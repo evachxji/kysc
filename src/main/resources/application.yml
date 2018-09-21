@@ -17,6 +17,6 @@ mybatis:
 
 logging:
   level:
-    com.yc.kysc.dao: debug
+    com.kysc.dao: debug
 
 
