@@ -1,4 +1,3 @@
 # kysc
 科院书城项目
-ItelliJ IDEA
-springboot+SSM+shiro+angular+bootstrap
+查看API接口：http://localhost:8080/swagger-ui.html
