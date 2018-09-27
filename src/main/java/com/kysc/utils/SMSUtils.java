@@ -5,12 +5,6 @@ package com.kysc.utils;
  * @project rest_demo
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.kysc.utils.SMS.client.AbsRestClient;
 import com.kysc.utils.SMS.client.JsonReqClient;
 
