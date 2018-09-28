@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test
+    url: jdbc:mysql://127.0.0.1:3306/kysc
     #url: jdbc:mysql://127.0.0.1:3306/keyuanshucheng
     username: root
-    password:
+    password: '0412'
 
 
 server:
-  port: 8080
+  port: 8081
   servlet.context-path: /   #项目名前缀
 
 mybatis:
