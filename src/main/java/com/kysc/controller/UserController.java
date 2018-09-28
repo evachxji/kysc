@@ -4,6 +4,7 @@ package com.kysc.controller;
 import com.kysc.bean.R;
 import com.kysc.bean.User;
 import com.kysc.service.UserService;
+import com.kysc.utils.AccountValidatorUtil;
 import com.kysc.utils.ErrorMsg;
 import com.kysc.utils.SMS.RandomUtils;
 import com.kysc.utils.SMSUtils;
@@ -13,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -24,7 +28,7 @@ public class UserController {
     //账号注册
     @PostMapping("/user")
     public R register(@RequestBody User user){
-        if(user.getPassword().length()<5 && user.getPassword().length()>15)     //检查密码
+        if(AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
@@ -49,7 +53,7 @@ public class UserController {
     public R checkUsername(@PathVariable("username") String username){      //检查用户名是否重复
         if(username != null && username != ""){         //为空
             //4到15位（字母，数字，下划线，减号）
-            if(Pattern.matches("^[a-zA-Z0-9_-]{4,15}$", username)){     //用户名符合规范
+            if(AccountValidatorUtil.isUsername(username)){     //用户名符合规范
                 if(userService.checkUsername(username)>0)
                     return R.error(ErrorMsg.ERROR_MSG2.getCode(),ErrorMsg.ERROR_MSG2.getMsg());
                 else
@@ -63,8 +67,9 @@ public class UserController {
 
     //检查手机号
     public R checkMobile(String mobile){
-        if(Pattern.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$", mobile)){
+        if(AccountValidatorUtil.isMobile(mobile)){
             int i = userService.checkMobile(mobile);       //手机已注册
+            System.out.println(i);
             if(i>0){
                 return R.error(ErrorMsg.ERROR_MSG4.getCode(),ErrorMsg.ERROR_MSG4.getMsg());
             }else
@@ -78,6 +83,7 @@ public class UserController {
     @PostMapping(value = "/sms/{mobile}")
     public R sms(@PathVariable("mobile") String mobile){//发送验证短信
         R r = checkMobile(mobile);
+        System.out.println(r.isEmpty());
         if(r.isEmpty()){
             //创建6位验证码
             String param = RandomUtils.getParam();
