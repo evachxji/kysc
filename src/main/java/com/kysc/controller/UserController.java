@@ -23,7 +23,7 @@ public class UserController {
 
     //账号注册
     @PostMapping("/user")
-    public R register(User user){
+    public R register(@RequestBody User user){
         if(user.getPassword().length()<5 && user.getPassword().length()>15)     //检查密码
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
@@ -62,7 +62,7 @@ public class UserController {
 
 
     //检查手机号
-    public R checkMobile(@PathVariable("mobile") String mobile){
+    public R checkMobile(String mobile){
         if(Pattern.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$", mobile)){
             int i = userService.checkMobile(mobile);       //手机已注册
             if(i>0){

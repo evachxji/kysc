@@ -25,13 +25,8 @@ public class ApiUserController {
 
     @PostMapping("/user")
     @ApiOperation(value = "账号注册", notes = "后台检查用户名密码手机号")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="username",value="用户名",required = true),
-            @ApiImplicitParam(name="password",value="密码",required = true),
-            @ApiImplicitParam(name="mobile",value="手机号",required = true),
-    })
-    public R register(User user){
-        if(user.getPassword().length()<5 && user.getPassword().length()>15)     //检查密码
+    public R register(@RequestBody User user){
+        /*if(user.getPassword().length()<5 && user.getPassword().length()>15)     //检查密码
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
@@ -43,19 +38,19 @@ public class ApiUserController {
                 user.setLastTime(new Date());
                 Md5Hash md5 = new Md5Hash(user.getPassword(),salt,2);   //加密2次
                 user.setPassword(md5.toString());
-                userService.regisger(user);
+                userService.regisger(user);*/
                 return R.ok("注册成功");
-            }else
+        /*    }else
                 return r2;
         }else
-            return r1;
+            return r1;*/
     }
 
 
     @GetMapping("/user/{username}")
     @ApiOperation(value = "检查用户名")
     public R checkUsername(@PathVariable("username") String username){      //检查用户名是否重复
-        if(username != null && username != ""){         //为空
+        /*if(username != null && username != ""){         //为空
             //4到15位（字母，数字，下划线，减号）
             if(Pattern.matches("^[a-zA-Z0-9_-]{4,15}$", username)){     //用户名符合规范
                 if(userService.checkUsername(username)>0)
@@ -64,7 +59,7 @@ public class ApiUserController {
                     return R.ok();
             }else
                 return R.error(ErrorMsg.ERROR_MSG1.getCode(),ErrorMsg.ERROR_MSG1.getMsg());
-        }else
+        }else*/
             return R.error(ErrorMsg.ERROR_MSG.getCode(),ErrorMsg.ERROR_MSG.getMsg());
     }
 
@@ -72,13 +67,13 @@ public class ApiUserController {
 
     //检查手机号
     public R checkMobile(@PathVariable("mobile") String mobile){
-        if(Pattern.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$", mobile)){
+        /*if(Pattern.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$", mobile)){
             int i = userService.checkMobile(mobile);       //手机已注册
             if(i>0){
                 return R.error(ErrorMsg.ERROR_MSG4.getCode(),ErrorMsg.ERROR_MSG4.getMsg());
             }else
                 return R.ok();
-        }else
+        }else*/
             return R.error(ErrorMsg.ERROR_MSG6.getCode(),ErrorMsg.ERROR_MSG6.getMsg());     //手机号不规范
     }
 
@@ -88,12 +83,12 @@ public class ApiUserController {
     @ApiOperation(value = "发送手机验证码")
     public R sms(@PathVariable("mobile") String mobile){//发送验证短信
         R r = checkMobile(mobile);
-        if(r.isEmpty()){
+        /*if(r.isEmpty()){
             //创建6位验证码
             String param = RandomUtils.getParam();
             SMSUtils.testSendSms(mobile, param);
             return R.ok(param);
-        }else
+        }else*/
             return r;
     }
 
