@@ -1,4 +1,4 @@
-package com.kysc.bean;
+package com.kysc.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,9 @@ import java.util.Map;
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	
-	public R() {}
+	public R() {
+	    put("code", 0);
+	}
 	
 	public static R error() {
 		return error(500, "未知异常，请联系管理员");

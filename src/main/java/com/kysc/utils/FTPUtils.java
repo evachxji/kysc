@@ -1,6 +1,5 @@
 package com.kysc.utils;
 
-import com.kysc.bean.R;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.web.multipart.MultipartFile;
