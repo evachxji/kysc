@@ -6,13 +6,14 @@ $('#myModal').on('okHidden', function(e){console.log('okHidden')});
 $('#myModal').on('cancelHide', function(e){console.log('cancelHide')});
 $('#myModal').on('cancelHidden', function(e){console.log('cancelHidden')});
 var uPattern = /^[a-zA-Z0-9_-]{4,15}$/;
-var uPattern1 = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
-var uPattern2 = /^[1][3,4,5,7,8][0-9]{9}$/;
-var isTrue=false;
-var isTrue1=false;
-var isTrue2=false;
-var isTrue3=false;
-var isTrue4=false;
+var uPattern1 = /^[a-zA-Z0-9]{5,15}$/;
+var uPattern2 = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+var yzm;
+var mobile1;
+var istrue=false;
+var istrue1=false;
+var istrue2=false;
+var istrue3=false;
 $('.input-element input').focusin(function(){
     $(this).parent().addClass('active');
 
@@ -27,47 +28,36 @@ function yz(o,uPattern){
     }
     else{
         o.parent().removeClass('error').addClass('active');
-        var username = $("#input").val();
-        $.ajax({
-            type: "get",
-            url : "/user/"+username,
-            dataType:'json',
-            //data: 'username='+username+'',
-            success: function(json){
-                if(json.code === 0){
-                    $("#error").css("display","none");
-                    $("#success").css("display","block");
-                }
-                else{
-                    $("#success").css("display","none");
-                    $("#error").css("display","block");
-                }
-            },
-            error: function (json){
-                alert("11");
-            }
-        });
-        isTrue=true;
     }
 }
 function yz1(o,uPattern){
     o.on('input propertychange', function() {
         if(uPattern.test(o.val()))
         {
-            isTrue1=true;
             o.parent().removeClass('error').addClass('active');
         }
     });
 }
-
+function yz2(o){
+    if(!o.val().length > 0) {
+        o.parent().removeClass('active').addClass('error');
+    }
+}
 $("#yz2").click(function(){
-    var mobile = String($("#input3").val());
+    mobile1 = String($("#input3").val());
     $.ajax({
         type: "post",
-        url : "/sms/"+mobile,
+        url : "/user/sms/"+mobile1,
         dataType:'json',
         success: function(json){
-            alert(mobile);
+            code1=json.code;
+            if(code1!='1005') {
+                yzm=json.msg;
+                console.log(yzm);
+            }
+            else{
+                alert(json.msg);
+            }
         },
         error: function (json){
             alert("无法获取");
@@ -87,21 +77,55 @@ $("#yz2").click(function(){
 
 });
 $('#input').blur(function(){
-    yz($(this),uPattern);});
+    istrue=false;
+    yz($(this),uPattern);
+    var username = $(this).val();
+    if(uPattern.test(username)) {
+        $.ajax({
+            type: "get",
+            url: "/user/user/"+username,
+            dataType: 'json',
+            success: function (json) {
+                if (!json.code) {
+                    istrue=true;
+                    $("#error").css("display", "none");
+                    $("#success").css("display", "block");
+                }
+                else {
+                    istrue=false;
+                    $("#success").css("display", "none");
+                    $("#error").css("display", "block");
+                }
+            },
+            error: function (json){
+               alert("请求失败");
+            }
+        });
+    }
+});
 $('#input1').blur(function(){
-    yz($(this),uPattern1);});
+    yz($(this),uPattern1);
+    if(uPattern1.test($(this).val())){
+        istrue1=true;
+    }
+    else{
+        istrue1=false;
+    }
+});
 yz1($('#input'),uPattern);
 yz1($('#input1'),uPattern1);
 $('#input2').blur(function(){
     if(!$(this).val().length > 0) {
         $(this).parent().removeClass('active');
+        istrue2=false;
     }
     else if($(this).val() != $('#input1').val() && $(this).val().length > 0){
         $(this).parent().removeClass('active').addClass('error');
+        istrue2=false;
     }
     else{
         $(this).parent().removeClass('error').addClass('active');
-        isTrue3=true;
+        istrue2=true;
     }
 });
 $("#input2").on('input propertychange', function() {
@@ -113,6 +137,7 @@ $("#input2").on('input propertychange', function() {
 $("#input3").on('input propertychange', function() {
     if(uPattern2.test($(this).val()))
     {
+        $(this).parent().removeClass('error').addClass('active');
         $(this).prev().attr("disabled",false);
     }
     else{
@@ -122,5 +147,46 @@ $("#input3").on('input propertychange', function() {
 $('#input3,#input4').blur(function(){
     if(!$(this).val().length > 0) {
         $(this).parent().removeClass('active');
+    }
+});
+$('#input3').blur(function(){
+    yz($(this),uPattern2)
+});
+$("#reg").click(function(){
+    yz2($("#input"));
+    yz2($("#input1"));
+    yz2($("#input2"));
+    yz2($("#input3"));
+    yz2($("#input4"));
+    var username=$("#input").val();
+    var password=$("#input1").val();
+    var mobile=String($("#input3").val());
+    var yzm1=$("#input4").val();
+    if(String(yzm)==yzm1) {
+        $("#error1").css("display", "none");
+        $("input4").parent().removeClass('error').addClass('active');
+        if (istrue && istrue1 && istrue2 && mobile == mobile1) {
+            $.ajax({
+                type: "post",
+                url: "/user/user/",
+                dataType: 'json',
+                contentType: "application/json;charset=UTF-8",
+                data:JSON.stringify({
+                    username:username,
+                    password:password,
+                    mobile:mobile
+                }),
+                success: function (json) {
+                    alert(json.msg);
+                    console.log(json);
+                },
+                error: function (json) {
+                    alert("请求失败");
+                }
+            });
+        }
+    }
+    else if(yzm1.length>0 && String(yzm).length>0){
+        $("#error1").css("display", "block");
     }
 });
