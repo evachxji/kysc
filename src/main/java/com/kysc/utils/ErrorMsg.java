@@ -20,6 +20,8 @@ public enum ErrorMsg {
     ERROR_MSG7(1008,"请上传正确的图片格式"),
 
     ERROR_MSG8(1009,"图片文件大小不符合规范"),
+
+    ERROR_MSG9(1010,"请完整填写注册信息"),
 ;
 	/** 错误码 */
 	private Integer code;

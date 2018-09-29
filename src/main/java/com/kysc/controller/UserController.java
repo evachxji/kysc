@@ -30,9 +30,13 @@ public class UserController {
     UserService userService;
 
     //账号注册
-    @PostMapping("/user")
+    @PostMapping(value = "/user", consumes = "application/json")
     public R register(@RequestBody User user){
-        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码
+        if(user.getUsername() == null || user.getPassword() == null || user.getMobile() == null ||
+                user.getUsername() == "" || user.getPassword() == "" || user.getMobile() == "" ){
+           return R.error(ErrorMsg.ERROR_MSG9.getCode(),ErrorMsg.ERROR_MSG9.getMsg());
+        }
+        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码规范
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
@@ -84,7 +88,7 @@ public class UserController {
 
 
     //发送手机验证码
-    @PostMapping(value = "/sms/{mobile}")
+    @PostMapping("/sms/{mobile}")
     public R sms(@PathVariable("mobile") String mobile){//发送验证短信
         R r = checkMobile(mobile);
         System.out.println(r.isEmpty());
@@ -97,7 +101,7 @@ public class UserController {
             return r;
     }
 
-    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
+    @PostMapping("/uploadImg")
     public R uploadImg(MultipartFile file) throws IOException {
 
         R r = FTPUtils.MultipartFiletoFile(file);
@@ -110,6 +114,9 @@ public class UserController {
         return R.ok();
     }
 
-
+    @PostMapping("login")
+    public R login(@RequestBody User user){
+        return null;
+    }
 
 }
