@@ -6,13 +6,17 @@ import com.kysc.bean.User;
 import com.kysc.service.UserService;
 import com.kysc.utils.AccountValidatorUtil;
 import com.kysc.utils.ErrorMsg;
+import com.kysc.utils.FTPUtils;
 import com.kysc.utils.SMS.RandomUtils;
 import com.kysc.utils.SMSUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +32,7 @@ public class UserController {
     //账号注册
     @PostMapping("/user")
     public R register(@RequestBody User user){
-        if(AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码
+        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
@@ -92,5 +96,20 @@ public class UserController {
         }else
             return r;
     }
+
+    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
+    public R uploadImg(MultipartFile file) throws IOException {
+
+        R r = FTPUtils.MultipartFiletoFile(file);
+        File file1 = (File) r.get("file");
+        if(file1 == null)    //转换成file失败，比如后缀不通过，或创建file失败，或文件大小非法
+            return r;
+        else{
+            FTPUtils.Upload(file1);
+        }
+        return R.ok();
+    }
+
+
 
 }
