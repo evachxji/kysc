@@ -16,6 +16,10 @@ public enum ErrorMsg {
     ERROR_MSG5(1006,"密码不符合规范"),
 
     ERROR_MSG6(1007,"手机号不符合规范"),
+
+    ERROR_MSG7(1008,"请上传正确的图片格式"),
+
+    ERROR_MSG8(1009,"图片文件大小不符合规范"),
 ;
 	/** 错误码 */
 	private Integer code;

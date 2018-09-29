@@ -1,15 +1,18 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test
+    url: jdbc:mysql://127.0.0.1:3306/kysc
     #url: jdbc:mysql://127.0.0.1:3306/keyuanshucheng
     username: root
     password:
-
+  http:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 100Mb
 
 server:
   port: 8080
-  servlet.context-path: /   #项目名前缀
+  servlet.context-path: /     #项目名前缀
 
 mybatis:
     mapperLocations: classpath:mapper/*.xml

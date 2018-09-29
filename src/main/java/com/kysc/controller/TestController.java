@@ -3,14 +3,19 @@ package com.kysc.controller;
 import com.kysc.bean.R;
 import com.kysc.service.TestService;
 import com.kysc.utils.FTPUtils;
-import com.kysc.utils.SMS.RandomUtils;
-import com.kysc.utils.SMSUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/test")
@@ -24,11 +29,14 @@ public class TestController {
         return R.ok(testService.test());
     }
 
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public R upload(File file){
-        FTPUtils ftpUtils = new FTPUtils();
-        //System.out.println(file);
-        //ftpUtils.upload(file.getName(),"/",file);
-        return R.ok();
+
+
+    private void deleteFile(File... files) {
+        for (File file : files) {
+            if (file.exists()) {
+                file.delete();
+            }
+        }
     }
+
 }
