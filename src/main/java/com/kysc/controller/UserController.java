@@ -1,7 +1,9 @@
 package com.kysc.controller;
 
 
-import com.kysc.bean.R;
+import com.kysc.bean.IdentifyCode;
+import com.kysc.service.IdentifyCodeService;
+import com.kysc.utils.R;
 import com.kysc.bean.User;
 import com.kysc.service.UserService;
 import com.kysc.utils.AccountValidatorUtil;
@@ -18,9 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/user")
@@ -29,15 +28,22 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    IdentifyCodeService identifyCodeService;
+
     //账号注册
-    @PostMapping("/user")
+    @PostMapping(value = "/user", consumes = "application/json")
     public R register(@RequestBody User user){
-        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码
+        if(user.getUsername() == null || user.getPassword() == null || user.getMobile() == null ||
+                user.getUsername() == "" || user.getPassword() == "" || user.getMobile() == "" ){
+           return R.error(ErrorMsg.ERROR_MSG9.getCode(),ErrorMsg.ERROR_MSG9.getMsg());
+        }
+        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码规范
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
-        if(r1.isEmpty()){ //用户名、手机号合法
-            if(r2.isEmpty()){
+        if(r1.get("code").equals(0)){ //用户名、手机号合法
+            if(r2.get("code").equals(0)){
                 String salt = new SecureRandomNumberGenerator().nextBytes().toString();
                 user.setSalt(salt);
                 user.setCreateTime(new Date());
@@ -45,7 +51,7 @@ public class UserController {
                 Md5Hash md5 = new Md5Hash(user.getPassword(),salt,2);   //加密2次
                 user.setPassword(md5.toString());
                 userService.regisger(user);
-                return R.ok("注册成功");
+                return R.ok();
             }else
                 return r2;
         }else
@@ -84,20 +90,25 @@ public class UserController {
 
 
     //发送手机验证码
-    @PostMapping(value = "/sms/{mobile}")
+    @PostMapping("/sms/{mobile}")
     public R sms(@PathVariable("mobile") String mobile){//发送验证短信
         R r = checkMobile(mobile);
-        System.out.println(r.isEmpty());
-        if(r.isEmpty()){
-            //创建6位验证码
-            String param = RandomUtils.getParam();
-            SMSUtils.testSendSms(mobile, param);
-            return R.ok(param);
+        if(r.get("code").equals(0)){        //该账号未被注册
+            int count = identifyCodeService.hasValidSms(mobile);     //已发送且有效的短信
+            if(count>0){
+                return R.error(ErrorMsg.ERROR_MSG10.getCode(),ErrorMsg.ERROR_MSG10.getMsg());
+            }else{
+                //创建6位验证码
+                String param = RandomUtils.getParam();
+                SMSUtils.testSendSms(mobile, param);
+                int id = identifyCodeService.insert(new IdentifyCode(mobile,Integer.valueOf(param)));
+                return R.ok().put("id",id);
+            }
         }else
             return r;
     }
 
-    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
+    @PostMapping("/uploadImg")
     public R uploadImg(MultipartFile file) throws IOException {
 
         R r = FTPUtils.MultipartFiletoFile(file);
@@ -110,6 +121,9 @@ public class UserController {
         return R.ok();
     }
 
-
+    @PostMapping("login")
+    public R login(@RequestBody User user){
+        return null;
+    }
 
 }

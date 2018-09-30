@@ -1,19 +1,12 @@
 package com.kysc.api;
 
-import com.kysc.bean.R;
+import com.kysc.utils.R;
 import com.kysc.bean.User;
 import com.kysc.service.UserService;
 import com.kysc.utils.ErrorMsg;
-import com.kysc.utils.SMS.RandomUtils;
-import com.kysc.utils.SMSUtils;
 import io.swagger.annotations.*;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api")
@@ -30,8 +23,8 @@ public class ApiUserController {
             return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
         R r1 = checkUsername(user.getUsername());       //检查用户名
         R r2 = checkMobile(user.getMobile());           //检查手机号
-        if(r1.isEmpty()){ //用户名、手机号合法
-            if(r2.isEmpty()){
+        if(r1.get("code").equals(0)){ //用户名、手机号合法
+            if(r2.get("code").equals(0)){
                 String salt = new SecureRandomNumberGenerator().nextBytes().toString();
                 user.setSalt(salt);
                 user.setCreateTime(new Date());
@@ -83,7 +76,7 @@ public class ApiUserController {
     @ApiOperation(value = "发送手机验证码")
     public R sms(@PathVariable("mobile") String mobile){//发送验证短信
         R r = checkMobile(mobile);
-        /*if(r.isEmpty()){
+        /*if(r.get("code").equals(0)){
             //创建6位验证码
             String param = RandomUtils.getParam();
             SMSUtils.testSendSms(mobile, param);

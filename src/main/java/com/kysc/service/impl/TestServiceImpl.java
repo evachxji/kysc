@@ -1,5 +1,6 @@
-package com.kysc.service;
+package com.kysc.service.impl;
 
+import com.kysc.service.TestService;
 import org.springframework.stereotype.Service;
 
 @Service("testService")

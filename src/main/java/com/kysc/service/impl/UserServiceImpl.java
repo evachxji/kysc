@@ -1,7 +1,8 @@
-package com.kysc.service;
+package com.kysc.service.impl;
 
 import com.kysc.bean.User;
 import com.kysc.dao.UserMapper;
+import com.kysc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
