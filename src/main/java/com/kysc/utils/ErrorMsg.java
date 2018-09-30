@@ -24,6 +24,8 @@ public enum ErrorMsg {
     ERROR_MSG9(1010,"请完整填写注册信息"),
 
     ERROR_MSG10(1011,"请在180秒以后重试"),
+
+    ERROR_MSG11(1012,"验证码错误"),
 ;
 	/** 错误码 */
 	private Integer code;
