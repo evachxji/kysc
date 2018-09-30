@@ -52,6 +52,17 @@ $("#yz2").click(function(){
             code1=json.code;
             if(code1==0) {
                 id=json.id;
+                $("#yz2").attr("disabled",true);
+                var time=120;
+                $("#yz2").text(time+"s后重新获取");
+                var set = setInterval(function(){
+                    time--;
+                    $("#yz2").text(time+"s后重新获取");
+                    if(time==0){
+                        clearInterval(set);
+                        $("#yz2").attr("disabled",false).text("获取验证码");
+                    }
+                },1000);
             }
             else{
                 alert(json.msg);
@@ -61,18 +72,6 @@ $("#yz2").click(function(){
             alert("无法获取");
         }
     });
-    $(this).attr("disabled",true);
-    var time=120;
-    $(this).text(time+"s后重新获取");
-    var set = setInterval(function(){
-        time--;
-        $("#yz2").text(time+"s后重新获取");
-        if(time==0){
-            clearInterval(set);
-            $("#yz2").attr("disabled",false).text("获取验证码");
-        }
-    },1000);
-
 });
 $('#input').blur(function(){
     istrue=false;
