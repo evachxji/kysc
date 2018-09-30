@@ -8,12 +8,11 @@ $('#myModal').on('cancelHidden', function(e){console.log('cancelHidden')});
 var uPattern = /^[a-zA-Z0-9_-]{4,15}$/;
 var uPattern1 = /^[a-zA-Z0-9]{5,15}$/;
 var uPattern2 = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-var yzm;
 var mobile1;
+var id;
 var istrue=false;
 var istrue1=false;
 var istrue2=false;
-var istrue3=false;
 $('.input-element input').focusin(function(){
     $(this).parent().addClass('active');
 
@@ -51,9 +50,8 @@ $("#yz2").click(function(){
         dataType:'json',
         success: function(json){
             code1=json.code;
-            if(code1!='1005') {
-                yzm=json.msg;
-                console.log(yzm);
+            if(code1==0) {
+                id=json.id;
             }
             else{
                 alert(json.msg);
@@ -86,7 +84,7 @@ $('#input').blur(function(){
             url: "/user/user/"+username,
             dataType: 'json',
             success: function (json) {
-                if (!json.code) {
+                if (json.code==0) {
                     istrue=true;
                     $("#error").css("display", "none");
                     $("#success").css("display", "block");
@@ -162,10 +160,9 @@ $("#reg").click(function(){
     var password=$("#input1").val();
     var mobile=String($("#input3").val());
     var yzm1=$("#input4").val();
-    if(String(yzm)==yzm1) {
-        $("#error1").css("display", "none");
-        $("input4").parent().removeClass('error').addClass('active');
-        if (istrue && istrue1 && istrue2 && mobile == mobile1) {
+        if (istrue && istrue1 && istrue2 && mobile == mobile1 && yzm1.length>0) {
+            $("#input4").parent().removeClass('error').addClass('active');
+            $("#load").css("display","inline");
             $.ajax({
                 type: "post",
                 url: "/user/user/",
@@ -174,19 +171,22 @@ $("#reg").click(function(){
                 data:JSON.stringify({
                     username:username,
                     password:password,
-                    mobile:mobile
+                    mobile:mobile,
+                    id:id,
+                    code:yzm1
                 }),
                 success: function (json) {
+                    $("#load").css("display","none");
+                    if(json.code==0){
                     alert(json.msg);
-                    console.log(json);
+                    }
+                    else{
+                        alert(json.msg);
+                    }
                 },
                 error: function (json) {
                     alert("请求失败");
                 }
             });
         }
-    }
-    else if(yzm1.length>0 && String(yzm).length>0){
-        $("#error1").css("display", "block");
-    }
 });
