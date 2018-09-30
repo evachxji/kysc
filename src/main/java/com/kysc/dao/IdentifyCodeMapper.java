@@ -21,4 +21,6 @@ public interface IdentifyCodeMapper {
     int updateByPrimaryKey(IdentifyCode record);
 
     int hasValidSms(String mobile);
+
+    int hasValidSmsCode(IdentifyCode identifyCode);
 }

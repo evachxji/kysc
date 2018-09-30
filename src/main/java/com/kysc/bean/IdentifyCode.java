@@ -23,6 +23,12 @@ public class IdentifyCode {
         this.code = code;
     }
 
+    public IdentifyCode(Integer id, String mobile, Integer code) {
+        this.id = id;
+        this.mobile = mobile;
+        this.code = code;
+    }
+
     public IdentifyCode(String mobile, Integer code, Date createTime, Date endTime) {
         this.mobile = mobile;
         this.code = code;

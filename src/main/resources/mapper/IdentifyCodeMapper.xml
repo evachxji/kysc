@@ -73,8 +73,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kysc.bean.IdentifyCode" useGeneratedKeys="true">
-
+  <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.kysc.bean.IdentifyCode">
     insert into identify_code (user_id, mobile, code,
       create_time, end_time)
     values (#{userId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{code,jdbcType=INTEGER},
@@ -161,4 +160,17 @@
               AND UNIX_TIMESTAMP(end_time)
               AND mobile = #{mobile}
     </select>
+
+    <select id="hasValidSmsCode" parameterType="com.kysc.bean.IdentifyCode" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        identify_code
+        WHERE UNIX_TIMESTAMP(SYSDATE()) BETWEEN UNIX_TIMESTAMP(create_time)
+        AND UNIX_TIMESTAMP(end_time)
+        AND mobile = #{mobile}
+        AND id = #{id}
+        AND code = #{code}
+    </select>
+
 </mapper>

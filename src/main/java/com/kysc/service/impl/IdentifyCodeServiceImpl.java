@@ -17,6 +17,11 @@ public class IdentifyCodeServiceImpl implements IdentifyCodeService {
     }
 
     @Override
+    public int hasValidSmsCode(IdentifyCode identifyCode) {
+        return identifyCodeMapper.hasValidSmsCode(identifyCode);
+    }
+
+    @Override
     public int hasValidSms(String mobile) {
         return identifyCodeMapper.hasValidSms(mobile);
     }

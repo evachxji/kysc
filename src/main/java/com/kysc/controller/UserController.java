@@ -2,6 +2,7 @@ package com.kysc.controller;
 
 
 import com.kysc.bean.IdentifyCode;
+import com.kysc.bean.UserVo;
 import com.kysc.service.IdentifyCodeService;
 import com.kysc.utils.R;
 import com.kysc.bean.User;
@@ -10,7 +11,6 @@ import com.kysc.utils.AccountValidatorUtil;
 import com.kysc.utils.ErrorMsg;
 import com.kysc.utils.FTPUtils;
 import com.kysc.utils.SMS.RandomUtils;
-import com.kysc.utils.SMSUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class UserController {
 
     //账号注册
     @PostMapping(value = "/user", consumes = "application/json")
-    public R register(@RequestBody User user){
+    public R register(@RequestBody UserVo user){
         if(user.getUsername() == null || user.getPassword() == null || user.getMobile() == null ||
                 user.getUsername() == "" || user.getPassword() == "" || user.getMobile() == "" ){
            return R.error(ErrorMsg.ERROR_MSG9.getCode(),ErrorMsg.ERROR_MSG9.getMsg());
@@ -44,14 +44,18 @@ public class UserController {
         R r2 = checkMobile(user.getMobile());           //检查手机号
         if(r1.get("code").equals(0)){ //用户名、手机号合法
             if(r2.get("code").equals(0)){
-                String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-                user.setSalt(salt);
-                user.setCreateTime(new Date());
-                user.setLastTime(new Date());
-                Md5Hash md5 = new Md5Hash(user.getPassword(),salt,2);   //加密2次
-                user.setPassword(md5.toString());
-                userService.regisger(user);
-                return R.ok();
+                IdentifyCode identifyCode = new IdentifyCode(user.getId(),user.getMobile(),user.getCode());
+                if(identifyCodeService.hasValidSmsCode(identifyCode) == 1){
+                    String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+                    user.setSalt(salt);
+                    user.setCreateTime(new Date());
+                    user.setLastTime(new Date());
+                    Md5Hash md5 = new Md5Hash(user.getPassword(),salt,2);   //加密2次
+                    user.setPassword(md5.toString());
+                    userService.regisger(user);
+                    return R.ok("注册成功");
+                }else
+                    return R.error(ErrorMsg.ERROR_MSG11.getCode(),ErrorMsg.ERROR_MSG11.getMsg());
             }else
                 return r2;
         }else
@@ -79,7 +83,6 @@ public class UserController {
     public R checkMobile(String mobile){
         if(AccountValidatorUtil.isMobile(mobile)){
             int i = userService.checkMobile(mobile);       //手机已注册
-            System.out.println(i);
             if(i>0){
                 return R.error(ErrorMsg.ERROR_MSG4.getCode(),ErrorMsg.ERROR_MSG4.getMsg());
             }else
@@ -100,9 +103,10 @@ public class UserController {
             }else{
                 //创建6位验证码
                 String param = RandomUtils.getParam();
-                SMSUtils.testSendSms(mobile, param);
-                int id = identifyCodeService.insert(new IdentifyCode(mobile,Integer.valueOf(param)));
-                return R.ok().put("id",id);
+                //SMSUtils.testSendSms(mobile, param);
+                IdentifyCode identifyCode = new IdentifyCode(mobile,Integer.valueOf(param));
+                identifyCodeService.insert(identifyCode);
+                return R.ok().put("id",identifyCode.getId());
             }
         }else
             return r;
