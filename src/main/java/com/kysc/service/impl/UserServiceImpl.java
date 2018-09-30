@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.checkMobile(mobile);
     }
 
+    @Override
+    public User queryByUserName(String username) {
+        return userMapper.queryByUserName(username);
+    }
+
 }

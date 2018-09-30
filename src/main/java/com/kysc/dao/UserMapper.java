@@ -23,4 +23,6 @@ public interface UserMapper {
     int checkUsername(String username);
 
     int checkMobile(String mobile);
+
+    User queryByUserName(String username);
 }

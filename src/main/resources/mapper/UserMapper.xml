@@ -185,4 +185,8 @@
         count(*)
         from user where mobile = #{mobile}
     </select>
+
+    <select id="queryByUserName" parameterType="java.lang.String" resultType="com.kysc.bean.User">
+        select * from user where username = #{username}
+    </select>
 </mapper>
