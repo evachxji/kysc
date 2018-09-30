@@ -13,6 +13,7 @@ var id;
 var istrue=false;
 var istrue1=false;
 var istrue2=false;
+var istrue3=false;
 $('.input-element input').focusin(function(){
     $(this).parent().addClass('active');
 
@@ -52,6 +53,7 @@ $("#yz2").click(function(){
             code1=json.code;
             if(code1==0) {
                 id=json.id;
+                istrue3=true;
                 $("#yz2").attr("disabled",true);
                 var time=120;
                 $("#yz2").text(time+"s后重新获取");
@@ -135,7 +137,9 @@ $("#input3").on('input propertychange', function() {
     if(uPattern2.test($(this).val()))
     {
         $(this).parent().removeClass('error').addClass('active');
-        $(this).prev().attr("disabled",false);
+        if(!istrue3) {
+            $(this).prev().attr("disabled", false);
+        }
     }
     else{
         $(this).prev().attr("disabled",true);
