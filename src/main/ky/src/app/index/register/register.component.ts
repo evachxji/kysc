@@ -46,6 +46,16 @@ export class RegisterComponent implements OnInit {
     mobile: false,
     yzm: false
   };
+  userMessage={
+    username: this.userNameValue,
+    password: this.password,
+    mobile: this.mobileValue
+  };
+  identifyCode={
+    id: this.yzmID,
+    mobile: this.mobileValue,
+    code: this.yzmValue
+  }
   blur(o,p,uPattern){
     if($(o.nativeElement).val().length<=0){
       switch(p){
@@ -158,11 +168,9 @@ export class RegisterComponent implements OnInit {
     this.http
       .post('/user/user/',
         JSON.stringify(
-          {username: this.userNameValue,
-            password: this.passwordValue,
-            mobile: this.mobileValue,
-            id: this.yzmID,
-            code: this.yzmValue}),
+          {user: this.userMessage,
+           identifyCode: this.identifyCode
+          }),
         {headers:this.headers})
       .subscribe(res=>{
         if(res.json().code===0){

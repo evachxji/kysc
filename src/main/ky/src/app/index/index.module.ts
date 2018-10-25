@@ -3,14 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './register/register.component';
 import {RouterModule, Routes} from "@angular/router";
 import { IndexComponent } from './index.component';
+import { UploadImageComponent } from './upload-image/upload-image.component';
+//import { HeadComponent } from './head/head.component';
 const appRoutes:Routes=[
- //{path:'',component:IndexComponent},
-//{path:'',component:AppComponent},
-//{path:'register',component:RegisterComponent},
- // {path:'',redirectTo:'index',pathMatch:'full'},
- // {path:'index',component:IndexComponent},
-//  {path:'register',component:RegisterComponent}
-//{path:'about', loadChildren:'./about/about.module#AboutModule'}
 ];
 @NgModule({
   imports: [
@@ -18,8 +13,6 @@ const appRoutes:Routes=[
   //  RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    //RegisterComponent,
-   // IndexComponent
   ]
 })
 export class IndexModule { }

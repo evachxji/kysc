@@ -6,24 +6,29 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './index/register/register.component';
 import {RouterModule, Routes} from "@angular/router";
 import { IndexComponent } from './index/index.component';
+import { UploadImageComponent } from './index/upload-image/upload-image.component';
 import { IndexModule } from './index/index.module';
 const appRoutes:Routes=[
 {path:'',redirectTo:'index',pathMatch:'full'},
-//{path:'',component:AppComponent},
-//{path:'register',component:RegisterComponent},
   {path:'index',
     component:IndexComponent,
     children: [
       {
         path:'register',
         component:RegisterComponent
-      }]}
+      },
+      {
+        path:'upload',
+        component:UploadImageComponent
+      }
+      ]}
 //{path:'about', loadChildren:'./about/about.module#AboutModule'}
 ];
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
+    UploadImageComponent,
     IndexComponent
   ],
   imports: [
