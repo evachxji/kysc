@@ -1,0 +1,16 @@
+<!--<div class="container">
+  <img src="./assets/img/wwb.jpg" #img  id="kk"/>
+  <button (click)="dd()">22</button>
+</div>-->
+<div id="myModal1" tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade" style="border:none;width:400px;border-radius:8px;background-color:#5bc0de;text-align:center;">
+  <div class="modal-header" style="border-bottom:0;">
+    <button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×</button>
+  </div>
+  <div class="modal-body" style="height:600px;padding:0px;border-radius:8px;text-align:center;">
+    <div class="upload">
+      <img id="imageview" #imageview width="300px" height="300px" style="position:absolute;top:0;left:0;" />
+        <i  id="sel" #sel (click)="selClick()" class="sui-icon icon-touch-plus" style="color:white;font-size:22px;font-weight:bold;cursor:pointer;margin:130px auto;"></i>
+      <input #file (change)="fileChange()" type="file" style="display:none;"/>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/kysc
     #url: jdbc:mysql://127.0.0.1:3306/keyuanshucheng
     username: root
-    password:
+    password: '0412'
   http:
     multipart:
       max-file-size: 10Mb

@@ -24,10 +24,12 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/cropper.css"
             ],
             "scripts": [
               "src/jquery.js",
               "src/sui.min.js",
+              "src/cropper.js"
               ]
           },
           "configurations": {

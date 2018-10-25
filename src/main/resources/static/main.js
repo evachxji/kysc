@@ -98,7 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_register_register_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./index/register/register.component */ "./src/app/index/register/register.component.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _index_index_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./index/index.component */ "./src/app/index/index.component.ts");
-/* harmony import */ var _index_index_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index/index.module */ "./src/app/index/index.module.ts");
+/* harmony import */ var _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index/upload-image/upload-image.component */ "./src/app/index/upload-image/upload-image.component.ts");
+/* harmony import */ var _index_index_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index/index.module */ "./src/app/index/index.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -114,16 +115,19 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var appRoutes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
-    //{path:'',component:AppComponent},
-    //{path:'register',component:RegisterComponent},
     { path: 'index',
         component: _index_index_component__WEBPACK_IMPORTED_MODULE_7__["IndexComponent"],
         children: [
             {
                 path: 'register',
                 component: _index_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"]
+            },
+            {
+                path: 'upload',
+                component: _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__["UploadImageComponent"]
             }
         ] }
     //{path:'about', loadChildren:'./about/about.module#AboutModule'}
@@ -136,12 +140,13 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                 _index_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"],
+                _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__["UploadImageComponent"],
                 _index_index_component__WEBPACK_IMPORTED_MODULE_7__["IndexComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _index_index_module__WEBPACK_IMPORTED_MODULE_8__["IndexModule"],
+                _index_index_module__WEBPACK_IMPORTED_MODULE_9__["IndexModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["JsonpModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterModule"].forRoot(appRoutes)
@@ -164,7 +169,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".head{\r\n  height:60px;\r\n  background-color:#5bc0de;\r\n  margin:0;\r\n  width:100%;\r\n}\r\n"
 
 /***/ }),
 
@@ -175,7 +180,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a [routerLink]=\"['/index/register']\"><button data-toggle=\"modal\" data-target=\"#myModal\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\">注册</button></a>\r\n<router-outlet></router-outlet>\r\n\r\n"
+module.exports = "<div class=\"head\">\r\n  <a [routerLink]=\"['/index/register']\"><button data-toggle=\"modal\" data-target=\"#myModal\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\">注册</button></a>\r\n  <a [routerLink]=\"['/index/upload']\"><button data-toggle=\"modal\" data-target=\"#myModal1\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\">设置头像</button></a>\r\n</div>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n"
 
 /***/ }),
 
@@ -240,15 +245,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 };
 
 
-var appRoutes = [
-//{path:'',component:IndexComponent},
-//{path:'',component:AppComponent},
-//{path:'register',component:RegisterComponent},
-// {path:'',redirectTo:'index',pathMatch:'full'},
-// {path:'index',component:IndexComponent},
-//  {path:'register',component:RegisterComponent}
-//{path:'about', loadChildren:'./about/about.module#AboutModule'}
-];
+//import { HeadComponent } from './head/head.component';
+var appRoutes = [];
 var IndexModule = /** @class */ (function () {
     function IndexModule() {
     }
@@ -257,10 +255,7 @@ var IndexModule = /** @class */ (function () {
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
             ],
-            declarations: [
-            //RegisterComponent,
-            // IndexComponent
-            ]
+            declarations: []
         })
     ], IndexModule);
     return IndexModule;
@@ -343,6 +338,16 @@ var RegisterComponent = /** @class */ (function () {
             tPassword: false,
             mobile: false,
             yzm: false
+        };
+        this.userMessage = {
+            username: this.userNameValue,
+            password: this.password,
+            mobile: this.mobileValue
+        };
+        this.identifyCode = {
+            id: this.yzmID,
+            mobile: this.mobileValue,
+            code: this.yzmValue
         };
     }
     ;
@@ -469,11 +474,9 @@ var RegisterComponent = /** @class */ (function () {
         this.yzmValue = $(this.yzm.nativeElement).val();
         this.isLoad = true;
         this.http
-            .post('/user/user/', JSON.stringify({ username: this.userNameValue,
-            password: this.passwordValue,
-            mobile: this.mobileValue,
-            id: this.yzmID,
-            code: this.yzmValue }), { headers: this.headers })
+            .post('/user/user/', JSON.stringify({ user: this.userMessage,
+            identifyCode: this.identifyCode
+        }), { headers: this.headers })
             .subscribe(function (res) {
             if (res.json().code === 0) {
                 _this.isLoad = false;
@@ -519,6 +522,108 @@ var RegisterComponent = /** @class */ (function () {
             _angular_http__WEBPACK_IMPORTED_MODULE_1__["Jsonp"]])
     ], RegisterComponent);
     return RegisterComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/index/upload-image/upload-image.component.css":
+/*!***************************************************************!*\
+  !*** ./src/app/index/upload-image/upload-image.component.css ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".upload{\r\n  position:relative;\r\n  margin-top:20%;\r\n  margin-left:70px;\r\n  border:2px dotted white;\r\n  width:260px;\r\n  height:260px;\r\n  text-align:center;\r\n  background:#5bc0de;\r\n}\r\n.scale{\r\n  width:100%;\r\n  height:100%;\r\n  border:2px dotted white;\r\n  position:absolute;\r\n  top:0;\r\n  left:0;\r\n  cursor:move;\r\n  outline: rgba(0, 0, 0, 0.6) solid 10000px;\r\n}\r\n"
+
+/***/ }),
+
+/***/ "./src/app/index/upload-image/upload-image.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/index/upload-image/upload-image.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--<div class=\"container\">\n  <img src=\"./assets/img/wwb.jpg\" #img  id=\"kk\"/>\n  <button (click)=\"dd()\">22</button>\n</div>-->\n<div id=\"myModal1\" tabindex=\"-1\" role=\"dialog\" data-hasfoot=\"false\" class=\"sui-modal hide fade\" style=\"border:none;width:400px;border-radius:8px;background-color:#5bc0de;text-align:center;\">\n  <div class=\"modal-header\" style=\"border-bottom:0;\">\n    <button type=\"button\" data-dismiss=\"modal\" aria-hidden=\"true\" class=\"sui-close\">×</button>\n  </div>\n  <div class=\"modal-body\" style=\"height:600px;padding:0px;border-radius:8px;text-align:center;\">\n    <div class=\"upload\">\n      <img id=\"imageview\" #imageview width=\"300px\" height=\"300px\" style=\"position:absolute;top:0;left:0;\" />\n        <i  id=\"sel\" #sel (click)=\"selClick()\" class=\"sui-icon icon-touch-plus\" style=\"color:white;font-size:22px;font-weight:bold;cursor:pointer;margin:130px auto;\"></i>\n      <input #file (change)=\"fileChange()\" type=\"file\" style=\"display:none;\"/>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/index/upload-image/upload-image.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/index/upload-image/upload-image.component.ts ***!
+  \**************************************************************/
+/*! exports provided: UploadImageComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UploadImageComponent", function() { return UploadImageComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var UploadImageComponent = /** @class */ (function () {
+    function UploadImageComponent() {
+    }
+    UploadImageComponent.prototype.ngOnInit = function () {
+    };
+    UploadImageComponent.prototype.selClick = function () {
+        $(this.fil.nativeElement).click();
+    };
+    UploadImageComponent.prototype.fileChange = function () {
+        console.log($(this.fil.nativeElement)[0]);
+        var objUrl = $(this.fil.nativeElement)[0].files[0];
+        var windowURL = window.URL;
+        var dataURL = windowURL.createObjectURL(objUrl);
+        $(this.imge.nativeElement).attr("src", dataURL);
+        var image1 = document.getElementById("imageview");
+        console.log(image1);
+        var cropper1 = new Cropper(image1, {
+            aspectRatio: 12 / 12,
+            crop: function (e) {
+                console.log(e.detail.x);
+                console.log(e.detail.y);
+                console.log(e.detail.width);
+                console.log(e.detail.height);
+                console.log(e.detail.rotate);
+                console.log(e.detail.scaleX);
+                console.log(e.detail.scaleY);
+                //$(this.imge.nativeElement).css("width","600px");
+            }
+        });
+        //$(this.imge.nativeElement).Cropper('cropper1');
+        cropper1.crop();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('imageview'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], UploadImageComponent.prototype, "imge", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('sel'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], UploadImageComponent.prototype, "sele", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('file'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], UploadImageComponent.prototype, "fil", void 0);
+    UploadImageComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-upload-image',
+            template: __webpack_require__(/*! ./upload-image.component.html */ "./src/app/index/upload-image/upload-image.component.html"),
+            styles: [__webpack_require__(/*! ./upload-image.component.css */ "./src/app/index/upload-image/upload-image.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], UploadImageComponent);
+    return UploadImageComponent;
 }());
 
 

@@ -9792,5 +9792,3522 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 enabled:y}:"string"==typeof y&&(y={classes:y}),y.enabled===!1&&s.push("disabled"),y.classes&&(s=s.concat(y.classes.split(/\s+/))),y.tooltip&&(d=y.tooltip)}s=a.unique(s);var z,A=new Date;z=this.o.todayHighlight&&n.getUTCFullYear()===A.getFullYear()&&n.getUTCMonth()===A.getMonth()&&n.getUTCDate()===A.getDate()?"今日":n.getUTCDate(),t.push('<td class="'+s.join(" ")+'"'+(d?' title="'+d+'"':"")+'data-day="'+n.getUTCDate()+'">'+z+"</td>"),n.getUTCDay()===this.o.weekEnd&&t.push("</tr>"),n.setUTCDate(n.getUTCDate()+1)}this.picker.find(".datepicker-days tbody").empty().append(t.join(""));var B=this.picker.find(".datepicker-months").find("th:eq(1)").text(f).end().find("span").removeClass("active");a.each(this.dates,function(a,b){b.getUTCFullYear()===f&&B.eq(b.getUTCMonth()).addClass("active")}),(h>f||f>j)&&B.addClass("disabled"),f===h&&B.slice(0,i).addClass("disabled"),f===j&&B.slice(k+1).addClass("disabled"),t="",f=10*parseInt(f/10,10);var C=this.picker.find(".datepicker-years").find("th:eq(1)").text(f+"-"+(f+9)).end().find("td");f-=1;for(var D,E=a.map(this.dates,function(a){return a.getUTCFullYear()}),F=-1;11>F;F++)D=["year"],-1===F?D.push("old"):10===F&&D.push("new"),-1!==a.inArray(f,E)&&D.push("active"),(h>f||f>j)&&D.push("disabled"),t+='<span class="'+D.join(" ")+'">'+f+"</span>",f+=1;C.html(t)},updateNavArrows:function(){if(this._allow_update){var a=new Date(this.viewDate),b=a.getUTCFullYear(),c=a.getUTCMonth();switch(this.viewMode){case 0:this.o.startDate!==-(1/0)&&b<=this.o.startDate.getUTCFullYear()&&c<=this.o.startDate.getUTCMonth()?this.picker.find(".prev").css({visibility:"hidden"}):this.picker.find(".prev").css({visibility:"visible"}),this.o.endDate!==1/0&&b>=this.o.endDate.getUTCFullYear()&&c>=this.o.endDate.getUTCMonth()?this.picker.find(".next").css({visibility:"hidden"}):this.picker.find(".next").css({visibility:"visible"});break;case 1:case 2:this.o.startDate!==-(1/0)&&b<=this.o.startDate.getUTCFullYear()?this.picker.find(".prev").css({visibility:"hidden"}):this.picker.find(".prev").css({visibility:"visible"}),this.o.endDate!==1/0&&b>=this.o.endDate.getUTCFullYear()?this.picker.find(".next").css({visibility:"hidden"}):this.picker.find(".next").css({visibility:"visible"})}}},click:function(b){if(b.preventDefault(),!a(b.target).parents(".timepicker-container")[0]){var d,e,f,g=a(b.target).closest("span, td, th");if(1===g.length)switch(g[0].nodeName.toLowerCase()){case"th":switch(g[0].className){case"datepicker-switch":this.showMode(1);break;case"prev":case"next":var h=p.modes[this.viewMode].navStep*("prev"===g[0].className?-1:1);switch(this.viewMode){case 0:this.viewDate=this.moveMonth(this.viewDate,h),this._trigger("changeMonth",this.viewDate);break;case 1:case 2:this.viewDate=this.moveYear(this.viewDate,h),1===this.viewMode&&this._trigger("changeYear",this.viewDate)}this.fill();break;case"today":var i=new Date;i=c(i.getFullYear(),i.getMonth(),i.getDate(),0,0,0),this.showMode(-2);var j="linked"===this.o.todayBtn?null:"view";this._setDate(i,j);break;case"clear":var k;this.isInput?k=this.element:this.component&&(k=this.element.find("input")),k&&k.val("").change(),this.update(),this._trigger("changeDate"),this.o.autoclose&&this.hide()}break;case"span":g.is(".disabled")||g.is("[data-num]")||(this.viewDate.setUTCDate(1),g.is(".month")?(f=1,e=g.parent().find("span").index(g),d=this.viewDate.getUTCFullYear(),this.viewDate.setUTCMonth(e),this._trigger("changeMonth",this.viewDate),1===this.o.minViewMode&&this._setDate(c(d,e,f))):(f=1,e=0,d=parseInt(g.text(),10)||0,this.viewDate.setUTCFullYear(d),this._trigger("changeYear",this.viewDate),2===this.o.minViewMode&&this._setDate(c(d,e,f))),this.showMode(-1),this.fill());break;case"td":g.is(".day")&&!g.is(".disabled")&&(f=g.data("day"),f=parseInt(f,10)||1,d=this.viewDate.getUTCFullYear(),e=this.viewDate.getUTCMonth(),g.is(".old")?0===e?(e=11,d-=1):e-=1:g.is(".new")&&(11===e?(e=0,d+=1):e+=1),this._setDate(c(d,e,f)))}this.picker.is(":visible")&&this._focused_from&&a(this._focused_from).focus(),delete this._focused_from}},_toggle_multidate:function(a){var b=this.dates.contains(a);if(a?-1!==b?this.dates.remove(b):this.dates.push(a):this.dates.clear(),"number"==typeof this.o.multidate)for(;this.dates.length>this.o.multidate;)this.dates.remove(0)},_setDate:function(a,b){b&&"date"!==b||this._toggle_multidate(a&&new Date(a)),b&&"view"!==b||(this.viewDate=a&&new Date(a)),this.fill(),this.setValue(),this._trigger("changeDate");var c;this.isInput?c=this.element:this.component&&(c=this.element.find("input")),c&&c.change(),!this.o.autoclose||b&&"date"!==b||this.hide()},moveMonth:function(a,c){if(!a)return b;if(!c)return a;var d,e,f=new Date(a.valueOf()),g=f.getUTCDate(),h=f.getUTCMonth(),i=Math.abs(c);if(c=c>0?1:-1,1===i)e=-1===c?function(){return f.getUTCMonth()===h}:function(){return f.getUTCMonth()!==d},d=h+c,f.setUTCMonth(d),(0>d||d>11)&&(d=(d+12)%12);else{for(var j=0;i>j;j++)f=this.moveMonth(f,c);d=f.getUTCMonth(),f.setUTCDate(g),e=function(){return d!==f.getUTCMonth()}}for(;e();)f.setUTCDate(--g),f.setUTCMonth(d);return f},moveYear:function(a,b){return this.moveMonth(a,12*b)},dateWithinRange:function(a){return a>=this.o.startDate&&a<=this.o.endDate},keydown:function(a){if(this.picker.is(":not(:visible)"))return void(27===a.keyCode&&this.show());var b,c,e,f=!1,g=this.focusDate||this.viewDate;switch(a.keyCode){case 27:this.focusDate?(this.focusDate=null,this.viewDate=this.dates.get(-1)||this.viewDate,this.fill()):this.hide(),a.preventDefault();break;case 37:case 39:if(!this.o.keyboardNavigation)break;b=37===a.keyCode?-1:1,a.ctrlKey?(c=this.moveYear(this.dates.get(-1)||d(),b),e=this.moveYear(g,b),this._trigger("changeYear",this.viewDate)):a.shiftKey?(c=this.moveMonth(this.dates.get(-1)||d(),b),e=this.moveMonth(g,b),this._trigger("changeMonth",this.viewDate)):(c=new Date(this.dates.get(-1)||d()),c.setUTCDate(c.getUTCDate()+b),e=new Date(g),e.setUTCDate(g.getUTCDate()+b)),this.dateWithinRange(c)&&(this.focusDate=this.viewDate=e,this.setValue(),this.fill(),a.preventDefault());break;case 38:case 40:if(!this.o.keyboardNavigation)break;b=38===a.keyCode?-1:1,a.ctrlKey?(c=this.moveYear(this.dates.get(-1)||d(),b),e=this.moveYear(g,b),this._trigger("changeYear",this.viewDate)):a.shiftKey?(c=this.moveMonth(this.dates.get(-1)||d(),b),e=this.moveMonth(g,b),this._trigger("changeMonth",this.viewDate)):(c=new Date(this.dates.get(-1)||d()),c.setUTCDate(c.getUTCDate()+7*b),e=new Date(g),e.setUTCDate(g.getUTCDate()+7*b)),this.dateWithinRange(c)&&(this.focusDate=this.viewDate=e,this.setValue(),this.fill(),a.preventDefault());break;case 32:break;case 13:g=this.focusDate||this.dates.get(-1)||this.viewDate,this._toggle_multidate(g),f=!0,this.focusDate=null,this.viewDate=this.dates.get(-1)||this.viewDate,this.setValue(),this.fill(),this.picker.is(":visible")&&(a.preventDefault(),this.o.autoclose&&this.hide());break;case 9:this.focusDate=null,this.viewDate=this.dates.get(-1)||this.viewDate,this.fill(),this.hide()}if(f){this.dates.length?this._trigger("changeDate"):this._trigger("clearDate");var h;this.isInput?h=this.element:this.component&&(h=this.element.find("input")),h&&h.change()}},showMode:function(a){a&&(this.viewMode=Math.max(this.o.minViewMode,Math.min(2,this.viewMode+a))),this.picker.find(">div").hide().filter(".datepicker-"+p.modes[this.viewMode].clsName).css("display","block"),this.updateNavArrows()}};var k=function(b,c){this.element=a(b),this.inputs=a.map(c.inputs,function(a){return a.jquery?a[0]:a}),delete c.inputs,a(this.inputs).datepicker(c).bind("changeDate",a.proxy(this.dateUpdated,this)),this.pickers=a.map(this.inputs,function(b){return a(b).data("datepicker")}),this.updateDates()};k.prototype={updateDates:function(){this.dates=a.map(this.pickers,function(a){return a.getUTCDate()}),this.updateRanges()},updateRanges:function(){var b=a.map(this.dates,function(a){return a.valueOf()});a.each(this.pickers,function(a,c){c.setRange(b)})},dateUpdated:function(b){if(!this.updating){this.updating=!0;var c=a(b.target).data("datepicker"),d=c.getUTCDate(),e=a.inArray(b.target,this.inputs),f=this.inputs.length;if(-1!==e){a.each(this.pickers,function(a,b){b.getUTCDate()||b.setUTCDate(d)});var g=0;for(g=0;g<this.pickers.length;g++)this.dates[g]=this.pickers[g].getDate();for(g=e-1;g>=0&&d<this.dates[g];)this.pickers[g--].setUTCDate(d);if(d<this.dates[e])for(;e>=0&&d<this.dates[e];)this.pickers[e--].setUTCDate(d);else if(d>this.dates[e])for(;f>e&&d>this.dates[e];)this.pickers[e++].setUTCDate(d);this.updateDates(),delete this.updating}}},remove:function(){a.map(this.pickers,function(a){a.remove()}),delete this.element.data().datepicker}};var l=a.fn.datepicker;a.fn.datepicker=function(c){var d=Array.apply(null,arguments);d.shift();var e;return this.each(function(){var h=a(this),i=h.data("datepicker"),l="object"==typeof c&&c;if(!i){var n=f(this,"date"),o=a.extend({},m,n,l),p=g(o.language),q=a.extend({},m,p,n,l);if(h.is(".input-daterange")||q.inputs){var r={inputs:q.inputs||h.find("input").toArray()};h.data("datepicker",i=new k(this,a.extend(q,r)))}else h.data("datepicker",i=new j(this,q))}return"string"==typeof c&&"function"==typeof i[c]&&(e=i[c].apply(i,d),e!==b)?!1:void 0}),e!==b?e:this};var m=a.fn.datepicker.defaults={autoclose:!0,beforeShowDay:a.noop,calendarWeeks:!1,clearBtn:!1,daysOfWeekDisabled:[],endDate:1/0,forceParse:!0,format:"yyyy-mm-dd",keyboardNavigation:!0,language:"zh-CN",minViewMode:0,multidate:!1,multidateSeparator:",",orientation:"auto",rtl:!1,size:"",startDate:-(1/0),startView:0,todayBtn:!1,todayHighlight:!0,weekStart:0,timepicker:!1},n=a.fn.datepicker.locale_opts=["format","rtl","weekStart"];a.fn.datepicker.Constructor=j;var o=a.fn.datepicker.dates={en:{days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],daysShort:["Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun"],daysMin:["Su","Mo","Tu","We","Th","Fr","Sa","Su"],months:["January","February","March","April","May","June","July","August","September","October","November","December"],monthsShort:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],today:"Today",clear:"Clear"},"zh-CN":{days:["星期日","星期一","星期二","星期三","星期四","星期五","星期六","星期日"],daysShort:["周日","周一","周二","周三","周四","周五","周六","周日"],daysMin:["日","一","二","三","四","五","六","日"],months:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],monthsShort:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],today:"今日",weekStart:0}},p={modes:[{clsName:"days",navFnc:"Month",navStep:1},{clsName:"months",navFnc:"FullYear",navStep:1},{clsName:"years",navFnc:"FullYear",navStep:10}],isLeapYear:function(a){return a%4===0&&a%100!==0||a%400===0},getDaysInMonth:function(a,b){return[31,p.isLeapYear(a)?29:28,31,30,31,30,31,31,30,31,30,31][b]},validParts:/dd?|DD?|mm?|MM?|yy(?:yy)?/g,nonpunctuation:/[^ -\/:-@\[\u3400-\u9fff-`{-~\t\n\r]+/g,parseFormat:function(a){var b=a.replace(this.validParts,"\x00").split("\x00"),c=a.match(this.validParts);if(!b||!b.length||!c||0===c.length)throw new Error("Invalid date format.");return{separators:b,parts:c}},parseDate:function(d,e,f){function g(){var a=this.slice(0,m[k].length),b=m[k].slice(0,a.length);return a===b}if(!d)return b;if(d instanceof Date)return d;"string"==typeof e&&(e=p.parseFormat(e));var h,i,k,l=/([\-+]\d+)([dmwy])/,m=d.match(/([\-+]\d+)([dmwy])/g);if(/^[\-+]\d+[dmwy]([\s,]+[\-+]\d+[dmwy])*$/.test(d)){for(d=new Date,k=0;k<m.length;k++)switch(h=l.exec(m[k]),i=parseInt(h[1]),h[2]){case"d":d.setUTCDate(d.getUTCDate()+i);break;case"m":d=j.prototype.moveMonth.call(j.prototype,d,i);break;case"w":d.setUTCDate(d.getUTCDate()+7*i);break;case"y":d=j.prototype.moveYear.call(j.prototype,d,i)}return c(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),0,0,0)}m=d&&d.match(this.nonpunctuation)||[],d=new Date;var n,q,r={},s=["yyyy","yy","M","MM","m","mm","d","dd"],t={yyyy:function(a,b){return a.setUTCFullYear(b)},yy:function(a,b){return a.setUTCFullYear(2e3+b)},m:function(a,b){if(isNaN(a))return a;for(b-=1;0>b;)b+=12;for(b%=12,a.setUTCMonth(b);a.getUTCMonth()!==b;)a.setUTCDate(a.getUTCDate()-1);return a},d:function(a,b){return a.setUTCDate(b)}};t.M=t.MM=t.mm=t.m,t.dd=t.d,d=c(d.getFullYear(),d.getMonth(),d.getDate(),0,0,0);var u=e.parts.slice();if(m.length!==u.length&&(u=a(u).filter(function(b,c){return-1!==a.inArray(c,s)}).toArray()),m.length===u.length){var v;for(k=0,v=u.length;v>k;k++){if(n=parseInt(m[k],10),h=u[k],isNaN(n))switch(h){case"MM":q=a(o[f].months).filter(g),n=a.inArray(q[0],o[f].months)+1;break;case"M":q=a(o[f].monthsShort).filter(g),n=a.inArray(q[0],o[f].monthsShort)+1}r[h]=n}var w,x;for(k=0;k<s.length;k++)x=s[k],x in r&&!isNaN(r[x])&&(w=new Date(d),t[x](w,r[x]),isNaN(w)||(d=w))}return d},formatDate:function(b,c,d){if(!b)return"";"string"==typeof c&&(c=p.parseFormat(c));var e={d:b.getUTCDate(),D:o[d].daysShort[b.getUTCDay()],DD:o[d].days[b.getUTCDay()],m:b.getUTCMonth()+1,M:o[d].monthsShort[b.getUTCMonth()],MM:o[d].months[b.getUTCMonth()],yy:b.getUTCFullYear().toString().substring(2),yyyy:b.getUTCFullYear()};e.dd=(e.d<10?"0":"")+e.d,e.mm=(e.m<10?"0":"")+e.m,b=[];for(var f=a.extend([],c.separators),g=0,h=c.parts.length;h>=g;g++)f.length&&b.push(f.shift()),b.push(e[c.parts[g]]);return b.join("")},headTemplate:'<thead><tr class="date-header"><th class="prev"><b></b></th><th colspan="5" class="datepicker-switch"></th><th class="next"><b></b></th></tr></thead>',contTemplate:'<tbody><tr><td colspan="7"></td></tr></tbody>',footTemplate:'<tfoot><tr><th colspan="7" class="today"></th></tr><tr><th colspan="7" class="clear"></th></tr></tfoot>',timepicerTemplate:'<div class="timepicker-container"></div>'};p.template='<div class="datepicker"><div class="datepicker-days clearfix"><table class=" table-condensed">'+p.headTemplate+"<tbody></tbody>"+p.footTemplate+"</table>"+p.timepicerTemplate+'</div><div class="datepicker-months"><table class="table-condensed">'+p.headTemplate+p.contTemplate+p.footTemplate+'</table></div><div class="datepicker-years"><table class="table-condensed">'+p.headTemplate+p.contTemplate+p.footTemplate+"</table></div></div>",a.fn.datepicker.DPGlobal=p,a.fn.datepicker.noConflict=function(){return a.fn.datepicker=l,this},a(document).on("focus.datepicker.data-api click.datepicker.data-api",'[data-toggle="datepicker"]',function(b){var c=a(this);c.data("datepicker")||(b.preventDefault(),c.datepicker("show"))}),a(function(){a('[data-toggle="datepicker-inline"]').datepicker()})}(window.jQuery,void 0)},{}],6:[function(a,b,c){!function(a){"use strict";var b="[data-toggle=dropdown]",c=".sui-dropdown, .sui-dropup",d=function(){a(".sui-dropdown.open, .sui-dropup.open, .sui-btn-group.open").each(function(){a(this).removeClass("open")})},e=function(a){var b=a.parent();return b.hasClass("dropdown-inner")?b.parent():b},f=function(){d();var b=a(this),c=e(b);if(!c.is(".disabled, :disabled"))return c.addClass("open"),b.focus(),!1},g=function(){var b=a(this),c=e(b);if(!c.is(".disabled, :disabled"))return c.removeClass("open"),b.focus(),!1},h=function(){var b=a(this),c=e(b),f=c.hasClass("open");return d(),c.is(".disabled, :disabled")?void 0:(f?c.removeClass("open"):c.addClass("open"),b.focus(),!1)},i=function(){var c=a(this),d=c.parent(),e=c.parents(".sui-dropdown, .sui-dropup"),f=e.find("[role='menu']");d.is(".disabled, :disabled")||e.is(".disabled, :disabled")||(e.find("input").val(c.attr("value")||"").trigger("change"),e.find(b+" span").html(c.html()),f.find(".active").removeClass("active"),d.addClass("active"))};a(document).on("mouseover",c,function(){var b,c=a(this);(b=c.find('[data-trigger="hover"]')[0])&&f.call(b)}),a(document).on("mouseleave",c,function(){var b,c=a(this);(b=c.find('[data-trigger="hover"]')[0])&&g.call(b)}),a(document).on("click","[data-toggle='dropdown']",h),a(document).on("click",function(){var b=a(this);b.is(c)||b.parents(c)[0]||d()}),a(document).on("click",".select .sui-dropdown-menu a",i),a.fn.dropdown=function(b){return this.each(function(){if(a(this).attr("data-toggle","dropdown"),"string"==typeof b)switch(b){case"show":f.call(this);break;case"hide":g.call(this);break;case"toggle":h.call(this)}})}}(window.jQuery)},{}],7:[function(a,b,c){!function(a){"use strict";a.extend({filesize:function(a,b){var c,d="",e=b||{},f=Number(a),g=["B","kB","MB","GB","TB","PB","EB","ZB","YB"],h=void 0!==e.round?e.round:2;if(isNaN(a)||0>f)throw new Error("无效的size参数");return 0===f?d="0B":(c=Math.floor(Math.log(f)/Math.log(1e3)),c>8&&(d*=1e3*(c-8),c=8),d=f/Math.pow(2,10*c),d=d.toFixed(c>0?h:0)+g[c]),d}})}(jQuery)},{}],8:[function(a,b,c){!function(a){function b(a,b){this._targetElement=a,this._options=c(b)}function c(c){return c=a.extend({},b.prototype.defaults,c)}function d(a){var b=[],c=this,d=[];if(this._options.steps)for(var f=0,j=this._options.steps.length;j>f;f++){var l=e(this._options.steps[f]);if(l.step=b.length+1,"string"==typeof l.element&&(l.element=document.querySelector(l.element)),"undefined"==typeof l.element||null===l.element){var m=document.querySelector(".introjsFloatingElement");null===m&&(m=document.createElement("div"),m.className="introjsFloatingElement",document.body.appendChild(m)),l.element=m,l.position="floating"}null!==l.element&&b.push(l)}else{if(d=a.querySelectorAll("*[data-intro]"),d.length<1)return!1;for(var f=0,n=d.length;n>f;f++){var o=d[f],q=parseInt(o.getAttribute("data-step"),10);q>0&&(b[q-1]={element:o,intro:o.getAttribute("data-intro"),step:parseInt(o.getAttribute("data-step"),10),tooltipClass:o.getAttribute("data-tooltipClass"),position:o.getAttribute("data-position")||this._options.tooltipPosition})}for(var r=0,f=0,n=d.length;n>f;f++){var o=d[f];if(null===o.getAttribute("data-step")){for(;;){if("undefined"==typeof b[r])break;r++}b[r]={element:o,intro:o.getAttribute("data-intro"),step:r+1,tooltipClass:o.getAttribute("data-tooltipClass"),position:o.getAttribute("data-position")||this._options.tooltipPosition}}}}for(var s=[],t=0;t<b.length;t++)b[t]&&s.push(b[t]);if(b=s,b.sort(function(a,b){return a.step-b.step}),c._introItems=b,p.call(c,a)){g.call(c);a.querySelector(".introjs-skipbutton"),a.querySelector(".introjs-nextbutton");c._onKeyDown=function(b){27===b.keyCode&&c._options.exitOnEsc===!0?(i.call(c,a),void 0!==c._introExitCallback&&c._introExitCallback.call(c)):37===b.keyCode?h.call(c):(39===b.keyCode||13===b.keyCode)&&(g.call(c),b.preventDefault?b.preventDefault():b.returnValue=!1)},c._onResize=function(a){k.call(c,document.querySelector(".sui-introjs-helperLayer"))},window.addEventListener?(this._options.keyboardNavigation&&window.addEventListener("keydown",c._onKeyDown,!0),window.addEventListener("resize",c._onResize,!0)):document.attachEvent&&(this._options.keyboardNavigation&&document.attachEvent("onkeydown",c._onKeyDown),document.attachEvent("onresize",c._onResize))}return!1}function e(a){if(null===a||"object"!=typeof a||"undefined"!=typeof a.nodeType)return a;var b={};for(var c in a)b[c]=e(a[c]);return b}function f(a){this._currentStep=a-2,"undefined"!=typeof this._introItems&&g.call(this)}function g(){if(this._direction="forward","undefined"==typeof this._currentStep?this._currentStep=0:++this._currentStep,this._introItems.length<=this._currentStep)return"function"==typeof this._introCompleteCallback&&this._introCompleteCallback.call(this),void i.call(this,this._targetElement);var a=this._introItems[this._currentStep];"undefined"!=typeof this._introBeforeChangeCallback&&this._introBeforeChangeCallback.call(this,a.element),l.call(this,a)}function h(){if(this._direction="backward",0===this._currentStep)return!1;var a=this._introItems[--this._currentStep];"undefined"!=typeof this._introBeforeChangeCallback&&this._introBeforeChangeCallback.call(this,a.element),l.call(this,a)}function i(a){var b=a.querySelector(".sui-introjs-overlay");if(null!==b){b.style.opacity=0,setTimeout(function(){b.parentNode&&b.parentNode.removeChild(b)},500);var c=a.querySelector(".sui-introjs-helperLayer");c&&c.parentNode.removeChild(c);var d=document.querySelector(".introjsFloatingElement");d&&d.parentNode.removeChild(d);var e=document.querySelector(".introjs-showElement");e&&(e.className=e.className.replace(/introjs-[a-zA-Z]+/g,"").replace(/^\s+|\s+$/g,""));var f=document.querySelectorAll(".introjs-fixParent");if(f&&f.length>0)for(var g=f.length-1;g>=0;g--)f[g].className=f[g].className.replace(/introjs-fixParent/g,"").replace(/^\s+|\s+$/g,"");window.removeEventListener?window.removeEventListener("keydown",this._onKeyDown,!0):document.detachEvent&&document.detachEvent("onkeydown",this._onKeyDown),this._currentStep=void 0}}function j(a,b,c,d){var e,f,g,h="";if(b.style.top=null,b.style.right=null,b.style.bottom=null,b.style.left=null,b.style.marginLeft=null,b.style.marginTop=null,c.style.display="inherit","undefined"!=typeof d&&null!==d&&(d.style.top=null,d.style.left=null),this._introItems[this._currentStep]){e=this._introItems[this._currentStep],h="string"==typeof e.tooltipClass?e.tooltipClass:this._options.tooltipClass,b.className=("introjs-tooltip "+h).replace(/^\s+|\s+$/g,"");var h=this._options.tooltipClass;switch(currentTooltipPosition=this._introItems[this._currentStep].position,currentTooltipPosition){case"top":b.style.left="15px",b.style.top="-"+(q(b).height+10)+"px",c.className="introjs-arrow bottom";break;case"right":b.style.left=q(a).width+20+"px",c.className="introjs-arrow left";break;case"left":this._options.showStepNumbers===!0&&(b.style.top="15px"),b.style.right=q(a).width+20+"px",c.className="introjs-arrow right";break;case"floating":c.style.display="none",f=q(b),b.style.left="50%",b.style.top="50%",b.style.marginLeft="-"+f.width/2+"px",b.style.marginTop="-"+f.height/2+"px","undefined"!=typeof d&&null!==d&&(d.style.left="-"+(f.width/2+18)+"px",d.style.top="-"+(f.height/2+18)+"px");break;case"bottom-right-aligned":c.className="introjs-arrow top-right",b.style.right="0px",b.style.bottom="-"+(q(b).height+10)+"px";break;case"bottom-middle-aligned":g=q(a),f=q(b),c.className="introjs-arrow top-middle",b.style.left=g.width/2-f.width/2+"px",b.style.bottom="-"+(f.height+10)+"px";break;default:b.style.bottom="-"+(q(b).height+10)+"px",c.className="introjs-arrow top"}}}function k(a){if(a){if(!this._introItems[this._currentStep])return;var b=this._introItems[this._currentStep],c=q(b.element),d=10;"floating"===b.position&&(d=0),a.setAttribute("style","width: "+(c.width+d)+"px; height:"+(c.height+d)+"px; top:"+(c.top-5)+"px;left: "+(c.left-5)+"px;")}}function l(a){"undefined"!=typeof this._introChangeCallback&&this._introChangeCallback.call(this,a.element);var b=this,c=document.querySelector(".sui-introjs-helperLayer");q(a.element);if(null!==c){var d=c.querySelector(".introjs-helperNumberLayer"),e=c.querySelector(".introjs-tooltiptext"),f=c.querySelector(".introjs-arrow"),l=c.querySelector(".introjs-tooltip"),p=c.querySelector(".introjs-skipbutton"),r=c.querySelector(".introjs-prevbutton"),s=c.querySelector(".introjs-nextbutton");if(l.style.opacity=0,null!==d){var t=this._introItems[a.step-2>=0?a.step-2:0];(null!==t&&"forward"===this._direction&&"floating"===t.position||"backward"===this._direction&&"floating"===a.position)&&(d.style.opacity=0)}k.call(b,c);var u=document.querySelectorAll(".introjs-fixParent");if(u&&u.length>0)for(var v=u.length-1;v>=0;v--)u[v].className=u[v].className.replace(/introjs-fixParent/g,"").replace(/^\s+|\s+$/g,"");var w=document.querySelector(".introjs-showElement");w.className=w.className.replace(/introjs-[a-zA-Z]+/g,"").replace(/^\s+|\s+$/g,""),b._lastShowElementTimer&&clearTimeout(b._lastShowElementTimer),b._lastShowElementTimer=setTimeout(function(){null!==d&&(d.innerHTML=a.step),e.innerHTML=a.intro,j.call(b,a.element,l,f,d),c.querySelector(".introjs-bullets li > a.active").className="",c.querySelector('.introjs-bullets li > a[data-stepnumber="'+a.step+'"]').className="active",l.style.opacity=1,d&&(d.style.opacity=1)},350)}else{var x=document.createElement("div"),y=document.createElement("div"),z=document.createElement("div"),A=document.createElement("div"),B=document.createElement("div"),C=document.createElement("div");x.className="sui-introjs-helperLayer",k.call(b,x),this._targetElement.appendChild(x),y.className="introjs-arrow",A.className="introjs-tooltiptext",A.innerHTML=a.intro,B.className="introjs-bullets",this._options.showBullets===!1&&(B.style.display="none");for(var D=document.createElement("ul"),E=function(){b.goToStep(this.getAttribute("data-stepnumber"))},v=0,F=this._introItems.length;F>v;v++){var G=document.createElement("li"),H=document.createElement("a");H.onclick=E,0===v&&(H.className="active"),H.href="javascript:void(0);",H.innerHTML="&nbsp;",H.setAttribute("data-stepnumber",this._introItems[v].step),G.appendChild(H),D.appendChild(G)}if(B.appendChild(D),C.className="introjs-tooltipbuttons",this._options.showButtons===!1&&(C.style.display="none"),z.className="introjs-tooltip",z.appendChild(A),z.appendChild(B),this._options.showStepNumbers===!0){var I=document.createElement("span");I.className="introjs-helperNumberLayer",I.innerHTML=a.step,x.appendChild(I)}z.appendChild(y),x.appendChild(z);var s=document.createElement("a");s.onclick=function(){b._introItems.length-1!==b._currentStep&&g.call(b)},s.href="javascript:void(0);",s.innerHTML=this._options.nextLabel;var r=document.createElement("a");r.onclick=function(){0!==b._currentStep&&h.call(b)},r.href="javascript:void(0);",r.innerHTML=this._options.prevLabel;var p=document.createElement("a");p.className="sui-btn introjs-skipbutton",p.href="javascript:void(0);",p.innerHTML=this._options.skipLabel,p.onclick=function(){b._introItems.length-1===b._currentStep&&"function"==typeof b._introCompleteCallback&&b._introCompleteCallback.call(b),b._introItems.length-1!==b._currentStep&&"function"==typeof b._introExitCallback&&b._introExitCallback.call(b),i.call(b,b._targetElement)},C.appendChild(p),this._introItems.length>1&&(C.appendChild(r),C.appendChild(s)),z.appendChild(C),j.call(b,a.element,z,y,I)}0===this._currentStep&&this._introItems.length>1?(r.className="sui-btn introjs-prevbutton disabled",s.className="sui-btn introjs-nextbutton",p.innerHTML=this._options.skipLabel):this._introItems.length-1===this._currentStep||1===this._introItems.length?(p.innerHTML=this._options.doneLabel,r.className="sui-btn introjs-prevbutton",s.className="sui-btn introjs-nextbutton disabled"):(r.className="sui-btn introjs-prevbutton",s.className="sui-btn introjs-nextbutton",p.innerHTML=this._options.skipLabel),s.focus(),a.element.className+=" introjs-showElement";var J=m(a.element,"position");"absolute"!==J&&"relative"!==J&&(a.element.className+=" introjs-relativePosition");for(var K=a.element.parentNode;null!==K&&"body"!==K.tagName.toLowerCase();){var L=m(K,"z-index"),M=parseFloat(m(K,"opacity"));(/[0-9]+/.test(L)||1>M)&&(K.className+=" introjs-fixParent"),K=K.parentNode}if(!o(a.element)&&this._options.scrollToElement===!0){var N=a.element.getBoundingClientRect(),O=n().height,P=N.bottom-(N.bottom-N.top),Q=N.bottom-O;0>P||a.element.clientHeight>O?window.scrollBy(0,P-30):window.scrollBy(0,Q+100)}"undefined"!=typeof this._introAfterChangeCallback&&this._introAfterChangeCallback.call(this,a.element)}function m(a,b){var c="";return a.currentStyle?c=a.currentStyle[b]:document.defaultView&&document.defaultView.getComputedStyle&&(c=document.defaultView.getComputedStyle(a,null).getPropertyValue(b)),c&&c.toLowerCase?c.toLowerCase():c}function n(){if(void 0!==window.innerWidth)return{width:window.innerWidth,height:window.innerHeight};var a=document.documentElement;return{width:a.clientWidth,height:a.clientHeight}}function o(a){var b=a.getBoundingClientRect();return b.top>=0&&b.left>=0&&b.bottom+80<=window.innerHeight&&b.right<=window.innerWidth}function p(a){var b=document.createElement("div"),c="",d=this;if(b.className="sui-introjs-overlay","body"===a.tagName.toLowerCase())c+="top: 0;bottom: 0; left: 0;right: 0;position: fixed;",b.setAttribute("style",c);else{var e=q(a);e&&(c+="width: "+e.width+"px; height:"+e.height+"px; top:"+e.top+"px;left: "+e.left+"px;",b.setAttribute("style",c))}return a.appendChild(b),b.onclick=function(){d._options.exitOnOverlayClick===!0&&(i.call(d,a),void 0!==d._introExitCallback&&d._introExitCallback.call(d))},setTimeout(function(){c+="opacity: "+d._options.overlayOpacity.toString()+";",b.setAttribute("style",c)},10),!0}function q(a){var b={};b.width=a.offsetWidth,b.height=a.offsetHeight;for(var c=0,d=0;a&&!isNaN(a.offsetLeft)&&!isNaN(a.offsetTop);)c+=a.offsetLeft,d+=a.offsetTop,a=a.offsetParent;return b.top=d,b.left=c,b}function r(a,b){var c={};for(var d in a)c[d]=a[d];for(var d in b)c[d]=b[d];return c}var s="0.9.0",t=function(c,d){if(a.isPlainObject(c)||!c&&!d)return d=c,new b(document.body,d);if(c.tagName)return new b(c,d);if("string"==typeof c){var e=document.querySelector(c);if(e)return new b(e,d);throw new Error("There is no element with given selector.")}};t.version=s,b.prototype={defaults:{nextLabel:'下一步 <i class="sui-icon icon-double-angle-right"></i> ',prevLabel:'<i class="sui-icon icon-double-angle-left"></i> 上一步',skipLabel:"知道了",doneLabel:"知道了",tooltipPosition:"bottom",tooltipClass:"",exitOnEsc:!0,exitOnOverlayClick:!0,showStepNumbers:!0,keyboardNavigation:!0,showButtons:!0,showBullets:!1,scrollToElement:!0,overlayOpacity:.8},clone:function(){return new b(this)},setOption:function(a,b){return this._options[a]=b,this},setOptions:function(a){return this._options=r(this._options,a),this},start:function(){return d.call(this,this._targetElement),this},goToStep:function(a){return f.call(this,a),this},nextStep:function(){return g.call(this),this},previousStep:function(){return h.call(this),this},exit:function(){i.call(this,this._targetElement)},refresh:function(){return k.call(this,document.querySelector(".sui-introjs-helperLayer")),this},onbeforechange:function(a){if("function"!=typeof a)throw new Error("Provided callback for onbeforechange was not a function");return this._introBeforeChangeCallback=a,this},onchange:function(a){if("function"!=typeof a)throw new Error("Provided callback for onchange was not a function.");return this._introChangeCallback=a,this},onafterchange:function(a){if("function"!=typeof a)throw new Error("Provided callback for onafterchange was not a function");return this._introAfterChangeCallback=a,this},oncomplete:function(a){if("function"!=typeof a)throw new Error("Provided callback for oncomplete was not a function.");return this._introCompleteCallback=a,this},onexit:function(a){if("function"!=typeof a)throw new Error("Provided callback for onexit was not a function.");return this._introExitCallback=a,this}},a.introJs=t}(jQuery)},{}],9:[function(a,b,c){!function(a){"use strict";var b=function(b,c){if(this.options=c,null===b){var d='<div class="sui-modal hide fade" tabindex="-1" role="dialog" id={%id%} data-hidetype="remove"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">'+(c.closeBtn?'<button type="button" class="sui-close" data-dismiss="modal" aria-hidden="true">&times;</button>':"")+'<h4 class="modal-title">{%title%}</h4></div><div class="modal-body '+(c.hasfoot?"":"no-foot")+'">{%body%}</div>'+(c.hasfoot?'<div class="modal-footer"><button type="button" class="sui-btn btn-primary btn-large" data-ok="modal">{%ok_btn%}</button>'+(c.cancelBtn?'<button type="button" class="sui-btn btn-default btn-large" data-dismiss="modal">{%cancel_btn%}</button>':"")+"</div>":"")+"</div></div></div>";b=a(d.replace("{%title%}",c.title).replace("{%body%}",c.body).replace("{%id%}",c.id).replace("{%ok_btn%}",c.okBtn).replace("{%cancel_btn%}",c.cancelBtn)),a("body").append(b)}this.$element=a(b),c.transition||a(b).removeClass("fade"),this.init()};b.prototype={constructor:b,init:function(){var b=this.$element,c=this.options,d=c.width,e=c.height,f={small:440,normal:590,large:790};b.delegate('[data-dismiss="modal"]',"click.dismiss.modal",a.proxy(this.hide,this)).delegate(':not(.disabled)[data-ok="modal"]',"click.ok.modal",a.proxy(this.okHide,this)),d&&(f[d]&&(d=f[d]),b.width(d).css("margin-left",-parseInt(d)/2)),e&&b.find(".modal-body").height(e),"string"==typeof this.options.remote&&this.$element.find(".modal-body").load(this.options.remote);
 },toggle:function(){return this[this.isShown?"hide":"show"]()},show:function(){var b=this,c=a.Event("show"),d=this.$element;return d.trigger(c),this.isShown||c.isDefaultPrevented()?void 0:(this.isShown=!0,this.escape(),this.backdrop(function(){function c(a){a.$element.focus().trigger("shown"),a.options.timeout>0&&(a.timeid=setTimeout(function(){a.hide()},a.options.timeout))}var e=a.support.transition&&d.hasClass("fade");d.parent().length||d.appendTo(document.body),b.resize(),d.show(),e&&d[0].offsetWidth,d.addClass("in").attr("aria-hidden",!1),b.enforceFocus(),e?d.one(a.support.transition.end,function(){c(b)}):c(b)}),d)},hide:function(b){b&&b.preventDefault();var c=this.$element;return b=a.Event("hide"),"ok"!=this.hideReason&&c.trigger("cancelHide"),c.trigger(b),this.isShown&&!b.isDefaultPrevented()?(this.isShown=!1,this.escape(),a(document).off("focusin.modal"),this.timeid&&clearTimeout(this.timeid),c.removeClass("in").attr("aria-hidden",!0),a.support.transition&&c.hasClass("fade")?this.hideWithTransition():this.hideModal(),c):void 0},okHide:function(b){function c(){d.hideReason="ok",d.hide(b)}var d=this;if(!b)return void c();var e=this.options.okHide,f=!0;if(!e){var g=a._data(this.$element[0],"events").okHide;g&&g.length&&(e=g[g.length-1].handler)}return"function"==typeof e&&(f=e.call(this)),f!==!1&&c(),d.$element},shadeIn:function(){var b=this.$element;if(!b.find(".shade").length){var c=a('<div class="shade in" style="background:'+this.options.bgcolor+'"></div>');return c.appendTo(b),this.hasShaded=!0,this.$element}},shadeOut:function(){return this.$element.find(".shade").remove(),this.hasShaded=!1,this.$element},shadeToggle:function(){return this[this.hasShaded?"shadeOut":"shadeIn"]()},resize:function(){var b=this.$element,c=b.height(),d=a(window).height(),e=0;return e=c>=d?-d/2:(d-c)/(1+1.618)-d/2,b.css("margin-top",parseInt(e)),b},enforceFocus:function(){var b=this;a(document).off("focusin.modal").on("focusin.modal",function(a){b.$element[0]===a.target||b.$element.has(a.target).length||b.$element.focus()})},escape:function(){var a=this;this.isShown&&this.options.keyboard?this.$element.on("keyup.dismiss.modal",function(b){27==b.which&&a.hide()}):this.isShown||this.$element.off("keyup.dismiss.modal")},hideWithTransition:function(){var b=this,c=setTimeout(function(){b.$element.off(a.support.transition.end),b.hideModal()},300);this.$element.one(a.support.transition.end,function(){clearTimeout(c),b.hideModal()})},hideModal:function(){var a=this,b=this.$element;b.hide(),this.backdrop(function(){a.removeBackdrop(),b.trigger("ok"==a.hideReason?"okHidden":"cancelHidden"),a.hideReason=null,b.trigger("hidden"),"remove"==b.data("hidetype")&&b.remove()})},removeBackdrop:function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},backdrop:function(b){var c=this.$element.hasClass("fade")?"fade":"",d=this.options;if(this.isShown){var e=a.support.transition&&c;if(d.backdrop!==!1){if(this.$backdrop=a('<div class="sui-modal-backdrop '+c+'" style="background:'+d.bgcolor+'"/>').appendTo(document.body),this.$backdrop.click("static"==d.backdrop?a.proxy(this.$element[0].focus,this.$element[0]):a.proxy(this.hide,this)),e&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in "),!b)return;e?this.$backdrop.one(a.support.transition.end,b):b()}else b&&b()}else this.$backdrop?(this.$backdrop.removeClass("in"),a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one(a.support.transition.end,b):b()):b&&b()}};var c=a.fn.modal;a.fn.modal=function(c){return this.each(function(){var d=a(this),e=d.data("modal"),f=a.extend({},a.fn.modal.defaults,d.data(),"object"==typeof c&&c);e||d.data("modal",e=new b(this,f)),"string"==typeof c?e[c]():e.show()})},a.fn.modal.defaults={backdrop:!0,bgcolor:"#000",keyboard:!0,hasfoot:!0,closeBtn:!0,transition:!0},a.fn.modal.Constructor=b,a.fn.modal.noConflict=function(){return a.fn.modal=c,this},a(document).on("click.modal.data-api",'[data-toggle="modal"]',function(b){var c=a(this),d=c.attr("href"),e=a(c.attr("data-target")||d&&d.replace(/.*(?=#[^\s]+$)/,"")),f=e.data("modal")?"toggle":c.data();b.preventDefault(),e.modal(f).one("hide",function(){c.focus()})}),a.extend({_modal:function(c,d){function e(b,c){var d=["show","shown","hide","hidden","okHidden","cancelHide","cancelHidden"];a.each(d,function(d,e){"function"==typeof c[e]&&a(document).on(e,"#"+b,a.proxy(c[e],a("#"+b)[0]))})}var f=+new Date,g=a.extend({},a.fn.modal.defaults,c,{id:f,okBtn:"确定"},"string"==typeof d?{body:d}:d),h=new b(null,g),i=h.$element;return e(f,g),i.data("modal",h).modal("show"),i},alert:function(b){var c={type:"alert",title:"注意"};return a._modal(c,b)},confirm:function(b){var c={type:"confirm",title:"提示",cancelBtn:"取消"};return a._modal(c,b)}})}(window.jQuery)},{}],10:[function(a,b,c){!function(a){a(document).on("click.msgs",'[data-dismiss="msgs"]',function(b){b.preventDefault();var c=a(this),d=c.parents(".sui-msg").remove(),e=d.attr("id");e&&d.hasClass("remember")&&localStorage.setItem("sui-msg-"+e,1)}),a(function(){a(".sui-msg.remember").each(function(){var b=a(this),c=b.attr("id");c&&(localStorage.getItem("sui-msg-"+c)||b.show())})})}(window.jQuery)},{}],11:[function(a,b,c){!function(a){function b(b){this.itemsCount=b.itemsCount,this.pageSize=b.pageSize,this.displayPage=b.displayPage<5?5:b.displayPage,this.pages=Math.ceil(b.itemsCount/b.pageSize)||1,a.isNumeric(b.pages)&&(this.pages=b.pages),this.currentPage=b.currentPage,this.styleClass=b.styleClass,this.onSelect=b.onSelect,this.showCtrl=b.showCtrl,this.remote=b.remote,this.displayInfoType="itemsCount"==b.displayInfoType&&b.itemsCount?"itemsCount":"pages"}b.prototype={_draw:function(){for(var a='<div class="sui-pagination',b=0;b<this.styleClass.length;b++)a+=" "+this.styleClass[b];a+='"></div>',this.hookNode.html(a),this._drawInner()},_drawInner:function(){var a=this.hookNode.children(".sui-pagination"),b='<ul><li class="prev'+(this.currentPage-1<=0?" disabled":" ")+'"><a href="#" data="'+(this.currentPage-1)+'">«上一页</a></li>';if(this.pages<=this.displayPage||this.pages==this.displayPage+1)for(var c=1;c<this.pages+1;c++)b+=c==this.currentPage?'<li class="active"><a href="#" data="'+c+'">'+c+"</a></li>":'<li><a href="#" data="'+c+'">'+c+"</a></li>";else if(this.currentPage<this.displayPage-1){for(var c=1;c<this.displayPage;c++)b+=c==this.currentPage?'<li class="active"><a href="#" data="'+c+'">'+c+"</a></li>":'<li><a href="#" data="'+c+'">'+c+"</a></li>";b+='<li class="dotted"><span>...</span></li>',b+='<li><a href="#" data="'+this.pages+'">'+this.pages+"</a></li>"}else if(this.currentPage>this.pages-this.displayPage+2&&this.currentPage<=this.pages){b+='<li><a href="#" data="1">1</a></li>',b+='<li class="dotted"><span>...</span></li>';for(var c=this.pages-this.displayPage+2;c<=this.pages;c++)b+=c==this.currentPage?'<li class="active"><a href="#" data="'+c+'">'+c+"</a></li>":'<li><a href="#" data="'+c+'">'+c+"</a></li>"}else{b+='<li><a href="#" data="1">1</a></li>',b+='<li class="dotted"><span>...</span></li>';var d,e,f=(this.displayPage-3)/2;(this.displayPage-3)%2==0?d=e=f:(d=Math.floor(f),e=Math.ceil(f));for(var c=this.currentPage-d;c<=this.currentPage+e;c++)b+=c==this.currentPage?'<li class="active"><a href="#" data="'+c+'">'+c+"</a></li>":'<li><a href="#" data="'+c+'">'+c+"</a></li>";b+='<li class="dotted"><span>...</span></li>',b+='<li><a href="#" data="'+this.pages+'">'+this.pages+"</a></li>"}b+='<li class="next'+(this.currentPage+1>this.pages?" disabled":" ")+'"><a href="#" data="'+(this.currentPage+1)+'">下一页»</a></li></ul>',this.showCtrl&&(b+=this._drawCtrl()),a.html(b)},_drawCtrl:function(){var a="<div>&nbsp;"+("itemsCount"==this.displayInfoType?"<span>共"+this.itemsCount+"条</span>&nbsp;":"<span>共"+this.pages+"页</span>&nbsp;")+'<span>&nbsp;到&nbsp;<input type="text" class="page-num"/><button class="page-confirm">确定</button>&nbsp;页</span></div>';return a},_ctrl:function(){function b(){var b=parseInt(d.find(".page-num").val());a.isNumeric(b)&&b<=c.pages&&b>0&&(c.remote||(c.currentPage=b,c._drawInner()),a.isFunction(c.onSelect)&&c.onSelect.call(a(this),b))}var c=this,d=c.hookNode.children(".sui-pagination");d.on("click",".page-confirm",function(a){b.call(this)}),d.on("keypress",".page-num",function(a){13==a.which&&b.call(this)})},_select:function(){var b=this;b.hookNode.children(".sui-pagination").on("click","a",function(c){c.preventDefault();var d=parseInt(a(this).attr("data"));a(this).parent().hasClass("disabled")||a(this).parent().hasClass("active")||(b.remote||(b.currentPage=d,b._drawInner()),a.isFunction(b.onSelect)&&b.onSelect.call(a(this),d))})},init:function(a,b){return this.hookNode=b,this._draw(),this._select(),this.showCtrl&&this._ctrl(),this},updateItemsCount:function(b,c){a.isNumeric(b)&&(this.pages=Math.ceil(b/this.pageSize)),this.currentPage=this.currentPage>this.pages?this.pages:this.currentPage,a.isNumeric(c)&&(this.currentPage=c),this._drawInner()},updatePages:function(b,c){a.isNumeric(b)&&(this.pages=b),this.currentPage=this.currentPage>this.pages?this.pages:this.currentPage,a.isNumeric(c)&&(this.currentPage=c),this._drawInner()},goToPage:function(b){a.isNumeric(b)&&b<=this.pages&&b>0&&(this.currentPage=b,this._drawInner())}};var c=a.fn.pagination;a.fn.pagination=function(c){var d=a.extend({},a.fn.pagination.defaults,"object"==typeof c&&c);"string"==typeof c&&(args=a.makeArray(arguments),args.shift());var e=a(this),f=e.data("sui-pagination");return f?"string"==typeof c&&f[c].apply(f,args):e.data("sui-pagination",f=new b(d).init(d,a(this))),f},a.fn.pagination.Constructor=b,a.fn.pagination.noConflict=function(){return a.fn.pagination=c,this},a.fn.pagination.defaults={pageSize:10,displayPage:5,currentPage:1,itemsCount:0,styleClass:[],pages:null,showCtrl:!1,onSelect:null,remote:!1}}(window.jQuery)},{}],12:[function(a,b,c){a("./transition"),a("./msgs"),a("./filesize"),a("./button"),a("./dropdown"),a("./modal"),a("./tooltip"),a("./tab"),a("./pagination"),a("./validate"),a("./validate-rules"),a("./tree"),a("./datepicker"),a("./timepicker"),a("./checkbox"),a("./autocomplete"),a("./intro"),a("./carousel"),a("./template")},{"./autocomplete":1,"./button":2,"./carousel":3,"./checkbox":4,"./datepicker":5,"./dropdown":6,"./filesize":7,"./intro":8,"./modal":9,"./msgs":10,"./pagination":11,"./tab":13,"./template":14,"./timepicker":15,"./tooltip":16,"./transition":17,"./tree":18,"./validate":20,"./validate-rules":19}],13:[function(a,b,c){!function(a){"use strict";var b=function(b){this.element=a(b)};b.prototype={constructor:b,show:function(){var b,c,d,e=this.element,f=e.closest("ul:not(.dropdown-menu)"),g=e.attr("data-target");g||(g=e.attr("href"),g=g&&g.replace(/.*(?=#[^\s]*$)/,"")),e.parent("li").hasClass("active")||(b=f.find(".active:last a")[0],d=a.Event("show",{relatedTarget:b}),e.trigger(d),d.isDefaultPrevented()||(c=a(g),this.activate(e.parent("li"),f),this.activate(c,c.parent(),function(){e.trigger({type:"shown",relatedTarget:b})})))},activate:function(b,c,d){function e(){f.removeClass("active").find("> .dropdown-menu > .active").removeClass("active"),b.addClass("active"),g?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu")&&b.closest("li.dropdown").addClass("active"),d&&d()}var f=c.find("> .active"),g=d&&a.support.transition&&f.hasClass("fade");g?f.one(a.support.transition.end,e):e(),f.removeClass("in")}};var c=a.fn.tab;a.fn.tab=function(c){return this.each(function(){var d=a(this),e=d.data("tab");e||d.data("tab",e=new b(this)),"string"==typeof c&&e[c]()})},a.fn.tab.Constructor=b,a.fn.tab.noConflict=function(){return a.fn.tab=c,this},a(document).on("click.tab.data-api",'[data-toggle="tab"], [data-toggle="pill"]',function(b){b.preventDefault(),a(this).tab("show")})}(window.jQuery)},{}],14:[function(a,b,c){!function(a){var b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","`":"&#x60;"},c=function(a){var c=function(b){return a[b]},d=[];for(var e in b)d.push(e);var f="(?:"+d.join("|")+")",g=RegExp(f),h=RegExp(f,"g");return function(a){return a=null==a?"":""+a,g.test(a)?a.replace(h,c):a}};a.escape=c(b);var d={evaluate:/<%([\s\S]+?)%>/g,interpolate:/<%=([\s\S]+?)%>/g,escape:/<%-([\s\S]+?)%>/g},e=/(.)^/,f={"'":"'","\\":"\\","\r":"r","\n":"n","\u2028":"u2028","\u2029":"u2029"},g=/\\|'|\r|\n|\u2028|\u2029/g,h=function(a){return"\\"+f[a]};a.template=function(b,c,f){!c&&f&&(c=f),c=a.extend({},c,d);var i=RegExp([(c.escape||e).source,(c.interpolate||e).source,(c.evaluate||e).source].join("|")+"|$","g"),j=0,k="__p+='";b.replace(i,function(a,c,d,e,f){return k+=b.slice(j,f).replace(g,h),j=f+a.length,c?k+="'+\n((__t=("+c+"))==null?'':_.escape(__t))+\n'":d?k+="'+\n((__t=("+d+"))==null?'':__t)+\n'":e&&(k+="';\n"+e+"\n__p+='"),a}),k+="';\n",c.variable||(k="with(obj||{}){\n"+k+"}\n"),k="var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};\n"+k+"return __p;\n";try{var l=new Function(c.variable||"obj","_",k)}catch(m){throw m.source=k,m}var n=function(b){return l.call(this,b,a)},o=c.variable||"obj";return n.source="function("+o+"){\n"+k+"}",n}}(window.jQuery)},{}],15:[function(a,b,c){!function(a){function b(a,c){return this instanceof b?void this.init(a,c):new b(a,c)}b.prototype={_defaultCfg:{hour:(new Date).getHours(),minute:(new Date).getMinutes(),orientation:{x:"auto",y:"auto"},keyboardNavigation:!0},init:function(b,c){this.element=a(b),this.isInline=!1,this.isInDatepicker=!1,this.isInput=this.element.is("input"),this.component=this.element.is(".date")?this.element.find(".add-on, .input-group-addon, .sui-btn"):!1,this.hasInput=this.component&&this.element.find("input").length,this.component&&0===this.component.length&&(this.component=!1),this.picker=a('<div class="timepicker"></div>'),this.o=this.config=a.extend(this._defaultCfg,c),this._buildEvents(),this._attachEvents(),this.isInDatepicker?this.picker.addClass("timepicker-in-datepicker").appendTo(this.element):this.isInline?(this.picker.addClass("timepicker-inline").appendTo(this.element),this._show()):this.picker.addClass("timepicker-dropdown dropdown-menu")},destory:function(){this._detachSecondaryEvents(),this.picker.html(""),this.picker=null},_show:function(){this.isInline||this.isInDatepicker||this.picker.appendTo("body"),this.picker.show(),this._place(),this._render(),this._attachSecondaryEvents()},show:function(){return this._show()},_hide:function(){this.isInline||this.isInDatepicker||this.picker.is(":visible")&&(this.focusDate=null,this.picker.hide().detach(),this._detachSecondaryEvents(),this._setValue())},_keydown:function(a){if(!this.isInDatepicker){if(this.picker.is(":not(:visible)"))return void(27===a.keyCode&&this._show());switch(a.keyCode){case 27:this._hide(),a.preventDefault();break;case 37:case 39:if(!this.o.keyboardNavigation)break;break;case 38:case 40:if(!this.o.keyboardNavigation)break;break;case 32:break;case 13:this._hide()}}},_place:function(){if(!this.isInline&&!this.isInDatepicker){var b=this.picker.outerWidth(),c=this.picker.outerHeight(),d=10,e=a(window),f=e.width(),g=e.height(),h=e.scrollTop(),i=parseInt(this.element.parents().filter(function(){return"auto"!==a(this).css("z-index")}).first().css("z-index"))+10,j=this.component?this.component.parent().offset():this.element.offset(),k=this.component?this.component.outerHeight(!0):this.element.outerHeight(!1),l=this.component?this.component.outerWidth(!0):this.element.outerWidth(!1),m=j.left,n=j.top;this.picker.removeClass("datepicker-orient-top datepicker-orient-bottom datepicker-orient-right datepicker-orient-left"),"auto"!==this.o.orientation.x?(this.picker.addClass("datepicker-orient-"+this.o.orientation.x),"right"===this.o.orientation.x&&(m-=b-l)):(this.picker.addClass("datepicker-orient-left"),j.left<0?m-=j.left-d:j.left+b>f&&(m=f-b-d));var o,p,q=this.o.orientation.y;"auto"===q&&(o=-h+j.top-c,p=h+g-(j.top+k+c),q=Math.max(o,p)===p?"top":"bottom"),this.picker.addClass("datepicker-orient-"+q),"top"===q?n+=k+6:n-=c+parseInt(this.picker.css("padding-top"))+6,this.picker.css({top:n,left:m,zIndex:i})}},_events:[],_secondaryEvents:[],_applyEvents:function(a){for(var b,c,d,e=0;e<a.length;e++)b=a[e][0],2===a[e].length?(c=void 0,d=a[e][1]):3===a[e].length&&(c=a[e][1],d=a[e][2]),b.on(d,c)},_unapplyEvents:function(a){for(var b,c,d,e=0;e<a.length;e++)b=a[e][0],2===a[e].length?(d=void 0,c=a[e][1]):3===a[e].length&&(d=a[e][1],c=a[e][2]),b.off(c,d)},_attachEvents:function(){this._detachEvents(),this._applyEvents(this._events)},_detachEvents:function(){this._unapplyEvents(this._events)},_attachSecondaryEvents:function(){this._detachSecondaryEvents(),this._applyEvents(this._secondaryEvents),this._pickerEvents()},_detachSecondaryEvents:function(){this._unapplyEvents(this._secondaryEvents),this.picker.off("click")},_buildEvents:function(){this.isInput?this._events=[[this.element,{focus:a.proxy(this._show,this),keyup:a.proxy(function(b){-1===a.inArray(b.keyCode,[27,37,39,38,40,32,13,9])&&this._updateUI()},this),keydown:a.proxy(this._keydown,this)}]]:this.component&&this.hasInput?this._events=[[this.element.find("input"),{focus:a.proxy(this._show,this),keyup:a.proxy(function(b){-1===a.inArray(b.keyCode,[27,37,39,38,40,32,13,9])&&this._updateUI()},this),keydown:a.proxy(this._keydown,this)}],[this.component,{click:a.proxy(this._show,this)}]]:this.element.is("div")?this.element.is(".timepicker-container")?this.isInDatepicker=!0:this.isInline=!0:this._events=[[this.element,{click:a.proxy(this._show,this)}]],this._events.push([this.element,"*",{blur:a.proxy(function(a){this._focused_from=a.target},this)}],[this.element,{blur:a.proxy(function(a){this._focused_from=a.target},this)}]),this._secondaryEvents=[[a(window),{resize:a.proxy(this._place,this)}],[a(document),{"mousedown touchstart":a.proxy(function(a){this.element.is(a.target)||this.element.find(a.target).length||this.picker.is(a.target)||this.picker.find(a.target).length||this._hide()},this)}]]},_pickerEvents:function(){var b=this;this.picker.on("click",".J_up",function(c){var d=c.currentTarget,e=a(d).parent(),f=e.attr("data-role");b._slide(f,"up")}).on("click",".J_down",function(c){var d=c.currentTarget,e=a(d).parent(),f=e.attr("data-role");b._slide(f,"down")}).on("click","span",function(c){var d=c.currentTarget,e=a(d).parent().parent().parent(),f=e.attr("data-role"),g=d.innerHTML,h=b[f+"Attr"],i=parseInt(g-h.current,10);i>0?b._slideDonw(h,i):b._slideUp(h,-i)})},_slide:function(a,b){var c=this[a+"Attr"];"up"==b?this._slideUp(c):"down"==b&&this._slideDonw(c)},_slideDonw:function(b,c,d){c=c||1;var e=(b.cp,b.ih*c);b.current+=c,b.current>b.maxSize&&(b.current=0,e=-b.ih*b.maxSize),b.cp-=e,this._animate(b.innerPickerCon,b.cp),a(".current",b.innerPickerCon).removeClass("current"),a('span[data-num="'+b.current+'"]',b.innerPickerCon).addClass("current"),d||this._setValue()},_slideUp:function(b,c,d){c=c||1;var e=(b.cp,b.ih*c);b.current-=c,b.current<0&&(b.current=b.maxSize,e=-b.ih*b.maxSize),b.cp+=e,this._animate(b.innerPickerCon,b.cp),a(".current",b.innerPickerCon).removeClass("current"),a('span[data-num="'+b.current+'"]',b.innerPickerCon).addClass("current"),d||this._setValue()},_updateSlide:function(a,b){var c=!0;b&&b>0?this._slideDonw(a,b,c):b&&this._slideUp(a,-b,c)},_updateUI:function(){var a,b,c=this.o.minute,d=this.o.hour;this._getInputTime(),c!==this.o.minute&&(a=this.minuteAttr,b=parseInt(this.o.minute-a.current,10),this._updateSlide(a,b)),d!==this.o.hour&&(a=this.hourAttr,b=parseInt(this.o.hour-a.current,10),this._updateSlide(a,b))},_doSetValue:function(a,b){var c;this.isInput?c=this.element:this.component&&(c=this.element.find("input")),c?(c.change(),c.val(a)):this.isInDatepicker&&(this.element.data("time",a),b||this.element.trigger("time:change"))},_render:function(){this.picker.html(""),this._getInputTime(),this._renderHour(),this._renderMinutes(),this._renderSplit(),this._setValue()},_foramtTimeString:function(b){var c,d,e={minute:0,hour:0};b=b.split(":");for(var f=b.length-1;f>=0;f--)b[f]=a.trim(b[f]);return 2===b.length&&(c=parseInt(b[1],10),c>=0&&60>c&&(e.minute=c),d=parseInt(b[0],10),d>=0&&24>d&&(e.hour=d)),e},_getInputTime:function(){if(!this.isInline||!this.isInDatepicker){var b,c,d;this.isInput||this.isInDatepicker?b=this.element:this.component&&(b=this.element.find("input")),b&&(c=this.isInDatepicker?a.trim(b.data("time")):a.trim(b.val()),d=this._foramtTimeString(c),this.o.minute=d.minute,this.o.hour=d.hour)}},_juicer:function(a,b){for(var c,d="",e=b.length-1;e>=0;e--)c=b[e]==a?'<span class="current" data-num="'+e+'">'+b[e]+"</span>":'<span data-num="'+e+'">'+b[e]+"</span>",d=c+d;return'<div class="picker-wrap"><a href="javascript:;" class="picker-btn up J_up"><b class="arrow"></b><b class="arrow-bg"></b></a><div class="picker-con"><div class="picker-innercon">'+d+'</div></div><a href="javascript:;" class="picker-btn down J_down"><b class="arrow"></b><b class="arrow-bg"></b></a></div>'},_renderHour:function(){for(var b=this,c=[],d=0;24>d;d++)c.push(b._beautifyNum(d));var e=this._juicer(b.o.hour,c),f=a(e);f.attr("data-role","hour"),this.picker.append(f),this.hourAttr=this._addPrefixAndSuffix(f,23),this.hourAttr.current=this.o.hour,this.hourAttr.maxSize=23},_renderMinutes:function(){for(var b=this,c=[],d=0;60>d;d++)c.push(b._beautifyNum(d));var e=this._juicer(b.o.minute,c),f=a(e);f.attr("data-role","minute"),this.picker.append(f),this.minuteAttr=this._addPrefixAndSuffix(f,59),this.minuteAttr.current=this.o.minute,this.minuteAttr.maxSize=59},_addPrefixAndSuffix:function(b,c){for(var d,e,f=this,g=a(".picker-con",b),h=a(".picker-innercon",b),i=a(".current",b),j=i.outerHeight(),k=g.outerHeight(),l=Math.floor(k/j)+1,m="",n=c-l;c>=n;n++)m+="<span>"+f._beautifyNum(n)+"</span>";h.prepend(a(m)),m="";for(var o=0;l>o;o++)m+="<span>"+f._beautifyNum(o)+"</span>";return h.append(a(m)),d=i.offset().top-g.offset().top,e=-d+2*j,this._animate(h,e),{ph:k,cp:e,ih:j,innerPickerCon:h,scrollNum:l-1}},_renderSplit:function(){var b='<div class="timePicker-split"><div class="hour-input"></div><div class="split-icon">:</div><div class="minute-input"></div></div>';this.picker.append(a(b))},_getCurrentTimeStr:function(){var a,b,c;return c=this.hourAttr.current,b=this.minuteAttr.current,a=this._beautifyNum(c)+":"+this._beautifyNum(b)},_setValue:function(){this.isInline||this._doSetValue(this._getCurrentTimeStr())},_animate:function(b,c){a.support.transition?b.css({top:c+"px"}):b.animate({top:c+"px"},300)},_beautifyNum:function(a){return a=a.toString(),parseInt(a)<10?"0"+a:a},update:function(a,b){this._doSetValue(a,b),this._updateUI()},getTime:function(){return this._getCurrentTimeStr()}};var c=a.fn.timepicker;a.fn.timepicker=function(c){var d=Array.apply(null,arguments);d.shift();var e;return this.each(function(){var f=a(this),g=f.data("timepicker");return g||f.data("timepicker",g=new b(this,c)),"string"==typeof c&&"function"==typeof g[c]&&(e=g[c].apply(g,d),void 0!==e)?!1:void 0}),void 0!==e?e:this},a.fn.timepicker.noConflict=function(){return a.fn.timepicker=c,this},a(document).on("focus.timepicker.data-api click.timepicker.data-api",'[data-toggle="timepicker"]',function(b){var c=a(this);c.data("timepicker")||(b.preventDefault(),c.timepicker("_show"))}),a(function(){a('[data-toggle="timepicker-inline"]').timepicker()})}(window.jQuery)},{}],16:[function(a,b,c){!function(a){"use strict";var b=function(a,b){this.init("tooltip",a,b)};b.prototype={constructor:b,init:function(b,c,d){var e,f,g,h,i;for(this.type=b,this.$element=a(c),this.options=this.getOptions(d),this.enabled=!0,this.hoverState="out",g=this.options.trigger.split(" "),i=g.length;i--;)h=g[i],"click"==h?this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this)):"manual"!=h&&(e="hover"==h?"mouseenter":"focus",f="hover"==h?"mouseleave":"blur",this.$element.on(e+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(f+"."+this.type,this.options.selector,a.proxy(this.leave,this)));this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},getOptions:function(b){b=a.extend({},a.fn[this.type].defaults,this.$element.data(),b);var c="confirm"==b.type?'<div class="tooltip-footer"><button class="sui-btn btn-primary" data-ok="tooltip">确定</button><button class="sui-btn btn-default" data-dismiss="tooltip">取消</button></div>':"";return b.template='<div class="sui-tooltip '+b.type+'" style="overflow:visible"><div class="tooltip-arrow"><div class="tooltip-arrow cover"></div></div><div class="tooltip-inner"></div>'+c+"</div>","confirm"==b.type&&(b.html=!0),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},enter:function(b){var c,d=a.fn[this.type].defaults,e={};if(this._options&&a.each(this._options,function(a,b){d[a]!=b&&(e[a]=b)},this),c=a(b.currentTarget)[this.type](e).data(this.type),clearTimeout(c.timeout),"out"==this.hoverState){if(this.hoverState="in",this.tip().off(a.support.transition&&a.support.transition.end),!this.options.delay||!this.options.delay.show)return this.show();this.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show)}},leave:function(b){var c=a(b.currentTarget)[this.type](this._options).data(this.type);return this.timeout&&clearTimeout(this.timeout),c.options.delay&&c.options.delay.hide?void(this.timeout=setTimeout(function(){c.isTipHover||(c.hoverState="out"),"out"==c.hoverState&&c.hide()},c.options.delay.hide)):c.hide()},show:function(){function b(){var a=d.left+d.width/2-e/2,b=d.top+d.height/2-f/2;switch(k){case"left":a=d.left;break;case"right":a=d.left-e+d.width;break;case"top":b=d.top;break;case"bottom":b=d.top-f+d.height}switch(g){case"bottom":h={top:d.top+d.height+m,left:a};break;case"top":h={top:d.top-f-m,left:a};break;case"left":h={top:b,left:d.left-e-m};break;case"right":h={top:b,left:d.left+d.width+m}}return h}var c,d,e,f,g,h,i=a.Event("show"),j=this.options,k=j.align,l=this;if(this.hasContent()&&this.enabled){if(this.$element.trigger(i),i.isDefaultPrevented())return;c=this.tip(),this.setContent(),j.animation&&c.addClass("fade"),g="function"==typeof j.placement?j.placement.call(this,c[0],this.$element[0]):j.placement,c.detach().css({top:0,left:0,display:"block"}),j.container?c.appendTo(j.container):c.insertAfter(this.$element),/\bhover\b/.test(j.trigger)&&c.hover(function(){l.isTipHover=1},function(){l.isTipHover=0,l.hoverState="out",c.detach()}),this.setWidth(),d=this.getPosition(),e=c[0].offsetWidth,f=c[0].offsetHeight;var m="attention"==j.type?5:7;h=b(),this.applyPlacement(h,g),this.applyAlign(k,d),this.$element.trigger("shown")}},applyPlacement:function(a,b){var c,d,e,f,g=this.tip(),h=g[0].offsetWidth,i=g[0].offsetHeight;g.offset(a).addClass(b).addClass("in"),c=g[0].offsetWidth,d=g[0].offsetHeight,"top"==b&&d!=i&&(a.top=a.top+i-d,f=!0),"bottom"==b||"top"==b?(e=0,a.left<0&&(e=-2*a.left,a.left=0,g.offset(a),c=g[0].offsetWidth,d=g[0].offsetHeight),this.replaceArrow(e-h+c,c,"left")):this.replaceArrow(d-i,d,"top"),f&&g.offset(a)},applyAlign:function(a,b){var c=this.tip(),d=c[0].offsetWidth,e=c[0].offsetHeight,f={};switch(a){case"left":b.width<d&&(f={left:b.width/2});break;case"right":b.width<d&&(f={left:d-b.width/2});break;case"top":b.height<e&&(f={top:b.height/2});break;case"bottom":b.height<e&&(f={top:e-b.height/2})}"center"!=a&&c.find(".tooltip-arrow").first().css(f)},replaceArrow:function(a,b,c){this.arrow().css(c,a?50*(1-a/b)+"%":"")},setWidth:function(){var a=this.options,b=a.width,c=a.widthlimit,d=this.tip();if(b)d.width(b);else if(c===!0)d.css("max-width","400px");else{var e;c===!1&&(e="none"),"string"==typeof a.widthlimit&&(e=c),d.css("max-width",e)}},setContent:function(){var a=this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade in top bottom left right")},hide:function(){function b(){e.timeout=setTimeout(function(){c.off(a.support.transition.end).detach()},500),c.one(a.support.transition.end,function(){clearTimeout(e.timeout),c.detach()})}var c=this.tip(),d=a.Event("hide"),e=this,f=this.options;return this.$element.trigger(d),d.isDefaultPrevented()?void 0:(c.removeClass("in"),"function"==typeof f.hide&&f.hide.call(e.$element),a.support.transition&&this.$tip.hasClass("fade")?b():c.detach(),this.$element.trigger("hidden"),this)},fixTitle:function(){var a=this.$element;(a.attr("title")||"string"!=typeof a.attr("data-original-title"))&&("tooltip"==a.data("toggle")?a.attr("data-original-title",a.attr("title")||"").attr("title",""):a.attr("data-original-title",""))},hasContent:function(){return this.getTitle()},getPosition:function(){var b=this.$element[0];return a.extend({},"function"==typeof b.getBoundingClientRect?b.getBoundingClientRect():{width:b.offsetWidth,height:b.offsetHeight},this.$element.offset())},getTitle:function(){var a,b=this.$element,c=this.options;return a=b.attr("data-original-title")||("function"==typeof c.title?c.title.call(b[0]):c.title)},tip:function(){return this.$tip=this.$tip||a(this.options.template)},arrow:function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},validate:function(){this.$element[0].parentNode||(this.hide(),this.$element=null,this.options=null)},enable:function(){this.enabled=!0},disable:function(){this.enabled=!1},toggleEnabled:function(){this.enabled=!this.enabled},toggle:function(b){var c=b?a(b.currentTarget)[this.type](this._options).data(this.type):this;c.tip().hasClass("in")?c.hide():c.show()},destroy:function(){this.hide().$element.off("."+this.type).removeData(this.type)}};var c=a.fn.tooltip;a.fn.tooltip=function(c){return this.each(function(){var d=a(this),e=d.data("tooltip"),f="object"==typeof c&&c;e||d.data("tooltip",e=new b(this,f)),"string"==typeof c&&e[c]()})},a.fn.tooltip.Constructor=b,a.fn.tooltip.defaults={animation:!0,type:"default",placement:"top",selector:!1,trigger:"hover focus",title:"it is default title",delay:{show:0,hide:200},html:!0,container:!1,widthlimit:!0,align:"center"},a.fn.tooltip.noConflict=function(){return a.fn.tooltip=c,this},a(function(){a('[data-toggle="tooltip"]').tooltip(),a(document).on("mousedown",function(b){var c=a(b.target),d=a(".sui-tooltip"),e=d.prev(),f=c.parents(".sui-tooltip");d.length&&!f.length&&c[0]!=e[0]&&c.parents("[data-original-title]")[0]!=e[0]&&e.trigger("click.tooltip")}),a(document).on("click","[data-dismiss=tooltip]",function(b){b.preventDefault(),a(b.target).parents(".sui-tooltip").prev().trigger("click.tooltip")}),a(document).on("click","[data-ok=tooltip]",function(b){b.preventDefault();var c=a(b.target).parents(".sui-tooltip").prev(),d=c.data("tooltip"),e=d.options.okHide;"function"==typeof e&&e.call(c)})})}(window.jQuery)},{}],17:[function(a,b,c){!function(a){"use strict";a(function(){a.support.transition=function(){var a=function(){var a,b=document.createElement("bootstrap"),c={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(a in c)if(void 0!==b.style[a])return c[a]}();return a&&{end:a}}()})}(window.jQuery)},{}],18:[function(a,b,c){!function(a){"use strict";var b=function(){this.data={}};b.prototype={constructor:b,query:function(a){return this.data[a]},insert:function(a,b){this.data[a]=b},clear:function(){this.data={}}};var c=function(c,d){this.$element=a(c),this.options=d,this.redis=new b},d={init:function(){this.destory(),d.bindChange.call(this),d.bindUpdate.call(this),this.$element.trigger("tree:update")},getData:function(b,c){var e=this,f=e.redis.query(b);e.options.src&&(f?d.createDom.apply(e,[f,c]):a.ajax(e.options.src,{data:e.options.key+"="+b,cache:!0,dataType:e.options.jsonp?"jsonp":"json"}).success(function(a){200==a.code&&a.data&&a.data.length&&(f=a.data,e.redis.insert(b,f),d.createDom.apply(e,[f,c]))}))},createDom:function(b,c){var d=["<select>"],e=this.options.placeholder,f=this.options.val[c];e&&d.push('<option value="">'+e+"</option>"),a.each(b,function(a,b){d.push('<option data-isleaf="'+b.isleaf+'" value="'+b.id+'" '+(b.id==f?"selected":"")+">"+b.value+"</option>")}),d.push("</select>"),d=a(d.join("")).appendTo(this.$element).trigger("change")},bindChange:function(){var b=this;
 this.$element.on("change.sui.tree","select",function(c){var e=a(this),f=e.val();e.nextAll().remove(),d.saveValue.call(b),f&&(e.find("option:selected").data("isleaf")?b.options.val=[]:d.getData.apply(b,[f,e.index()+1]))})},bindUpdate:function(){var b=this;this.$element.on("tree:update",function(c){var e=a(this);e.empty(),d.getData.apply(b,[0,0])})},saveValue:function(){var b=[],c=[];this.$element.find("select").each(function(){b.push(this.value),c.push(a(this).find("option:selected").text())}),this.datas={text:c,value:b}}};c.prototype={constructor:c,getValue:a.noop,setValue:function(a){this.options.val=a,this.$element.trigger("tree:update")},destory:function(){this.$element.off("change.sui.tree").empty()}};var e=a.fn.tree;a.fn.extend({tree:function(){var b=Array.prototype.slice.call(arguments),e=b.shift();return this.each(function(){var f=a(this),g=f.data("tree"),h=a.extend({},a.fn.tree.defaults,f.data(),"object"==typeof e&&e);g||f.data("tree",g=new c(this,h)),"string"==typeof e&&"function"==typeof g[e]?g[e].apply(g,b):d.init.call(g)})}}),a.fn.tree.Constructor=c,a.fn.tree.defaults={src:"",treeType:"select",placeholder:"请选择",val:[],key:"id"},a.fn.tree.noConflict=function(){return a.fn.tree=e,this},a(function(){a('[data-toggle="tree"]').tree()})}(jQuery)},{}],19:[function(a,b,c){!function(a){Validate=a.validate,trim=function(a){return a?a.replace(/^\s+/g,"").replace(/\s+$/g,""):a};var b=function(b,c,d){a(c);return!!trim(b)},c=function(a,b){var c=function(a){var b=a[0].tagName.toUpperCase(),c=a[0].type.toUpperCase();return"CHECKBOX"==c||"RADIO"==c||"SELECT"==b?"选择":"填写"};return"请"+c(a)};Validate.setRule("required",b,c);var d=function(b,c,d){var e=a(c);if(d&&"string"==typeof d){var f=e.parents("form"),g=f.find("[name='"+d+"']");return!!g.val()}return!0};Validate.setRule("prefill",d,function(a,b){var c=function(a){var b=a[0].tagName.toUpperCase(),c=a[0].type.toUpperCase();return"CHECKBOX"==c||"RADIO"==c||"SELECT"==b?"选择":"填写"};if(b&&"string"==typeof b){var d=a.parents("form"),e=d.find("[name='"+b+"']");if(!e.val())return"请先"+c(e)+(e.attr("title")||e.attr("name"))}return"错误"});var e=function(b,c,d){return b=trim(b),b==a(c).parents("form").find("[name='"+d+"']").val()};Validate.setRule("match",e,"必须与$0相同");var f=function(a,b,c){return a=trim(a),/^\d+(.\d*)?$/.test(a)};Validate.setRule("number",f,"请输入数字");var g=function(a,b,c){return a=trim(a),/^\d+$/.test(a)};Validate.setRule("digits",g,"请输入整数");var h=function(a,b,c){return/^0?1[3|4|5|7|8][0-9]\d{8,9}$/.test(trim(a))};Validate.setRule("mobile",h,"请填写正确的手机号码");var i=function(a,b,c){return/^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,11})+$/.test(trim(a))};Validate.setRule("tel",i,"请填写正确的电话号码");var j=function(a,b,c){return/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(trim(a))};Validate.setRule("email",j,"请填写正确的email地址");var k=function(a,b,c){return/^[1-9][0-9]{5}$/.test(trim(a))};Validate.setRule("zip",k,"请填写正确的邮编");var l=function(a,b,c){c=c||"-";var d=new RegExp("^[1|2]\\d{3}"+c+"[0-2][0-9]"+c+"[0-3][0-9]$");return d.test(trim(a))};Validate.setRule("date",l,"请填写正确的日期");var m=function(a,b,c){return/^[0-2]\d:[0-6]\d$/.test(trim(a))};Validate.setRule("time",m,"请填写正确的时间");var n=function(a,b,c){var d=new RegExp("^[1|2]\\d{3}-[0-2][0-9]-[0-3][0-9] [0-2]\\d:[0-6]\\d$");return d.test(trim(a))};Validate.setRule("datetime",n,"请填写正确的日期和时间");var o=function(a,b,c){var d;return a=trim(a),d=/(http|ftp|https):\/\/([\w-]+\.)+[\w-]+\.(com|net|cn|org|me|io|info|xxx)/,/^http/.test(a)||(a="http://"+a),d.test(a)};Validate.setRule("url",o,"请填写正确的网址");var p=function(a,b,c){return trim(a).length>=c};Validate.setRule("minlength",p,"长度不能少于$0");var q=function(a,b,c){return trim(a).length<=c};Validate.setRule("maxlength",q,"长度不能超过$0");var r=function(a,b,c){return Number(a)>c};Validate.setRule("gt",r,"必须大于$0");var s=function(a,b,c){return Number(a)<c};Validate.setRule("lt",s,"必须小于$0")}(window.jQuery)},{}],20:[function(a,b,c){!function(a){"use strict";var b=function(b,e){var f=this;this.options=a.extend({},a.fn.validate.defaults,e),this.$form=a(b).attr("novalidate","novalidate"),this.$form.submit(function(){return c.call(f)}),this.disabled=!1,this.$form.on("blur keyup change update","input, select, textarea",function(b){if(!f.disabled){var c=a(b.target);c.attr("disabled")||d.call(f,c)}}),this.errors={}};b.rules={},b.setRule=function(a,c,d){var e=b.rules[a];e&&!c&&(c=e.method),b.rules[a]={method:c,msg:d}},b.setMsg=function(a,c){b.setRule(a,void 0,c)},b.prototype={disable:function(){this.disabled=!0,this.hideError()},enable:function(){this.disabled=!1},showError:function(a,b,c){e.call(this,a,b,c)},hideError:function(a,b){f.call(this,a,b)}};var c=function(){if(this.disabled)return!0;var b,c;c=this,b=!1;var e=[];if(this.$form.find("input, select, textarea").each(function(){var f,g;return f=a(this),g=d.call(c,this),g&&!b&&f.focus(),g?(e.push(f),b=!0):void 0}),b)this.options.fail.call(this,e,this.$form);else{var f=this.options.success.call(this,this.$form);if(f===!1)return!1}return!b},d=function(c){for(var d=a(c),e={},h=(d.data("rules")||"").split("|"),i=d.attr("name"),j=0;j<h.length;j++)if(h[j]){var k=h[j].split("=");k[1]=k[1]||void 0,e[k[0]]=k[1]}var l=this.options.rules&&this.options.rules[i]||{};e=a.extend(e,l);var m=!1,n=null;for(var o in e){var p=e[o],q=b.rules[o];if(!q)throw new Error("未定义的校验规则："+o);var r=g(d);if(r||"required"===o){var s=!0;if(s=a.isFunction(p)?p.call(this,d):q.method.call(this,r,d,p),!s){if(m=!0,n=q.msg,a.isFunction(n)&&(n=n(d,p)),"required"!==o&&(d.data("error-msg")&&(n=d.data("error-msg")),this.options.messages&&this.options.messages[i]&&(n=this.options.messages[i],a.isFunction(n)&&(n=n(d,p)),a.isArray(n)&&(n=n[1]))),"required"===o&&(d.data("empty-msg")&&(n=d.data("empty-msg")),this.options.messages&&this.options.messages[i])){var t=this.options.messages[i];a.isFunction(t)&&(t=n(d,p)),a.isArray(t)&&(n=t[0])}this.showError(d,n.replace("$0",p),o);break}m=!1,f.call(this,d,o)}else m=!1,f.call(this,d)}return m},e=function(b,c,d){d=d||"anonymous","string"==typeof b&&(b=this.$form.find("[name='"+b+"']")),b=a(b);var e=b.attr("name"),f=this.errors[e]||(this.errors[e]={}),g=f[d];g||(g=f[d]=a(this.options.errorTpl.replace("$errorMsg",c)),this.options.placeError.call(this,b,g));for(var h in f)h!==d&&f[h].hide();this.options.highlight.call(this,b,g,this.options.inputErrorClass),b.trigger("highlight")},f=function(b,c){var d=this,e=function(a){var b=d.errors[a.attr("name")];for(var c in b)d.options.unhighlight.call(d,a,b[c],d.options.inputErrorClass)};b||this.$form.find("input, select, textarea").each(function(){var b=a(this);b.attr("disabled")||e(b)}),"string"==typeof b&&(b=this.$form.find("[name='"+b+"']")),b=a(b);var f=this.errors[b.attr("name")];if(f){if(!c)return void e(b);var g=f[c];g&&(this.options.unhighlight.call(this,b,g,this.options.inputErrorClass),b.trigger("unhighlight"))}},g=function(b){var c=a(b);if(!c[0])return void 0;var d=c[0].tagName.toUpperCase(),e=(c.attr("type")||"text").toUpperCase(),f=c.attr("name"),g=c.parents("form");switch(d){case"INPUT":switch(e){case"CHECKBOX":case"RADIO":return g.find("[name='"+f+"']:checked").val();default:return c.val()}break;case"TEXTAREA":return c.val();default:return c.val()}},h=a.fn.validate;a.fn.extend({validate:function(c){var d=arguments;return this.each(function(){var e=a(this),f=e.data("validate");f||e.data("validate",f=new b(this,c)),"string"==typeof c&&f[c].apply(f,Array.prototype.slice.call(d,1))})}}),a.fn.validate.Constructor=b,a.fn.validate.defaults={errorTpl:'<div class="sui-msg msg-error help-inline">\n  <div class="msg-con">\n    <span>$errorMsg</span>\n </div>   <i class="msg-icon"></i>\n  \n</div>',inputErrorClass:"input-error",placeError:function(b,c){b=a(b);var d=b.parents(".controls-wrap");d[0]||(d=b.parents(".controls")),d[0]||(d=b.parent()),c.appendTo(d[0])},highlight:function(b,c,d){b.addClass(d),a.fn.validate.defaults.placeError(b,c),c.show()},unhighlight:function(a,b,c){b.is(":visible")&&(a.removeClass(c),b.hide())},rules:void 0,messages:void 0,success:a.noop,fail:a.noop},a.fn.validate.noConflict=function(){return a.fn.validate=h,this},a.validate=b,a(function(){a(".sui-validate").validate()})}(window.jQuery)},{}]},{},[12]);
+;/*!
+ * Cropper.js v1.4.2
+ * https://fengyuanchen.github.io/cropperjs
+ *
+ * Copyright 2015-present Chen Fengyuan
+ * Released under the MIT license
+ *
+ * Date: 2018-10-15T13:27:01.969Z
+ */
+
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.Cropper = factory());
+}(this, (function () { 'use strict';
+
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+      return arr2;
+    }
+  }
+
+  function _iterableToArray(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
+  var IN_BROWSER = typeof window !== 'undefined';
+  var WINDOW = IN_BROWSER ? window : {};
+  var NAMESPACE = 'cropper'; // Actions
+
+  var ACTION_ALL = 'all';
+  var ACTION_CROP = 'crop';
+  var ACTION_MOVE = 'move';
+  var ACTION_ZOOM = 'zoom';
+  var ACTION_EAST = 'e';
+  var ACTION_WEST = 'w';
+  var ACTION_SOUTH = 's';
+  var ACTION_NORTH = 'n';
+  var ACTION_NORTH_EAST = 'ne';
+  var ACTION_NORTH_WEST = 'nw';
+  var ACTION_SOUTH_EAST = 'se';
+  var ACTION_SOUTH_WEST = 'sw'; // Classes
+
+  var CLASS_CROP = "".concat(NAMESPACE, "-crop");
+  var CLASS_DISABLED = "".concat(NAMESPACE, "-disabled");
+  var CLASS_HIDDEN = "".concat(NAMESPACE, "-hidden");
+  var CLASS_HIDE = "".concat(NAMESPACE, "-hide");
+  var CLASS_INVISIBLE = "".concat(NAMESPACE, "-invisible");
+  var CLASS_MODAL = "".concat(NAMESPACE, "-modal");
+  var CLASS_MOVE = "".concat(NAMESPACE, "-move"); // Data keys
+
+  var DATA_ACTION = "".concat(NAMESPACE, "Action");
+  var DATA_PREVIEW = "".concat(NAMESPACE, "Preview"); // Drag modes
+
+  var DRAG_MODE_CROP = 'crop';
+  var DRAG_MODE_MOVE = 'move';
+  var DRAG_MODE_NONE = 'none'; // Events
+
+  var EVENT_CROP = 'crop';
+  var EVENT_CROP_END = 'cropend';
+  var EVENT_CROP_MOVE = 'cropmove';
+  var EVENT_CROP_START = 'cropstart';
+  var EVENT_DBLCLICK = 'dblclick';
+  var EVENT_POINTER_DOWN = WINDOW.PointerEvent ? 'pointerdown' : 'touchstart mousedown';
+  var EVENT_POINTER_MOVE = WINDOW.PointerEvent ? 'pointermove' : 'touchmove mousemove';
+  var EVENT_POINTER_UP = WINDOW.PointerEvent ? 'pointerup pointercancel' : 'touchend touchcancel mouseup';
+  var EVENT_READY = 'ready';
+  var EVENT_RESIZE = 'resize';
+  var EVENT_WHEEL = 'wheel mousewheel DOMMouseScroll';
+  var EVENT_ZOOM = 'zoom'; // Mime types
+
+  var MIME_TYPE_JPEG = 'image/jpeg'; // RegExps
+
+  var REGEXP_ACTIONS = /^(?:e|w|s|n|se|sw|ne|nw|all|crop|move|zoom)$/;
+  var REGEXP_DATA_URL = /^data:/;
+  var REGEXP_DATA_URL_JPEG = /^data:image\/jpeg;base64,/;
+  var REGEXP_TAG_NAME = /^(?:img|canvas)$/i;
+
+  var DEFAULTS = {
+    // Define the view mode of the cropper
+    viewMode: 0,
+    // 0, 1, 2, 3
+    // Define the dragging mode of the cropper
+    dragMode: DRAG_MODE_CROP,
+    // 'crop', 'move' or 'none'
+    // Define the initial aspect ratio of the crop box
+    initialAspectRatio: NaN,
+    // Define the aspect ratio of the crop box
+    aspectRatio: NaN,
+    // An object with the previous cropping result data
+    data: null,
+    // A selector for adding extra containers to preview
+    preview: '',
+    // Re-render the cropper when resize the window
+    responsive: true,
+    // Restore the cropped area after resize the window
+    restore: true,
+    // Check if the current image is a cross-origin image
+    checkCrossOrigin: true,
+    // Check the current image's Exif Orientation information
+    checkOrientation: true,
+    // Show the black modal
+    modal: true,
+    // Show the dashed lines for guiding
+    guides: true,
+    // Show the center indicator for guiding
+    center: true,
+    // Show the white modal to highlight the crop box
+    highlight: true,
+    // Show the grid background
+    background: true,
+    // Enable to crop the image automatically when initialize
+    autoCrop: true,
+    // Define the percentage of automatic cropping area when initializes
+    autoCropArea: 0.8,
+    // Enable to move the image
+    movable: true,
+    // Enable to rotate the image
+    rotatable: true,
+    // Enable to scale the image
+    scalable: true,
+    // Enable to zoom the image
+    zoomable: true,
+    // Enable to zoom the image by dragging touch
+    zoomOnTouch: true,
+    // Enable to zoom the image by wheeling mouse
+    zoomOnWheel: true,
+    // Define zoom ratio when zoom the image by wheeling mouse
+    wheelZoomRatio: 0.1,
+    // Enable to move the crop box
+    cropBoxMovable: true,
+    // Enable to resize the crop box
+    cropBoxResizable: true,
+    // Toggle drag mode between "crop" and "move" when click twice on the cropper
+    toggleDragModeOnDblclick: true,
+    // Size limitation
+    minCanvasWidth: 0,
+    minCanvasHeight: 0,
+    minCropBoxWidth: 0,
+    minCropBoxHeight: 0,
+    minContainerWidth: 200,
+    minContainerHeight: 100,
+    // Shortcuts of events
+    ready: null,
+    cropstart: null,
+    cropmove: null,
+    cropend: null,
+    crop: null,
+    zoom: null
+  };
+
+  var TEMPLATE = '<div class="cropper-container" touch-action="none">' + '<div class="cropper-wrap-box">' + '<div class="cropper-canvas"></div>' + '</div>' + '<div class="cropper-drag-box"></div>' + '<div class="cropper-crop-box">' + '<span class="cropper-view-box"></span>' + '<span class="cropper-dashed dashed-h"></span>' + '<span class="cropper-dashed dashed-v"></span>' + '<span class="cropper-center"></span>' + '<span class="cropper-face"></span>' + '<span class="cropper-line line-e" data-cropper-action="e"></span>' + '<span class="cropper-line line-n" data-cropper-action="n"></span>' + '<span class="cropper-line line-w" data-cropper-action="w"></span>' + '<span class="cropper-line line-s" data-cropper-action="s"></span>' + '<span class="cropper-point point-e" data-cropper-action="e"></span>' + '<span class="cropper-point point-n" data-cropper-action="n"></span>' + '<span class="cropper-point point-w" data-cropper-action="w"></span>' + '<span class="cropper-point point-s" data-cropper-action="s"></span>' + '<span class="cropper-point point-ne" data-cropper-action="ne"></span>' + '<span class="cropper-point point-nw" data-cropper-action="nw"></span>' + '<span class="cropper-point point-sw" data-cropper-action="sw"></span>' + '<span class="cropper-point point-se" data-cropper-action="se"></span>' + '</div>' + '</div>';
+
+  /**
+   * Check if the given value is not a number.
+   */
+
+  var isNaN = Number.isNaN || WINDOW.isNaN;
+  /**
+   * Check if the given value is a number.
+   * @param {*} value - The value to check.
+   * @returns {boolean} Returns `true` if the given value is a number, else `false`.
+   */
+
+  function isNumber(value) {
+    return typeof value === 'number' && !isNaN(value);
+  }
+  /**
+   * Check if the given value is undefined.
+   * @param {*} value - The value to check.
+   * @returns {boolean} Returns `true` if the given value is undefined, else `false`.
+   */
+
+  function isUndefined(value) {
+    return typeof value === 'undefined';
+  }
+  /**
+   * Check if the given value is an object.
+   * @param {*} value - The value to check.
+   * @returns {boolean} Returns `true` if the given value is an object, else `false`.
+   */
+
+  function isObject(value) {
+    return _typeof(value) === 'object' && value !== null;
+  }
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+  /**
+   * Check if the given value is a plain object.
+   * @param {*} value - The value to check.
+   * @returns {boolean} Returns `true` if the given value is a plain object, else `false`.
+   */
+
+  function isPlainObject(value) {
+    if (!isObject(value)) {
+      return false;
+    }
+
+    try {
+      var _constructor = value.constructor;
+      var prototype = _constructor.prototype;
+      return _constructor && prototype && hasOwnProperty.call(prototype, 'isPrototypeOf');
+    } catch (e) {
+      return false;
+    }
+  }
+  /**
+   * Check if the given value is a function.
+   * @param {*} value - The value to check.
+   * @returns {boolean} Returns `true` if the given value is a function, else `false`.
+   */
+
+  function isFunction(value) {
+    return typeof value === 'function';
+  }
+  /**
+   * Iterate the given data.
+   * @param {*} data - The data to iterate.
+   * @param {Function} callback - The process function for each element.
+   * @returns {*} The original data.
+   */
+
+  function forEach(data, callback) {
+    if (data && isFunction(callback)) {
+      if (Array.isArray(data) || isNumber(data.length)
+      /* array-like */
+      ) {
+          var length = data.length;
+          var i;
+
+          for (i = 0; i < length; i += 1) {
+            if (callback.call(data, data[i], i, data) === false) {
+              break;
+            }
+          }
+        } else if (isObject(data)) {
+        Object.keys(data).forEach(function (key) {
+          callback.call(data, data[key], key, data);
+        });
+      }
+    }
+
+    return data;
+  }
+  /**
+   * Extend the given object.
+   * @param {*} obj - The object to be extended.
+   * @param {*} args - The rest objects which will be merged to the first object.
+   * @returns {Object} The extended object.
+   */
+
+  var assign = Object.assign || function assign(obj) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    if (isObject(obj) && args.length > 0) {
+      args.forEach(function (arg) {
+        if (isObject(arg)) {
+          Object.keys(arg).forEach(function (key) {
+            obj[key] = arg[key];
+          });
+        }
+      });
+    }
+
+    return obj;
+  };
+  var REGEXP_DECIMALS = /\.\d*(?:0|9){12}\d*$/;
+  /**
+   * Normalize decimal number.
+   * Check out {@link http://0.30000000000000004.com/}
+   * @param {number} value - The value to normalize.
+   * @param {number} [times=100000000000] - The times for normalizing.
+   * @returns {number} Returns the normalized number.
+   */
+
+  function normalizeDecimalNumber(value) {
+    var times = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100000000000;
+    return REGEXP_DECIMALS.test(value) ? Math.round(value * times) / times : value;
+  }
+  var REGEXP_SUFFIX = /^(?:width|height|left|top|marginLeft|marginTop)$/;
+  /**
+   * Apply styles to the given element.
+   * @param {Element} element - The target element.
+   * @param {Object} styles - The styles for applying.
+   */
+
+  function setStyle(element, styles) {
+    var style = element.style;
+    forEach(styles, function (value, property) {
+      if (REGEXP_SUFFIX.test(property) && isNumber(value)) {
+        value += 'px';
+      }
+
+      style[property] = value;
+    });
+  }
+  /**
+   * Check if the given element has a special class.
+   * @param {Element} element - The element to check.
+   * @param {string} value - The class to search.
+   * @returns {boolean} Returns `true` if the special class was found.
+   */
+
+  function hasClass(element, value) {
+    return element.classList ? element.classList.contains(value) : element.className.indexOf(value) > -1;
+  }
+  /**
+   * Add classes to the given element.
+   * @param {Element} element - The target element.
+   * @param {string} value - The classes to be added.
+   */
+
+  function addClass(element, value) {
+    if (!value) {
+      return;
+    }
+
+    if (isNumber(element.length)) {
+      forEach(element, function (elem) {
+        addClass(elem, value);
+      });
+      return;
+    }
+
+    if (element.classList) {
+      element.classList.add(value);
+      return;
+    }
+
+    var className = element.className.trim();
+
+    if (!className) {
+      element.className = value;
+    } else if (className.indexOf(value) < 0) {
+      element.className = "".concat(className, " ").concat(value);
+    }
+  }
+  /**
+   * Remove classes from the given element.
+   * @param {Element} element - The target element.
+   * @param {string} value - The classes to be removed.
+   */
+
+  function removeClass(element, value) {
+    if (!value) {
+      return;
+    }
+
+    if (isNumber(element.length)) {
+      forEach(element, function (elem) {
+        removeClass(elem, value);
+      });
+      return;
+    }
+
+    if (element.classList) {
+      element.classList.remove(value);
+      return;
+    }
+
+    if (element.className.indexOf(value) >= 0) {
+      element.className = element.className.replace(value, '');
+    }
+  }
+  /**
+   * Add or remove classes from the given element.
+   * @param {Element} element - The target element.
+   * @param {string} value - The classes to be toggled.
+   * @param {boolean} added - Add only.
+   */
+
+  function toggleClass(element, value, added) {
+    if (!value) {
+      return;
+    }
+
+    if (isNumber(element.length)) {
+      forEach(element, function (elem) {
+        toggleClass(elem, value, added);
+      });
+      return;
+    } // IE10-11 doesn't support the second parameter of `classList.toggle`
+
+
+    if (added) {
+      addClass(element, value);
+    } else {
+      removeClass(element, value);
+    }
+  }
+  var REGEXP_HYPHENATE = /([a-z\d])([A-Z])/g;
+  /**
+   * Transform the given string from camelCase to kebab-case
+   * @param {string} value - The value to transform.
+   * @returns {string} The transformed value.
+   */
+
+  function hyphenate(value) {
+    return value.replace(REGEXP_HYPHENATE, '$1-$2').toLowerCase();
+  }
+  /**
+   * Get data from the given element.
+   * @param {Element} element - The target element.
+   * @param {string} name - The data key to get.
+   * @returns {string} The data value.
+   */
+
+  function getData(element, name) {
+    if (isObject(element[name])) {
+      return element[name];
+    }
+
+    if (element.dataset) {
+      return element.dataset[name];
+    }
+
+    return element.getAttribute("data-".concat(hyphenate(name)));
+  }
+  /**
+   * Set data to the given element.
+   * @param {Element} element - The target element.
+   * @param {string} name - The data key to set.
+   * @param {string} data - The data value.
+   */
+
+  function setData(element, name, data) {
+    if (isObject(data)) {
+      element[name] = data;
+    } else if (element.dataset) {
+      element.dataset[name] = data;
+    } else {
+      element.setAttribute("data-".concat(hyphenate(name)), data);
+    }
+  }
+  /**
+   * Remove data from the given element.
+   * @param {Element} element - The target element.
+   * @param {string} name - The data key to remove.
+   */
+
+  function removeData(element, name) {
+    if (isObject(element[name])) {
+      try {
+        delete element[name];
+      } catch (e) {
+        element[name] = undefined;
+      }
+    } else if (element.dataset) {
+      // #128 Safari not allows to delete dataset property
+      try {
+        delete element.dataset[name];
+      } catch (e) {
+        element.dataset[name] = undefined;
+      }
+    } else {
+      element.removeAttribute("data-".concat(hyphenate(name)));
+    }
+  }
+  var REGEXP_SPACES = /\s\s*/;
+
+  var onceSupported = function () {
+    var supported = false;
+
+    if (IN_BROWSER) {
+      var once = false;
+
+      var listener = function listener() {};
+
+      var options = Object.defineProperty({}, 'once', {
+        get: function get() {
+          supported = true;
+          return once;
+        },
+
+        /**
+         * This setter can fix a `TypeError` in strict mode
+         * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Getter_only}
+         * @param {boolean} value - The value to set
+         */
+        set: function set(value) {
+          once = value;
+        }
+      });
+      WINDOW.addEventListener('test', listener, options);
+      WINDOW.removeEventListener('test', listener, options);
+    }
+
+    return supported;
+  }();
+  /**
+   * Remove event listener from the target element.
+   * @param {Element} element - The event target.
+   * @param {string} type - The event type(s).
+   * @param {Function} listener - The event listener.
+   * @param {Object} options - The event options.
+   */
+
+
+  function removeListener(element, type, listener) {
+    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    var handler = listener;
+    type.trim().split(REGEXP_SPACES).forEach(function (event) {
+      if (!onceSupported) {
+        var listeners = element.listeners;
+
+        if (listeners && listeners[event] && listeners[event][listener]) {
+          handler = listeners[event][listener];
+          delete listeners[event][listener];
+
+          if (Object.keys(listeners[event]).length === 0) {
+            delete listeners[event];
+          }
+
+          if (Object.keys(listeners).length === 0) {
+            delete element.listeners;
+          }
+        }
+      }
+
+      element.removeEventListener(event, handler, options);
+    });
+  }
+  /**
+   * Add event listener to the target element.
+   * @param {Element} element - The event target.
+   * @param {string} type - The event type(s).
+   * @param {Function} listener - The event listener.
+   * @param {Object} options - The event options.
+   */
+
+  function addListener(element, type, listener) {
+    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    var _handler = listener;
+    type.trim().split(REGEXP_SPACES).forEach(function (event) {
+      if (options.once && !onceSupported) {
+        var _element$listeners = element.listeners,
+            listeners = _element$listeners === void 0 ? {} : _element$listeners;
+
+        _handler = function handler() {
+          delete listeners[event][listener];
+          element.removeEventListener(event, _handler, options);
+
+          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+          }
+
+          listener.apply(element, args);
+        };
+
+        if (!listeners[event]) {
+          listeners[event] = {};
+        }
+
+        if (listeners[event][listener]) {
+          element.removeEventListener(event, listeners[event][listener], options);
+        }
+
+        listeners[event][listener] = _handler;
+        element.listeners = listeners;
+      }
+
+      element.addEventListener(event, _handler, options);
+    });
+  }
+  /**
+   * Dispatch event on the target element.
+   * @param {Element} element - The event target.
+   * @param {string} type - The event type(s).
+   * @param {Object} data - The additional event data.
+   * @returns {boolean} Indicate if the event is default prevented or not.
+   */
+
+  function dispatchEvent(element, type, data) {
+    var event; // Event and CustomEvent on IE9-11 are global objects, not constructors
+
+    if (isFunction(Event) && isFunction(CustomEvent)) {
+      event = new CustomEvent(type, {
+        detail: data,
+        bubbles: true,
+        cancelable: true
+      });
+    } else {
+      event = document.createEvent('CustomEvent');
+      event.initCustomEvent(type, true, true, data);
+    }
+
+    return element.dispatchEvent(event);
+  }
+  /**
+   * Get the offset base on the document.
+   * @param {Element} element - The target element.
+   * @returns {Object} The offset data.
+   */
+
+  function getOffset(element) {
+    var box = element.getBoundingClientRect();
+    return {
+      left: box.left + (window.pageXOffset - document.documentElement.clientLeft),
+      top: box.top + (window.pageYOffset - document.documentElement.clientTop)
+    };
+  }
+  var location = WINDOW.location;
+  var REGEXP_ORIGINS = /^(https?:)\/\/([^:/?#]+):?(\d*)/i;
+  /**
+   * Check if the given URL is a cross origin URL.
+   * @param {string} url - The target URL.
+   * @returns {boolean} Returns `true` if the given URL is a cross origin URL, else `false`.
+   */
+
+  function isCrossOriginURL(url) {
+    var parts = url.match(REGEXP_ORIGINS);
+    return parts && (parts[1] !== location.protocol || parts[2] !== location.hostname || parts[3] !== location.port);
+  }
+  /**
+   * Add timestamp to the given URL.
+   * @param {string} url - The target URL.
+   * @returns {string} The result URL.
+   */
+
+  function addTimestamp(url) {
+    var timestamp = "timestamp=".concat(new Date().getTime());
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp;
+  }
+  /**
+   * Get transforms base on the given object.
+   * @param {Object} obj - The target object.
+   * @returns {string} A string contains transform values.
+   */
+
+  function getTransforms(_ref) {
+    var rotate = _ref.rotate,
+        scaleX = _ref.scaleX,
+        scaleY = _ref.scaleY,
+        translateX = _ref.translateX,
+        translateY = _ref.translateY;
+    var values = [];
+
+    if (isNumber(translateX) && translateX !== 0) {
+      values.push("translateX(".concat(translateX, "px)"));
+    }
+
+    if (isNumber(translateY) && translateY !== 0) {
+      values.push("translateY(".concat(translateY, "px)"));
+    } // Rotate should come first before scale to match orientation transform
+
+
+    if (isNumber(rotate) && rotate !== 0) {
+      values.push("rotate(".concat(rotate, "deg)"));
+    }
+
+    if (isNumber(scaleX) && scaleX !== 1) {
+      values.push("scaleX(".concat(scaleX, ")"));
+    }
+
+    if (isNumber(scaleY) && scaleY !== 1) {
+      values.push("scaleY(".concat(scaleY, ")"));
+    }
+
+    var transform = values.length ? values.join(' ') : 'none';
+    return {
+      WebkitTransform: transform,
+      msTransform: transform,
+      transform: transform
+    };
+  }
+  /**
+   * Get the max ratio of a group of pointers.
+   * @param {string} pointers - The target pointers.
+   * @returns {number} The result ratio.
+   */
+
+  function getMaxZoomRatio(pointers) {
+    var pointers2 = assign({}, pointers);
+    var ratios = [];
+    forEach(pointers, function (pointer, pointerId) {
+      delete pointers2[pointerId];
+      forEach(pointers2, function (pointer2) {
+        var x1 = Math.abs(pointer.startX - pointer2.startX);
+        var y1 = Math.abs(pointer.startY - pointer2.startY);
+        var x2 = Math.abs(pointer.endX - pointer2.endX);
+        var y2 = Math.abs(pointer.endY - pointer2.endY);
+        var z1 = Math.sqrt(x1 * x1 + y1 * y1);
+        var z2 = Math.sqrt(x2 * x2 + y2 * y2);
+        var ratio = (z2 - z1) / z1;
+        ratios.push(ratio);
+      });
+    });
+    ratios.sort(function (a, b) {
+      return Math.abs(a) < Math.abs(b);
+    });
+    return ratios[0];
+  }
+  /**
+   * Get a pointer from an event object.
+   * @param {Object} event - The target event object.
+   * @param {boolean} endOnly - Indicates if only returns the end point coordinate or not.
+   * @returns {Object} The result pointer contains start and/or end point coordinates.
+   */
+
+  function getPointer(_ref2, endOnly) {
+    var pageX = _ref2.pageX,
+        pageY = _ref2.pageY;
+    var end = {
+      endX: pageX,
+      endY: pageY
+    };
+    return endOnly ? end : assign({
+      startX: pageX,
+      startY: pageY
+    }, end);
+  }
+  /**
+   * Get the center point coordinate of a group of pointers.
+   * @param {Object} pointers - The target pointers.
+   * @returns {Object} The center point coordinate.
+   */
+
+  function getPointersCenter(pointers) {
+    var pageX = 0;
+    var pageY = 0;
+    var count = 0;
+    forEach(pointers, function (_ref3) {
+      var startX = _ref3.startX,
+          startY = _ref3.startY;
+      pageX += startX;
+      pageY += startY;
+      count += 1;
+    });
+    pageX /= count;
+    pageY /= count;
+    return {
+      pageX: pageX,
+      pageY: pageY
+    };
+  }
+  /**
+   * Check if the given value is a finite number.
+   */
+
+  var isFinite = Number.isFinite || WINDOW.isFinite;
+  /**
+   * Get the max sizes in a rectangle under the given aspect ratio.
+   * @param {Object} data - The original sizes.
+   * @param {string} [type='contain'] - The adjust type.
+   * @returns {Object} The result sizes.
+   */
+
+  function getAdjustedSizes(_ref4) // or 'cover'
+  {
+    var aspectRatio = _ref4.aspectRatio,
+        height = _ref4.height,
+        width = _ref4.width;
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'contain';
+
+    var isValidNumber = function isValidNumber(value) {
+      return isFinite(value) && value > 0;
+    };
+
+    if (isValidNumber(width) && isValidNumber(height)) {
+      var adjustedWidth = height * aspectRatio;
+
+      if (type === 'contain' && adjustedWidth > width || type === 'cover' && adjustedWidth < width) {
+        height = width / aspectRatio;
+      } else {
+        width = height * aspectRatio;
+      }
+    } else if (isValidNumber(width)) {
+      height = width / aspectRatio;
+    } else if (isValidNumber(height)) {
+      width = height * aspectRatio;
+    }
+
+    return {
+      width: width,
+      height: height
+    };
+  }
+  /**
+   * Get the new sizes of a rectangle after rotated.
+   * @param {Object} data - The original sizes.
+   * @returns {Object} The result sizes.
+   */
+
+  function getRotatedSizes(_ref5) {
+    var width = _ref5.width,
+        height = _ref5.height,
+        degree = _ref5.degree;
+    degree = Math.abs(degree) % 180;
+
+    if (degree === 90) {
+      return {
+        width: height,
+        height: width
+      };
+    }
+
+    var arc = degree % 90 * Math.PI / 180;
+    var sinArc = Math.sin(arc);
+    var cosArc = Math.cos(arc);
+    var newWidth = width * cosArc + height * sinArc;
+    var newHeight = width * sinArc + height * cosArc;
+    return degree > 90 ? {
+      width: newHeight,
+      height: newWidth
+    } : {
+      width: newWidth,
+      height: newHeight
+    };
+  }
+  /**
+   * Get a canvas which drew the given image.
+   * @param {HTMLImageElement} image - The image for drawing.
+   * @param {Object} imageData - The image data.
+   * @param {Object} canvasData - The canvas data.
+   * @param {Object} options - The options.
+   * @returns {HTMLCanvasElement} The result canvas.
+   */
+
+  function getSourceCanvas(image, _ref6, _ref7, _ref8) {
+    var imageAspectRatio = _ref6.aspectRatio,
+        imageNaturalWidth = _ref6.naturalWidth,
+        imageNaturalHeight = _ref6.naturalHeight,
+        _ref6$rotate = _ref6.rotate,
+        rotate = _ref6$rotate === void 0 ? 0 : _ref6$rotate,
+        _ref6$scaleX = _ref6.scaleX,
+        scaleX = _ref6$scaleX === void 0 ? 1 : _ref6$scaleX,
+        _ref6$scaleY = _ref6.scaleY,
+        scaleY = _ref6$scaleY === void 0 ? 1 : _ref6$scaleY;
+    var aspectRatio = _ref7.aspectRatio,
+        naturalWidth = _ref7.naturalWidth,
+        naturalHeight = _ref7.naturalHeight;
+    var _ref8$fillColor = _ref8.fillColor,
+        fillColor = _ref8$fillColor === void 0 ? 'transparent' : _ref8$fillColor,
+        _ref8$imageSmoothingE = _ref8.imageSmoothingEnabled,
+        imageSmoothingEnabled = _ref8$imageSmoothingE === void 0 ? true : _ref8$imageSmoothingE,
+        _ref8$imageSmoothingQ = _ref8.imageSmoothingQuality,
+        imageSmoothingQuality = _ref8$imageSmoothingQ === void 0 ? 'low' : _ref8$imageSmoothingQ,
+        _ref8$maxWidth = _ref8.maxWidth,
+        maxWidth = _ref8$maxWidth === void 0 ? Infinity : _ref8$maxWidth,
+        _ref8$maxHeight = _ref8.maxHeight,
+        maxHeight = _ref8$maxHeight === void 0 ? Infinity : _ref8$maxHeight,
+        _ref8$minWidth = _ref8.minWidth,
+        minWidth = _ref8$minWidth === void 0 ? 0 : _ref8$minWidth,
+        _ref8$minHeight = _ref8.minHeight,
+        minHeight = _ref8$minHeight === void 0 ? 0 : _ref8$minHeight;
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var maxSizes = getAdjustedSizes({
+      aspectRatio: aspectRatio,
+      width: maxWidth,
+      height: maxHeight
+    });
+    var minSizes = getAdjustedSizes({
+      aspectRatio: aspectRatio,
+      width: minWidth,
+      height: minHeight
+    }, 'cover');
+    var width = Math.min(maxSizes.width, Math.max(minSizes.width, naturalWidth));
+    var height = Math.min(maxSizes.height, Math.max(minSizes.height, naturalHeight)); // Note: should always use image's natural sizes for drawing as
+    // imageData.naturalWidth === canvasData.naturalHeight when rotate % 180 === 90
+
+    var destMaxSizes = getAdjustedSizes({
+      aspectRatio: imageAspectRatio,
+      width: maxWidth,
+      height: maxHeight
+    });
+    var destMinSizes = getAdjustedSizes({
+      aspectRatio: imageAspectRatio,
+      width: minWidth,
+      height: minHeight
+    }, 'cover');
+    var destWidth = Math.min(destMaxSizes.width, Math.max(destMinSizes.width, imageNaturalWidth));
+    var destHeight = Math.min(destMaxSizes.height, Math.max(destMinSizes.height, imageNaturalHeight));
+    var params = [-destWidth / 2, -destHeight / 2, destWidth, destHeight];
+    canvas.width = normalizeDecimalNumber(width);
+    canvas.height = normalizeDecimalNumber(height);
+    context.fillStyle = fillColor;
+    context.fillRect(0, 0, width, height);
+    context.save();
+    context.translate(width / 2, height / 2);
+    context.rotate(rotate * Math.PI / 180);
+    context.scale(scaleX, scaleY);
+    context.imageSmoothingEnabled = imageSmoothingEnabled;
+    context.imageSmoothingQuality = imageSmoothingQuality;
+    context.drawImage.apply(context, [image].concat(_toConsumableArray(params.map(function (param) {
+      return Math.floor(normalizeDecimalNumber(param));
+    }))));
+    context.restore();
+    return canvas;
+  }
+  var fromCharCode = String.fromCharCode;
+  /**
+   * Get string from char code in data view.
+   * @param {DataView} dataView - The data view for read.
+   * @param {number} start - The start index.
+   * @param {number} length - The read length.
+   * @returns {string} The read result.
+   */
+
+  function getStringFromCharCode(dataView, start, length) {
+    var str = '';
+    var i;
+    length += start;
+
+    for (i = start; i < length; i += 1) {
+      str += fromCharCode(dataView.getUint8(i));
+    }
+
+    return str;
+  }
+  var REGEXP_DATA_URL_HEAD = /^data:.*,/;
+  /**
+   * Transform Data URL to array buffer.
+   * @param {string} dataURL - The Data URL to transform.
+   * @returns {ArrayBuffer} The result array buffer.
+   */
+
+  function dataURLToArrayBuffer(dataURL) {
+    var base64 = dataURL.replace(REGEXP_DATA_URL_HEAD, '');
+    var binary = atob(base64);
+    var arrayBuffer = new ArrayBuffer(binary.length);
+    var uint8 = new Uint8Array(arrayBuffer);
+    forEach(uint8, function (value, i) {
+      uint8[i] = binary.charCodeAt(i);
+    });
+    return arrayBuffer;
+  }
+  /**
+   * Transform array buffer to Data URL.
+   * @param {ArrayBuffer} arrayBuffer - The array buffer to transform.
+   * @param {string} mimeType - The mime type of the Data URL.
+   * @returns {string} The result Data URL.
+   */
+
+  function arrayBufferToDataURL(arrayBuffer, mimeType) {
+    var chunks = [];
+    var chunkSize = 8192;
+    var uint8 = new Uint8Array(arrayBuffer);
+
+    while (uint8.length > 0) {
+      chunks.push(fromCharCode.apply(void 0, _toConsumableArray(uint8.subarray(0, chunkSize))));
+      uint8 = uint8.subarray(chunkSize);
+    }
+
+    return "data:".concat(mimeType, ";base64,").concat(btoa(chunks.join('')));
+  }
+  /**
+   * Get orientation value from given array buffer.
+   * @param {ArrayBuffer} arrayBuffer - The array buffer to read.
+   * @returns {number} The read orientation value.
+   */
+
+  function resetAndGetOrientation(arrayBuffer) {
+    var dataView = new DataView(arrayBuffer);
+    var orientation;
+    var littleEndian;
+    var app1Start;
+    var ifdStart; // Only handle JPEG image (start by 0xFFD8)
+
+    if (dataView.getUint8(0) === 0xFF && dataView.getUint8(1) === 0xD8) {
+      var length = dataView.byteLength;
+      var offset = 2;
+
+      while (offset < length) {
+        if (dataView.getUint8(offset) === 0xFF && dataView.getUint8(offset + 1) === 0xE1) {
+          app1Start = offset;
+          break;
+        }
+
+        offset += 1;
+      }
+    }
+
+    if (app1Start) {
+      var exifIDCode = app1Start + 4;
+      var tiffOffset = app1Start + 10;
+
+      if (getStringFromCharCode(dataView, exifIDCode, 4) === 'Exif') {
+        var endianness = dataView.getUint16(tiffOffset);
+        littleEndian = endianness === 0x4949;
+
+        if (littleEndian || endianness === 0x4D4D
+        /* bigEndian */
+        ) {
+            if (dataView.getUint16(tiffOffset + 2, littleEndian) === 0x002A) {
+              var firstIFDOffset = dataView.getUint32(tiffOffset + 4, littleEndian);
+
+              if (firstIFDOffset >= 0x00000008) {
+                ifdStart = tiffOffset + firstIFDOffset;
+              }
+            }
+          }
+      }
+    }
+
+    if (ifdStart) {
+      var _length = dataView.getUint16(ifdStart, littleEndian);
+
+      var _offset;
+
+      var i;
+
+      for (i = 0; i < _length; i += 1) {
+        _offset = ifdStart + i * 12 + 2;
+
+        if (dataView.getUint16(_offset, littleEndian) === 0x0112
+        /* Orientation */
+        ) {
+            // 8 is the offset of the current tag's value
+            _offset += 8; // Get the original orientation value
+
+            orientation = dataView.getUint16(_offset, littleEndian); // Override the orientation with its default value
+
+            dataView.setUint16(_offset, 1, littleEndian);
+            break;
+          }
+      }
+    }
+
+    return orientation;
+  }
+  /**
+   * Parse Exif Orientation value.
+   * @param {number} orientation - The orientation to parse.
+   * @returns {Object} The parsed result.
+   */
+
+  function parseOrientation(orientation) {
+    var rotate = 0;
+    var scaleX = 1;
+    var scaleY = 1;
+
+    switch (orientation) {
+      // Flip horizontal
+      case 2:
+        scaleX = -1;
+        break;
+      // Rotate left 180°
+
+      case 3:
+        rotate = -180;
+        break;
+      // Flip vertical
+
+      case 4:
+        scaleY = -1;
+        break;
+      // Flip vertical and rotate right 90°
+
+      case 5:
+        rotate = 90;
+        scaleY = -1;
+        break;
+      // Rotate right 90°
+
+      case 6:
+        rotate = 90;
+        break;
+      // Flip horizontal and rotate right 90°
+
+      case 7:
+        rotate = 90;
+        scaleX = -1;
+        break;
+      // Rotate left 90°
+
+      case 8:
+        rotate = -90;
+        break;
+
+      default:
+    }
+
+    return {
+      rotate: rotate,
+      scaleX: scaleX,
+      scaleY: scaleY
+    };
+  }
+
+  var render = {
+    render: function render() {
+      this.initContainer();
+      this.initCanvas();
+      this.initCropBox();
+      this.renderCanvas();
+
+      if (this.cropped) {
+        this.renderCropBox();
+      }
+    },
+    initContainer: function initContainer() {
+      var element = this.element,
+          options = this.options,
+          container = this.container,
+          cropper = this.cropper;
+      addClass(cropper, CLASS_HIDDEN);
+      removeClass(element, CLASS_HIDDEN);
+      var containerData = {
+        width: Math.max(container.offsetWidth, Number(options.minContainerWidth) || 200),
+        height: Math.max(container.offsetHeight, Number(options.minContainerHeight) || 100)
+      };
+      this.containerData = containerData;
+      setStyle(cropper, {
+        width: containerData.width,
+        height: containerData.height
+      });
+      addClass(element, CLASS_HIDDEN);
+      removeClass(cropper, CLASS_HIDDEN);
+    },
+    // Canvas (image wrapper)
+    initCanvas: function initCanvas() {
+      var containerData = this.containerData,
+          imageData = this.imageData;
+      var viewMode = this.options.viewMode;
+      var rotated = Math.abs(imageData.rotate) % 180 === 90;
+      var naturalWidth = rotated ? imageData.naturalHeight : imageData.naturalWidth;
+      var naturalHeight = rotated ? imageData.naturalWidth : imageData.naturalHeight;
+      var aspectRatio = naturalWidth / naturalHeight;
+      var canvasWidth = containerData.width;
+      var canvasHeight = containerData.height;
+
+      if (containerData.height * aspectRatio > containerData.width) {
+        if (viewMode === 3) {
+          canvasWidth = containerData.height * aspectRatio;
+        } else {
+          canvasHeight = containerData.width / aspectRatio;
+        }
+      } else if (viewMode === 3) {
+        canvasHeight = containerData.width / aspectRatio;
+      } else {
+        canvasWidth = containerData.height * aspectRatio;
+      }
+
+      var canvasData = {
+        aspectRatio: aspectRatio,
+        naturalWidth: naturalWidth,
+        naturalHeight: naturalHeight,
+        width: canvasWidth,
+        height: canvasHeight
+      };
+      canvasData.left = (containerData.width - canvasWidth) / 2;
+      canvasData.top = (containerData.height - canvasHeight) / 2;
+      canvasData.oldLeft = canvasData.left;
+      canvasData.oldTop = canvasData.top;
+      this.canvasData = canvasData;
+      this.limited = viewMode === 1 || viewMode === 2;
+      this.limitCanvas(true, true);
+      this.initialImageData = assign({}, imageData);
+      this.initialCanvasData = assign({}, canvasData);
+    },
+    limitCanvas: function limitCanvas(sizeLimited, positionLimited) {
+      var options = this.options,
+          containerData = this.containerData,
+          canvasData = this.canvasData,
+          cropBoxData = this.cropBoxData;
+      var viewMode = options.viewMode;
+      var aspectRatio = canvasData.aspectRatio;
+      var cropped = this.cropped && cropBoxData;
+
+      if (sizeLimited) {
+        var minCanvasWidth = Number(options.minCanvasWidth) || 0;
+        var minCanvasHeight = Number(options.minCanvasHeight) || 0;
+
+        if (viewMode > 1) {
+          minCanvasWidth = Math.max(minCanvasWidth, containerData.width);
+          minCanvasHeight = Math.max(minCanvasHeight, containerData.height);
+
+          if (viewMode === 3) {
+            if (minCanvasHeight * aspectRatio > minCanvasWidth) {
+              minCanvasWidth = minCanvasHeight * aspectRatio;
+            } else {
+              minCanvasHeight = minCanvasWidth / aspectRatio;
+            }
+          }
+        } else if (viewMode > 0) {
+          if (minCanvasWidth) {
+            minCanvasWidth = Math.max(minCanvasWidth, cropped ? cropBoxData.width : 0);
+          } else if (minCanvasHeight) {
+            minCanvasHeight = Math.max(minCanvasHeight, cropped ? cropBoxData.height : 0);
+          } else if (cropped) {
+            minCanvasWidth = cropBoxData.width;
+            minCanvasHeight = cropBoxData.height;
+
+            if (minCanvasHeight * aspectRatio > minCanvasWidth) {
+              minCanvasWidth = minCanvasHeight * aspectRatio;
+            } else {
+              minCanvasHeight = minCanvasWidth / aspectRatio;
+            }
+          }
+        }
+
+        var _getAdjustedSizes = getAdjustedSizes({
+          aspectRatio: aspectRatio,
+          width: minCanvasWidth,
+          height: minCanvasHeight
+        });
+
+        minCanvasWidth = _getAdjustedSizes.width;
+        minCanvasHeight = _getAdjustedSizes.height;
+        canvasData.minWidth = minCanvasWidth;
+        canvasData.minHeight = minCanvasHeight;
+        canvasData.maxWidth = Infinity;
+        canvasData.maxHeight = Infinity;
+      }
+
+      if (positionLimited) {
+        if (viewMode > (cropped ? 0 : 1)) {
+          var newCanvasLeft = containerData.width - canvasData.width;
+          var newCanvasTop = containerData.height - canvasData.height;
+          canvasData.minLeft = Math.min(0, newCanvasLeft);
+          canvasData.minTop = Math.min(0, newCanvasTop);
+          canvasData.maxLeft = Math.max(0, newCanvasLeft);
+          canvasData.maxTop = Math.max(0, newCanvasTop);
+
+          if (cropped && this.limited) {
+            canvasData.minLeft = Math.min(cropBoxData.left, cropBoxData.left + (cropBoxData.width - canvasData.width));
+            canvasData.minTop = Math.min(cropBoxData.top, cropBoxData.top + (cropBoxData.height - canvasData.height));
+            canvasData.maxLeft = cropBoxData.left;
+            canvasData.maxTop = cropBoxData.top;
+
+            if (viewMode === 2) {
+              if (canvasData.width >= containerData.width) {
+                canvasData.minLeft = Math.min(0, newCanvasLeft);
+                canvasData.maxLeft = Math.max(0, newCanvasLeft);
+              }
+
+              if (canvasData.height >= containerData.height) {
+                canvasData.minTop = Math.min(0, newCanvasTop);
+                canvasData.maxTop = Math.max(0, newCanvasTop);
+              }
+            }
+          }
+        } else {
+          canvasData.minLeft = -canvasData.width;
+          canvasData.minTop = -canvasData.height;
+          canvasData.maxLeft = containerData.width;
+          canvasData.maxTop = containerData.height;
+        }
+      }
+    },
+    renderCanvas: function renderCanvas(changed, transformed) {
+      var canvasData = this.canvasData,
+          imageData = this.imageData;
+
+      if (transformed) {
+        var _getRotatedSizes = getRotatedSizes({
+          width: imageData.naturalWidth * Math.abs(imageData.scaleX || 1),
+          height: imageData.naturalHeight * Math.abs(imageData.scaleY || 1),
+          degree: imageData.rotate || 0
+        }),
+            naturalWidth = _getRotatedSizes.width,
+            naturalHeight = _getRotatedSizes.height;
+
+        var width = canvasData.width * (naturalWidth / canvasData.naturalWidth);
+        var height = canvasData.height * (naturalHeight / canvasData.naturalHeight);
+        canvasData.left -= (width - canvasData.width) / 2;
+        canvasData.top -= (height - canvasData.height) / 2;
+        canvasData.width = width;
+        canvasData.height = height;
+        canvasData.aspectRatio = naturalWidth / naturalHeight;
+        canvasData.naturalWidth = naturalWidth;
+        canvasData.naturalHeight = naturalHeight;
+        this.limitCanvas(true, false);
+      }
+
+      if (canvasData.width > canvasData.maxWidth || canvasData.width < canvasData.minWidth) {
+        canvasData.left = canvasData.oldLeft;
+      }
+
+      if (canvasData.height > canvasData.maxHeight || canvasData.height < canvasData.minHeight) {
+        canvasData.top = canvasData.oldTop;
+      }
+
+      canvasData.width = Math.min(Math.max(canvasData.width, canvasData.minWidth), canvasData.maxWidth);
+      canvasData.height = Math.min(Math.max(canvasData.height, canvasData.minHeight), canvasData.maxHeight);
+      this.limitCanvas(false, true);
+      canvasData.left = Math.min(Math.max(canvasData.left, canvasData.minLeft), canvasData.maxLeft);
+      canvasData.top = Math.min(Math.max(canvasData.top, canvasData.minTop), canvasData.maxTop);
+      canvasData.oldLeft = canvasData.left;
+      canvasData.oldTop = canvasData.top;
+      setStyle(this.canvas, assign({
+        width: canvasData.width,
+        height: canvasData.height
+      }, getTransforms({
+        translateX: canvasData.left,
+        translateY: canvasData.top
+      })));
+      this.renderImage(changed);
+
+      if (this.cropped && this.limited) {
+        this.limitCropBox(true, true);
+      }
+    },
+    renderImage: function renderImage(changed) {
+      var canvasData = this.canvasData,
+          imageData = this.imageData;
+      var width = imageData.naturalWidth * (canvasData.width / canvasData.naturalWidth);
+      var height = imageData.naturalHeight * (canvasData.height / canvasData.naturalHeight);
+      assign(imageData, {
+        width: width,
+        height: height,
+        left: (canvasData.width - width) / 2,
+        top: (canvasData.height - height) / 2
+      });
+      setStyle(this.image, assign({
+        width: imageData.width,
+        height: imageData.height
+      }, getTransforms(assign({
+        translateX: imageData.left,
+        translateY: imageData.top
+      }, imageData))));
+
+      if (changed) {
+        this.output();
+      }
+    },
+    initCropBox: function initCropBox() {
+      var options = this.options,
+          canvasData = this.canvasData;
+      var aspectRatio = options.aspectRatio || options.initialAspectRatio;
+      var autoCropArea = Number(options.autoCropArea) || 0.8;
+      var cropBoxData = {
+        width: canvasData.width,
+        height: canvasData.height
+      };
+
+      if (aspectRatio) {
+        if (canvasData.height * aspectRatio > canvasData.width) {
+          cropBoxData.height = cropBoxData.width / aspectRatio;
+        } else {
+          cropBoxData.width = cropBoxData.height * aspectRatio;
+        }
+      }
+
+      this.cropBoxData = cropBoxData;
+      this.limitCropBox(true, true); // Initialize auto crop area
+
+      cropBoxData.width = Math.min(Math.max(cropBoxData.width, cropBoxData.minWidth), cropBoxData.maxWidth);
+      cropBoxData.height = Math.min(Math.max(cropBoxData.height, cropBoxData.minHeight), cropBoxData.maxHeight); // The width/height of auto crop area must large than "minWidth/Height"
+
+      cropBoxData.width = Math.max(cropBoxData.minWidth, cropBoxData.width * autoCropArea);
+      cropBoxData.height = Math.max(cropBoxData.minHeight, cropBoxData.height * autoCropArea);
+      cropBoxData.left = canvasData.left + (canvasData.width - cropBoxData.width) / 2;
+      cropBoxData.top = canvasData.top + (canvasData.height - cropBoxData.height) / 2;
+      cropBoxData.oldLeft = cropBoxData.left;
+      cropBoxData.oldTop = cropBoxData.top;
+      this.initialCropBoxData = assign({}, cropBoxData);
+    },
+    limitCropBox: function limitCropBox(sizeLimited, positionLimited) {
+      var options = this.options,
+          containerData = this.containerData,
+          canvasData = this.canvasData,
+          cropBoxData = this.cropBoxData,
+          limited = this.limited;
+      var aspectRatio = options.aspectRatio;
+
+      if (sizeLimited) {
+        var minCropBoxWidth = Number(options.minCropBoxWidth) || 0;
+        var minCropBoxHeight = Number(options.minCropBoxHeight) || 0;
+        var maxCropBoxWidth = limited ? Math.min(containerData.width, canvasData.width, canvasData.width + canvasData.left, containerData.width - canvasData.left) : containerData.width;
+        var maxCropBoxHeight = limited ? Math.min(containerData.height, canvasData.height, canvasData.height + canvasData.top, containerData.height - canvasData.top) : containerData.height; // The min/maxCropBoxWidth/Height must be less than container's width/height
+
+        minCropBoxWidth = Math.min(minCropBoxWidth, containerData.width);
+        minCropBoxHeight = Math.min(minCropBoxHeight, containerData.height);
+
+        if (aspectRatio) {
+          if (minCropBoxWidth && minCropBoxHeight) {
+            if (minCropBoxHeight * aspectRatio > minCropBoxWidth) {
+              minCropBoxHeight = minCropBoxWidth / aspectRatio;
+            } else {
+              minCropBoxWidth = minCropBoxHeight * aspectRatio;
+            }
+          } else if (minCropBoxWidth) {
+            minCropBoxHeight = minCropBoxWidth / aspectRatio;
+          } else if (minCropBoxHeight) {
+            minCropBoxWidth = minCropBoxHeight * aspectRatio;
+          }
+
+          if (maxCropBoxHeight * aspectRatio > maxCropBoxWidth) {
+            maxCropBoxHeight = maxCropBoxWidth / aspectRatio;
+          } else {
+            maxCropBoxWidth = maxCropBoxHeight * aspectRatio;
+          }
+        } // The minWidth/Height must be less than maxWidth/Height
+
+
+        cropBoxData.minWidth = Math.min(minCropBoxWidth, maxCropBoxWidth);
+        cropBoxData.minHeight = Math.min(minCropBoxHeight, maxCropBoxHeight);
+        cropBoxData.maxWidth = maxCropBoxWidth;
+        cropBoxData.maxHeight = maxCropBoxHeight;
+      }
+
+      if (positionLimited) {
+        if (limited) {
+          cropBoxData.minLeft = Math.max(0, canvasData.left);
+          cropBoxData.minTop = Math.max(0, canvasData.top);
+          cropBoxData.maxLeft = Math.min(containerData.width, canvasData.left + canvasData.width) - cropBoxData.width;
+          cropBoxData.maxTop = Math.min(containerData.height, canvasData.top + canvasData.height) - cropBoxData.height;
+        } else {
+          cropBoxData.minLeft = 0;
+          cropBoxData.minTop = 0;
+          cropBoxData.maxLeft = containerData.width - cropBoxData.width;
+          cropBoxData.maxTop = containerData.height - cropBoxData.height;
+        }
+      }
+    },
+    renderCropBox: function renderCropBox() {
+      var options = this.options,
+          containerData = this.containerData,
+          cropBoxData = this.cropBoxData;
+
+      if (cropBoxData.width > cropBoxData.maxWidth || cropBoxData.width < cropBoxData.minWidth) {
+        cropBoxData.left = cropBoxData.oldLeft;
+      }
+
+      if (cropBoxData.height > cropBoxData.maxHeight || cropBoxData.height < cropBoxData.minHeight) {
+        cropBoxData.top = cropBoxData.oldTop;
+      }
+
+      cropBoxData.width = Math.min(Math.max(cropBoxData.width, cropBoxData.minWidth), cropBoxData.maxWidth);
+      cropBoxData.height = Math.min(Math.max(cropBoxData.height, cropBoxData.minHeight), cropBoxData.maxHeight);
+      this.limitCropBox(false, true);
+      cropBoxData.left = Math.min(Math.max(cropBoxData.left, cropBoxData.minLeft), cropBoxData.maxLeft);
+      cropBoxData.top = Math.min(Math.max(cropBoxData.top, cropBoxData.minTop), cropBoxData.maxTop);
+      cropBoxData.oldLeft = cropBoxData.left;
+      cropBoxData.oldTop = cropBoxData.top;
+
+      if (options.movable && options.cropBoxMovable) {
+        // Turn to move the canvas when the crop box is equal to the container
+        setData(this.face, DATA_ACTION, cropBoxData.width >= containerData.width && cropBoxData.height >= containerData.height ? ACTION_MOVE : ACTION_ALL);
+      }
+
+      setStyle(this.cropBox, assign({
+        width: cropBoxData.width,
+        height: cropBoxData.height
+      }, getTransforms({
+        translateX: cropBoxData.left,
+        translateY: cropBoxData.top
+      })));
+
+      if (this.cropped && this.limited) {
+        this.limitCanvas(true, true);
+      }
+
+      if (!this.disabled) {
+        this.output();
+      }
+    },
+    output: function output() {
+      this.preview();
+      dispatchEvent(this.element, EVENT_CROP, this.getData());
+    }
+  };
+
+  var preview = {
+    initPreview: function initPreview() {
+      var crossOrigin = this.crossOrigin;
+      var preview = this.options.preview;
+      var url = crossOrigin ? this.crossOriginUrl : this.url;
+      var image = document.createElement('img');
+
+      if (crossOrigin) {
+        image.crossOrigin = crossOrigin;
+      }
+
+      image.src = url;
+      this.viewBox.appendChild(image);
+      this.viewBoxImage = image;
+
+      if (!preview) {
+        return;
+      }
+
+      var previews = preview;
+
+      if (typeof preview === 'string') {
+        previews = this.element.ownerDocument.querySelectorAll(preview);
+      } else if (preview.querySelector) {
+        previews = [preview];
+      }
+
+      this.previews = previews;
+      forEach(previews, function (el) {
+        var img = document.createElement('img'); // Save the original size for recover
+
+        setData(el, DATA_PREVIEW, {
+          width: el.offsetWidth,
+          height: el.offsetHeight,
+          html: el.innerHTML
+        });
+
+        if (crossOrigin) {
+          img.crossOrigin = crossOrigin;
+        }
+
+        img.src = url;
+        /**
+         * Override img element styles
+         * Add `display:block` to avoid margin top issue
+         * Add `height:auto` to override `height` attribute on IE8
+         * (Occur only when margin-top <= -height)
+         */
+
+        img.style.cssText = 'display:block;' + 'width:100%;' + 'height:auto;' + 'min-width:0!important;' + 'min-height:0!important;' + 'max-width:none!important;' + 'max-height:none!important;' + 'image-orientation:0deg!important;"';
+        el.innerHTML = '';
+        el.appendChild(img);
+      });
+    },
+    resetPreview: function resetPreview() {
+      forEach(this.previews, function (element) {
+        var data = getData(element, DATA_PREVIEW);
+        setStyle(element, {
+          width: data.width,
+          height: data.height
+        });
+        element.innerHTML = data.html;
+        removeData(element, DATA_PREVIEW);
+      });
+    },
+    preview: function preview() {
+      var imageData = this.imageData,
+          canvasData = this.canvasData,
+          cropBoxData = this.cropBoxData;
+      var cropBoxWidth = cropBoxData.width,
+          cropBoxHeight = cropBoxData.height;
+      var width = imageData.width,
+          height = imageData.height;
+      var left = cropBoxData.left - canvasData.left - imageData.left;
+      var top = cropBoxData.top - canvasData.top - imageData.top;
+
+      if (!this.cropped || this.disabled) {
+        return;
+      }
+
+      setStyle(this.viewBoxImage, assign({
+        width: width,
+        height: height
+      }, getTransforms(assign({
+        translateX: -left,
+        translateY: -top
+      }, imageData))));
+      forEach(this.previews, function (element) {
+        var data = getData(element, DATA_PREVIEW);
+        var originalWidth = data.width;
+        var originalHeight = data.height;
+        var newWidth = originalWidth;
+        var newHeight = originalHeight;
+        var ratio = 1;
+
+        if (cropBoxWidth) {
+          ratio = originalWidth / cropBoxWidth;
+          newHeight = cropBoxHeight * ratio;
+        }
+
+        if (cropBoxHeight && newHeight > originalHeight) {
+          ratio = originalHeight / cropBoxHeight;
+          newWidth = cropBoxWidth * ratio;
+          newHeight = originalHeight;
+        }
+
+        setStyle(element, {
+          width: newWidth,
+          height: newHeight
+        });
+        setStyle(element.getElementsByTagName('img')[0], assign({
+          width: width * ratio,
+          height: height * ratio
+        }, getTransforms(assign({
+          translateX: -left * ratio,
+          translateY: -top * ratio
+        }, imageData))));
+      });
+    }
+  };
+
+  var events = {
+    bind: function bind() {
+      var element = this.element,
+          options = this.options,
+          cropper = this.cropper;
+
+      if (isFunction(options.cropstart)) {
+        addListener(element, EVENT_CROP_START, options.cropstart);
+      }
+
+      if (isFunction(options.cropmove)) {
+        addListener(element, EVENT_CROP_MOVE, options.cropmove);
+      }
+
+      if (isFunction(options.cropend)) {
+        addListener(element, EVENT_CROP_END, options.cropend);
+      }
+
+      if (isFunction(options.crop)) {
+        addListener(element, EVENT_CROP, options.crop);
+      }
+
+      if (isFunction(options.zoom)) {
+        addListener(element, EVENT_ZOOM, options.zoom);
+      }
+
+      addListener(cropper, EVENT_POINTER_DOWN, this.onCropStart = this.cropStart.bind(this));
+
+      if (options.zoomable && options.zoomOnWheel) {
+        addListener(cropper, EVENT_WHEEL, this.onWheel = this.wheel.bind(this));
+      }
+
+      if (options.toggleDragModeOnDblclick) {
+        addListener(cropper, EVENT_DBLCLICK, this.onDblclick = this.dblclick.bind(this));
+      }
+
+      addListener(element.ownerDocument, EVENT_POINTER_MOVE, this.onCropMove = this.cropMove.bind(this));
+      addListener(element.ownerDocument, EVENT_POINTER_UP, this.onCropEnd = this.cropEnd.bind(this));
+
+      if (options.responsive) {
+        addListener(window, EVENT_RESIZE, this.onResize = this.resize.bind(this));
+      }
+    },
+    unbind: function unbind() {
+      var element = this.element,
+          options = this.options,
+          cropper = this.cropper;
+
+      if (isFunction(options.cropstart)) {
+        removeListener(element, EVENT_CROP_START, options.cropstart);
+      }
+
+      if (isFunction(options.cropmove)) {
+        removeListener(element, EVENT_CROP_MOVE, options.cropmove);
+      }
+
+      if (isFunction(options.cropend)) {
+        removeListener(element, EVENT_CROP_END, options.cropend);
+      }
+
+      if (isFunction(options.crop)) {
+        removeListener(element, EVENT_CROP, options.crop);
+      }
+
+      if (isFunction(options.zoom)) {
+        removeListener(element, EVENT_ZOOM, options.zoom);
+      }
+
+      removeListener(cropper, EVENT_POINTER_DOWN, this.onCropStart);
+
+      if (options.zoomable && options.zoomOnWheel) {
+        removeListener(cropper, EVENT_WHEEL, this.onWheel);
+      }
+
+      if (options.toggleDragModeOnDblclick) {
+        removeListener(cropper, EVENT_DBLCLICK, this.onDblclick);
+      }
+
+      removeListener(element.ownerDocument, EVENT_POINTER_MOVE, this.onCropMove);
+      removeListener(element.ownerDocument, EVENT_POINTER_UP, this.onCropEnd);
+
+      if (options.responsive) {
+        removeListener(window, EVENT_RESIZE, this.onResize);
+      }
+    }
+  };
+
+  var handlers = {
+    resize: function resize() {
+      var options = this.options,
+          container = this.container,
+          containerData = this.containerData;
+      var minContainerWidth = Number(options.minContainerWidth) || 200;
+      var minContainerHeight = Number(options.minContainerHeight) || 100;
+
+      if (this.disabled || containerData.width <= minContainerWidth || containerData.height <= minContainerHeight) {
+        return;
+      }
+
+      var ratio = container.offsetWidth / containerData.width; // Resize when width changed or height changed
+
+      if (ratio !== 1 || container.offsetHeight !== containerData.height) {
+        var canvasData;
+        var cropBoxData;
+
+        if (options.restore) {
+          canvasData = this.getCanvasData();
+          cropBoxData = this.getCropBoxData();
+        }
+
+        this.render();
+
+        if (options.restore) {
+          this.setCanvasData(forEach(canvasData, function (n, i) {
+            canvasData[i] = n * ratio;
+          }));
+          this.setCropBoxData(forEach(cropBoxData, function (n, i) {
+            cropBoxData[i] = n * ratio;
+          }));
+        }
+      }
+    },
+    dblclick: function dblclick() {
+      if (this.disabled || this.options.dragMode === DRAG_MODE_NONE) {
+        return;
+      }
+
+      this.setDragMode(hasClass(this.dragBox, CLASS_CROP) ? DRAG_MODE_MOVE : DRAG_MODE_CROP);
+    },
+    wheel: function wheel(e) {
+      var _this = this;
+
+      var ratio = Number(this.options.wheelZoomRatio) || 0.1;
+      var delta = 1;
+
+      if (this.disabled) {
+        return;
+      }
+
+      e.preventDefault(); // Limit wheel speed to prevent zoom too fast (#21)
+
+      if (this.wheeling) {
+        return;
+      }
+
+      this.wheeling = true;
+      setTimeout(function () {
+        _this.wheeling = false;
+      }, 50);
+
+      if (e.deltaY) {
+        delta = e.deltaY > 0 ? 1 : -1;
+      } else if (e.wheelDelta) {
+        delta = -e.wheelDelta / 120;
+      } else if (e.detail) {
+        delta = e.detail > 0 ? 1 : -1;
+      }
+
+      this.zoom(-delta * ratio, e);
+    },
+    cropStart: function cropStart(e) {
+      if (this.disabled) {
+        return;
+      }
+
+      var options = this.options,
+          pointers = this.pointers;
+      var action;
+
+      if (e.changedTouches) {
+        // Handle touch event
+        forEach(e.changedTouches, function (touch) {
+          pointers[touch.identifier] = getPointer(touch);
+        });
+      } else {
+        // Handle mouse event and pointer event
+        pointers[e.pointerId || 0] = getPointer(e);
+      }
+
+      if (Object.keys(pointers).length > 1 && options.zoomable && options.zoomOnTouch) {
+        action = ACTION_ZOOM;
+      } else {
+        action = getData(e.target, DATA_ACTION);
+      }
+
+      if (!REGEXP_ACTIONS.test(action)) {
+        return;
+      }
+
+      if (dispatchEvent(this.element, EVENT_CROP_START, {
+        originalEvent: e,
+        action: action
+      }) === false) {
+        return;
+      } // This line is required for preventing page zooming in iOS browsers
+
+
+      e.preventDefault();
+      this.action = action;
+      this.cropping = false;
+
+      if (action === ACTION_CROP) {
+        this.cropping = true;
+        addClass(this.dragBox, CLASS_MODAL);
+      }
+    },
+    cropMove: function cropMove(e) {
+      var action = this.action;
+
+      if (this.disabled || !action) {
+        return;
+      }
+
+      var pointers = this.pointers;
+      e.preventDefault();
+
+      if (dispatchEvent(this.element, EVENT_CROP_MOVE, {
+        originalEvent: e,
+        action: action
+      }) === false) {
+        return;
+      }
+
+      if (e.changedTouches) {
+        forEach(e.changedTouches, function (touch) {
+          // The first parameter should not be undefined (#432)
+          assign(pointers[touch.identifier] || {}, getPointer(touch, true));
+        });
+      } else {
+        assign(pointers[e.pointerId || 0] || {}, getPointer(e, true));
+      }
+
+      this.change(e);
+    },
+    cropEnd: function cropEnd(e) {
+      if (this.disabled) {
+        return;
+      }
+
+      var action = this.action,
+          pointers = this.pointers;
+
+      if (e.changedTouches) {
+        forEach(e.changedTouches, function (touch) {
+          delete pointers[touch.identifier];
+        });
+      } else {
+        delete pointers[e.pointerId || 0];
+      }
+
+      if (!action) {
+        return;
+      }
+
+      e.preventDefault();
+
+      if (!Object.keys(pointers).length) {
+        this.action = '';
+      }
+
+      if (this.cropping) {
+        this.cropping = false;
+        toggleClass(this.dragBox, CLASS_MODAL, this.cropped && this.options.modal);
+      }
+
+      dispatchEvent(this.element, EVENT_CROP_END, {
+        originalEvent: e,
+        action: action
+      });
+    }
+  };
+
+  var change = {
+    change: function change(e) {
+      var options = this.options,
+          canvasData = this.canvasData,
+          containerData = this.containerData,
+          cropBoxData = this.cropBoxData,
+          pointers = this.pointers;
+      var action = this.action;
+      var aspectRatio = options.aspectRatio;
+      var left = cropBoxData.left,
+          top = cropBoxData.top,
+          width = cropBoxData.width,
+          height = cropBoxData.height;
+      var right = left + width;
+      var bottom = top + height;
+      var minLeft = 0;
+      var minTop = 0;
+      var maxWidth = containerData.width;
+      var maxHeight = containerData.height;
+      var renderable = true;
+      var offset; // Locking aspect ratio in "free mode" by holding shift key
+
+      if (!aspectRatio && e.shiftKey) {
+        aspectRatio = width && height ? width / height : 1;
+      }
+
+      if (this.limited) {
+        minLeft = cropBoxData.minLeft;
+        minTop = cropBoxData.minTop;
+        maxWidth = minLeft + Math.min(containerData.width, canvasData.width, canvasData.left + canvasData.width);
+        maxHeight = minTop + Math.min(containerData.height, canvasData.height, canvasData.top + canvasData.height);
+      }
+
+      var pointer = pointers[Object.keys(pointers)[0]];
+      var range = {
+        x: pointer.endX - pointer.startX,
+        y: pointer.endY - pointer.startY
+      };
+
+      var check = function check(side) {
+        switch (side) {
+          case ACTION_EAST:
+            if (right + range.x > maxWidth) {
+              range.x = maxWidth - right;
+            }
+
+            break;
+
+          case ACTION_WEST:
+            if (left + range.x < minLeft) {
+              range.x = minLeft - left;
+            }
+
+            break;
+
+          case ACTION_NORTH:
+            if (top + range.y < minTop) {
+              range.y = minTop - top;
+            }
+
+            break;
+
+          case ACTION_SOUTH:
+            if (bottom + range.y > maxHeight) {
+              range.y = maxHeight - bottom;
+            }
+
+            break;
+
+          default:
+        }
+      };
+
+      switch (action) {
+        // Move crop box
+        case ACTION_ALL:
+          left += range.x;
+          top += range.y;
+          break;
+        // Resize crop box
+
+        case ACTION_EAST:
+          if (range.x >= 0 && (right >= maxWidth || aspectRatio && (top <= minTop || bottom >= maxHeight))) {
+            renderable = false;
+            break;
+          }
+
+          check(ACTION_EAST);
+          width += range.x;
+
+          if (width < 0) {
+            action = ACTION_WEST;
+            width = -width;
+            left -= width;
+          }
+
+          if (aspectRatio) {
+            height = width / aspectRatio;
+            top += (cropBoxData.height - height) / 2;
+          }
+
+          break;
+
+        case ACTION_NORTH:
+          if (range.y <= 0 && (top <= minTop || aspectRatio && (left <= minLeft || right >= maxWidth))) {
+            renderable = false;
+            break;
+          }
+
+          check(ACTION_NORTH);
+          height -= range.y;
+          top += range.y;
+
+          if (height < 0) {
+            action = ACTION_SOUTH;
+            height = -height;
+            top -= height;
+          }
+
+          if (aspectRatio) {
+            width = height * aspectRatio;
+            left += (cropBoxData.width - width) / 2;
+          }
+
+          break;
+
+        case ACTION_WEST:
+          if (range.x <= 0 && (left <= minLeft || aspectRatio && (top <= minTop || bottom >= maxHeight))) {
+            renderable = false;
+            break;
+          }
+
+          check(ACTION_WEST);
+          width -= range.x;
+          left += range.x;
+
+          if (width < 0) {
+            action = ACTION_EAST;
+            width = -width;
+            left -= width;
+          }
+
+          if (aspectRatio) {
+            height = width / aspectRatio;
+            top += (cropBoxData.height - height) / 2;
+          }
+
+          break;
+
+        case ACTION_SOUTH:
+          if (range.y >= 0 && (bottom >= maxHeight || aspectRatio && (left <= minLeft || right >= maxWidth))) {
+            renderable = false;
+            break;
+          }
+
+          check(ACTION_SOUTH);
+          height += range.y;
+
+          if (height < 0) {
+            action = ACTION_NORTH;
+            height = -height;
+            top -= height;
+          }
+
+          if (aspectRatio) {
+            width = height * aspectRatio;
+            left += (cropBoxData.width - width) / 2;
+          }
+
+          break;
+
+        case ACTION_NORTH_EAST:
+          if (aspectRatio) {
+            if (range.y <= 0 && (top <= minTop || right >= maxWidth)) {
+              renderable = false;
+              break;
+            }
+
+            check(ACTION_NORTH);
+            height -= range.y;
+            top += range.y;
+            width = height * aspectRatio;
+          } else {
+            check(ACTION_NORTH);
+            check(ACTION_EAST);
+
+            if (range.x >= 0) {
+              if (right < maxWidth) {
+                width += range.x;
+              } else if (range.y <= 0 && top <= minTop) {
+                renderable = false;
+              }
+            } else {
+              width += range.x;
+            }
+
+            if (range.y <= 0) {
+              if (top > minTop) {
+                height -= range.y;
+                top += range.y;
+              }
+            } else {
+              height -= range.y;
+              top += range.y;
+            }
+          }
+
+          if (width < 0 && height < 0) {
+            action = ACTION_SOUTH_WEST;
+            height = -height;
+            width = -width;
+            top -= height;
+            left -= width;
+          } else if (width < 0) {
+            action = ACTION_NORTH_WEST;
+            width = -width;
+            left -= width;
+          } else if (height < 0) {
+            action = ACTION_SOUTH_EAST;
+            height = -height;
+            top -= height;
+          }
+
+          break;
+
+        case ACTION_NORTH_WEST:
+          if (aspectRatio) {
+            if (range.y <= 0 && (top <= minTop || left <= minLeft)) {
+              renderable = false;
+              break;
+            }
+
+            check(ACTION_NORTH);
+            height -= range.y;
+            top += range.y;
+            width = height * aspectRatio;
+            left += cropBoxData.width - width;
+          } else {
+            check(ACTION_NORTH);
+            check(ACTION_WEST);
+
+            if (range.x <= 0) {
+              if (left > minLeft) {
+                width -= range.x;
+                left += range.x;
+              } else if (range.y <= 0 && top <= minTop) {
+                renderable = false;
+              }
+            } else {
+              width -= range.x;
+              left += range.x;
+            }
+
+            if (range.y <= 0) {
+              if (top > minTop) {
+                height -= range.y;
+                top += range.y;
+              }
+            } else {
+              height -= range.y;
+              top += range.y;
+            }
+          }
+
+          if (width < 0 && height < 0) {
+            action = ACTION_SOUTH_EAST;
+            height = -height;
+            width = -width;
+            top -= height;
+            left -= width;
+          } else if (width < 0) {
+            action = ACTION_NORTH_EAST;
+            width = -width;
+            left -= width;
+          } else if (height < 0) {
+            action = ACTION_SOUTH_WEST;
+            height = -height;
+            top -= height;
+          }
+
+          break;
+
+        case ACTION_SOUTH_WEST:
+          if (aspectRatio) {
+            if (range.x <= 0 && (left <= minLeft || bottom >= maxHeight)) {
+              renderable = false;
+              break;
+            }
+
+            check(ACTION_WEST);
+            width -= range.x;
+            left += range.x;
+            height = width / aspectRatio;
+          } else {
+            check(ACTION_SOUTH);
+            check(ACTION_WEST);
+
+            if (range.x <= 0) {
+              if (left > minLeft) {
+                width -= range.x;
+                left += range.x;
+              } else if (range.y >= 0 && bottom >= maxHeight) {
+                renderable = false;
+              }
+            } else {
+              width -= range.x;
+              left += range.x;
+            }
+
+            if (range.y >= 0) {
+              if (bottom < maxHeight) {
+                height += range.y;
+              }
+            } else {
+              height += range.y;
+            }
+          }
+
+          if (width < 0 && height < 0) {
+            action = ACTION_NORTH_EAST;
+            height = -height;
+            width = -width;
+            top -= height;
+            left -= width;
+          } else if (width < 0) {
+            action = ACTION_SOUTH_EAST;
+            width = -width;
+            left -= width;
+          } else if (height < 0) {
+            action = ACTION_NORTH_WEST;
+            height = -height;
+            top -= height;
+          }
+
+          break;
+
+        case ACTION_SOUTH_EAST:
+          if (aspectRatio) {
+            if (range.x >= 0 && (right >= maxWidth || bottom >= maxHeight)) {
+              renderable = false;
+              break;
+            }
+
+            check(ACTION_EAST);
+            width += range.x;
+            height = width / aspectRatio;
+          } else {
+            check(ACTION_SOUTH);
+            check(ACTION_EAST);
+
+            if (range.x >= 0) {
+              if (right < maxWidth) {
+                width += range.x;
+              } else if (range.y >= 0 && bottom >= maxHeight) {
+                renderable = false;
+              }
+            } else {
+              width += range.x;
+            }
+
+            if (range.y >= 0) {
+              if (bottom < maxHeight) {
+                height += range.y;
+              }
+            } else {
+              height += range.y;
+            }
+          }
+
+          if (width < 0 && height < 0) {
+            action = ACTION_NORTH_WEST;
+            height = -height;
+            width = -width;
+            top -= height;
+            left -= width;
+          } else if (width < 0) {
+            action = ACTION_SOUTH_WEST;
+            width = -width;
+            left -= width;
+          } else if (height < 0) {
+            action = ACTION_NORTH_EAST;
+            height = -height;
+            top -= height;
+          }
+
+          break;
+        // Move canvas
+
+        case ACTION_MOVE:
+          this.move(range.x, range.y);
+          renderable = false;
+          break;
+        // Zoom canvas
+
+        case ACTION_ZOOM:
+          this.zoom(getMaxZoomRatio(pointers), e);
+          renderable = false;
+          break;
+        // Create crop box
+
+        case ACTION_CROP:
+          if (!range.x || !range.y) {
+            renderable = false;
+            break;
+          }
+
+          offset = getOffset(this.cropper);
+          left = pointer.startX - offset.left;
+          top = pointer.startY - offset.top;
+          width = cropBoxData.minWidth;
+          height = cropBoxData.minHeight;
+
+          if (range.x > 0) {
+            action = range.y > 0 ? ACTION_SOUTH_EAST : ACTION_NORTH_EAST;
+          } else if (range.x < 0) {
+            left -= width;
+            action = range.y > 0 ? ACTION_SOUTH_WEST : ACTION_NORTH_WEST;
+          }
+
+          if (range.y < 0) {
+            top -= height;
+          } // Show the crop box if is hidden
+
+
+          if (!this.cropped) {
+            removeClass(this.cropBox, CLASS_HIDDEN);
+            this.cropped = true;
+
+            if (this.limited) {
+              this.limitCropBox(true, true);
+            }
+          }
+
+          break;
+
+        default:
+      }
+
+      if (renderable) {
+        cropBoxData.width = width;
+        cropBoxData.height = height;
+        cropBoxData.left = left;
+        cropBoxData.top = top;
+        this.action = action;
+        this.renderCropBox();
+      } // Override
+
+
+      forEach(pointers, function (p) {
+        p.startX = p.endX;
+        p.startY = p.endY;
+      });
+    }
+  };
+
+  var methods = {
+    // Show the crop box manually
+    crop: function crop() {
+      if (this.ready && !this.cropped && !this.disabled) {
+        this.cropped = true;
+        this.limitCropBox(true, true);
+
+        if (this.options.modal) {
+          addClass(this.dragBox, CLASS_MODAL);
+        }
+
+        removeClass(this.cropBox, CLASS_HIDDEN);
+        this.setCropBoxData(this.initialCropBoxData);
+      }
+
+      return this;
+    },
+    // Reset the image and crop box to their initial states
+    reset: function reset() {
+      if (this.ready && !this.disabled) {
+        this.imageData = assign({}, this.initialImageData);
+        this.canvasData = assign({}, this.initialCanvasData);
+        this.cropBoxData = assign({}, this.initialCropBoxData);
+        this.renderCanvas();
+
+        if (this.cropped) {
+          this.renderCropBox();
+        }
+      }
+
+      return this;
+    },
+    // Clear the crop box
+    clear: function clear() {
+      if (this.cropped && !this.disabled) {
+        assign(this.cropBoxData, {
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0
+        });
+        this.cropped = false;
+        this.renderCropBox();
+        this.limitCanvas(true, true); // Render canvas after crop box rendered
+
+        this.renderCanvas();
+        removeClass(this.dragBox, CLASS_MODAL);
+        addClass(this.cropBox, CLASS_HIDDEN);
+      }
+
+      return this;
+    },
+
+    /**
+     * Replace the image's src and rebuild the cropper
+     * @param {string} url - The new URL.
+     * @param {boolean} [hasSameSize] - Indicate if the new image has the same size as the old one.
+     * @returns {Cropper} this
+     */
+    replace: function replace(url) {
+      var hasSameSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (!this.disabled && url) {
+        if (this.isImg) {
+          this.element.src = url;
+        }
+
+        if (hasSameSize) {
+          this.url = url;
+          this.image.src = url;
+
+          if (this.ready) {
+            this.viewBoxImage.src = url;
+            forEach(this.previews, function (element) {
+              element.getElementsByTagName('img')[0].src = url;
+            });
+          }
+        } else {
+          if (this.isImg) {
+            this.replaced = true;
+          }
+
+          this.options.data = null;
+          this.uncreate();
+          this.load(url);
+        }
+      }
+
+      return this;
+    },
+    // Enable (unfreeze) the cropper
+    enable: function enable() {
+      if (this.ready && this.disabled) {
+        this.disabled = false;
+        removeClass(this.cropper, CLASS_DISABLED);
+      }
+
+      return this;
+    },
+    // Disable (freeze) the cropper
+    disable: function disable() {
+      if (this.ready && !this.disabled) {
+        this.disabled = true;
+        addClass(this.cropper, CLASS_DISABLED);
+      }
+
+      return this;
+    },
+
+    /**
+     * Destroy the cropper and remove the instance from the image
+     * @returns {Cropper} this
+     */
+    destroy: function destroy() {
+      var element = this.element;
+
+      if (!element[NAMESPACE]) {
+        return this;
+      }
+
+      element[NAMESPACE] = undefined;
+
+      if (this.isImg && this.replaced) {
+        element.src = this.originalUrl;
+      }
+
+      this.uncreate();
+      return this;
+    },
+
+    /**
+     * Move the canvas with relative offsets
+     * @param {number} offsetX - The relative offset distance on the x-axis.
+     * @param {number} [offsetY=offsetX] - The relative offset distance on the y-axis.
+     * @returns {Cropper} this
+     */
+    move: function move(offsetX) {
+      var offsetY = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : offsetX;
+      var _this$canvasData = this.canvasData,
+          left = _this$canvasData.left,
+          top = _this$canvasData.top;
+      return this.moveTo(isUndefined(offsetX) ? offsetX : left + Number(offsetX), isUndefined(offsetY) ? offsetY : top + Number(offsetY));
+    },
+
+    /**
+     * Move the canvas to an absolute point
+     * @param {number} x - The x-axis coordinate.
+     * @param {number} [y=x] - The y-axis coordinate.
+     * @returns {Cropper} this
+     */
+    moveTo: function moveTo(x) {
+      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+      var canvasData = this.canvasData;
+      var changed = false;
+      x = Number(x);
+      y = Number(y);
+
+      if (this.ready && !this.disabled && this.options.movable) {
+        if (isNumber(x)) {
+          canvasData.left = x;
+          changed = true;
+        }
+
+        if (isNumber(y)) {
+          canvasData.top = y;
+          changed = true;
+        }
+
+        if (changed) {
+          this.renderCanvas(true);
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     * Zoom the canvas with a relative ratio
+     * @param {number} ratio - The target ratio.
+     * @param {Event} _originalEvent - The original event if any.
+     * @returns {Cropper} this
+     */
+    zoom: function zoom(ratio, _originalEvent) {
+      var canvasData = this.canvasData;
+      ratio = Number(ratio);
+
+      if (ratio < 0) {
+        ratio = 1 / (1 - ratio);
+      } else {
+        ratio = 1 + ratio;
+      }
+
+      return this.zoomTo(canvasData.width * ratio / canvasData.naturalWidth, null, _originalEvent);
+    },
+
+    /**
+     * Zoom the canvas to an absolute ratio
+     * @param {number} ratio - The target ratio.
+     * @param {Object} pivot - The zoom pivot point coordinate.
+     * @param {Event} _originalEvent - The original event if any.
+     * @returns {Cropper} this
+     */
+    zoomTo: function zoomTo(ratio, pivot, _originalEvent) {
+      var options = this.options,
+          canvasData = this.canvasData;
+      var width = canvasData.width,
+          height = canvasData.height,
+          naturalWidth = canvasData.naturalWidth,
+          naturalHeight = canvasData.naturalHeight;
+      ratio = Number(ratio);
+
+      if (ratio >= 0 && this.ready && !this.disabled && options.zoomable) {
+        var newWidth = naturalWidth * ratio;
+        var newHeight = naturalHeight * ratio;
+
+        if (dispatchEvent(this.element, EVENT_ZOOM, {
+          ratio: ratio,
+          oldRatio: width / naturalWidth,
+          originalEvent: _originalEvent
+        }) === false) {
+          return this;
+        }
+
+        if (_originalEvent) {
+          var pointers = this.pointers;
+          var offset = getOffset(this.cropper);
+          var center = pointers && Object.keys(pointers).length ? getPointersCenter(pointers) : {
+            pageX: _originalEvent.pageX,
+            pageY: _originalEvent.pageY
+          }; // Zoom from the triggering point of the event
+
+          canvasData.left -= (newWidth - width) * ((center.pageX - offset.left - canvasData.left) / width);
+          canvasData.top -= (newHeight - height) * ((center.pageY - offset.top - canvasData.top) / height);
+        } else if (isPlainObject(pivot) && isNumber(pivot.x) && isNumber(pivot.y)) {
+          canvasData.left -= (newWidth - width) * ((pivot.x - canvasData.left) / width);
+          canvasData.top -= (newHeight - height) * ((pivot.y - canvasData.top) / height);
+        } else {
+          // Zoom from the center of the canvas
+          canvasData.left -= (newWidth - width) / 2;
+          canvasData.top -= (newHeight - height) / 2;
+        }
+
+        canvasData.width = newWidth;
+        canvasData.height = newHeight;
+        this.renderCanvas(true);
+      }
+
+      return this;
+    },
+
+    /**
+     * Rotate the canvas with a relative degree
+     * @param {number} degree - The rotate degree.
+     * @returns {Cropper} this
+     */
+    rotate: function rotate(degree) {
+      return this.rotateTo((this.imageData.rotate || 0) + Number(degree));
+    },
+
+    /**
+     * Rotate the canvas to an absolute degree
+     * @param {number} degree - The rotate degree.
+     * @returns {Cropper} this
+     */
+    rotateTo: function rotateTo(degree) {
+      degree = Number(degree);
+
+      if (isNumber(degree) && this.ready && !this.disabled && this.options.rotatable) {
+        this.imageData.rotate = degree % 360;
+        this.renderCanvas(true, true);
+      }
+
+      return this;
+    },
+
+    /**
+     * Scale the image on the x-axis.
+     * @param {number} scaleX - The scale ratio on the x-axis.
+     * @returns {Cropper} this
+     */
+    scaleX: function scaleX(_scaleX) {
+      var scaleY = this.imageData.scaleY;
+      return this.scale(_scaleX, isNumber(scaleY) ? scaleY : 1);
+    },
+
+    /**
+     * Scale the image on the y-axis.
+     * @param {number} scaleY - The scale ratio on the y-axis.
+     * @returns {Cropper} this
+     */
+    scaleY: function scaleY(_scaleY) {
+      var scaleX = this.imageData.scaleX;
+      return this.scale(isNumber(scaleX) ? scaleX : 1, _scaleY);
+    },
+
+    /**
+     * Scale the image
+     * @param {number} scaleX - The scale ratio on the x-axis.
+     * @param {number} [scaleY=scaleX] - The scale ratio on the y-axis.
+     * @returns {Cropper} this
+     */
+    scale: function scale(scaleX) {
+      var scaleY = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : scaleX;
+      var imageData = this.imageData;
+      var transformed = false;
+      scaleX = Number(scaleX);
+      scaleY = Number(scaleY);
+
+      if (this.ready && !this.disabled && this.options.scalable) {
+        if (isNumber(scaleX)) {
+          imageData.scaleX = scaleX;
+          transformed = true;
+        }
+
+        if (isNumber(scaleY)) {
+          imageData.scaleY = scaleY;
+          transformed = true;
+        }
+
+        if (transformed) {
+          this.renderCanvas(true, true);
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     * Get the cropped area position and size data (base on the original image)
+     * @param {boolean} [rounded=false] - Indicate if round the data values or not.
+     * @returns {Object} The result cropped data.
+     */
+    getData: function getData$$1() {
+      var rounded = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var options = this.options,
+          imageData = this.imageData,
+          canvasData = this.canvasData,
+          cropBoxData = this.cropBoxData;
+      var data;
+
+      if (this.ready && this.cropped) {
+        data = {
+          x: cropBoxData.left - canvasData.left,
+          y: cropBoxData.top - canvasData.top,
+          width: cropBoxData.width,
+          height: cropBoxData.height
+        };
+        var ratio = imageData.width / imageData.naturalWidth;
+        forEach(data, function (n, i) {
+          data[i] = n / ratio;
+        });
+
+        if (rounded) {
+          // In case rounding off leads to extra 1px in right or bottom border
+          // we should round the top-left corner and the dimension (#343).
+          var bottom = Math.round(data.y + data.height);
+          var right = Math.round(data.x + data.width);
+          data.x = Math.round(data.x);
+          data.y = Math.round(data.y);
+          data.width = right - data.x;
+          data.height = bottom - data.y;
+        }
+      } else {
+        data = {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0
+        };
+      }
+
+      if (options.rotatable) {
+        data.rotate = imageData.rotate || 0;
+      }
+
+      if (options.scalable) {
+        data.scaleX = imageData.scaleX || 1;
+        data.scaleY = imageData.scaleY || 1;
+      }
+
+      return data;
+    },
+
+    /**
+     * Set the cropped area position and size with new data
+     * @param {Object} data - The new data.
+     * @returns {Cropper} this
+     */
+    setData: function setData$$1(data) {
+      var options = this.options,
+          imageData = this.imageData,
+          canvasData = this.canvasData;
+      var cropBoxData = {};
+
+      if (this.ready && !this.disabled && isPlainObject(data)) {
+        var transformed = false;
+
+        if (options.rotatable) {
+          if (isNumber(data.rotate) && data.rotate !== imageData.rotate) {
+            imageData.rotate = data.rotate;
+            transformed = true;
+          }
+        }
+
+        if (options.scalable) {
+          if (isNumber(data.scaleX) && data.scaleX !== imageData.scaleX) {
+            imageData.scaleX = data.scaleX;
+            transformed = true;
+          }
+
+          if (isNumber(data.scaleY) && data.scaleY !== imageData.scaleY) {
+            imageData.scaleY = data.scaleY;
+            transformed = true;
+          }
+        }
+
+        if (transformed) {
+          this.renderCanvas(true, true);
+        }
+
+        var ratio = imageData.width / imageData.naturalWidth;
+
+        if (isNumber(data.x)) {
+          cropBoxData.left = data.x * ratio + canvasData.left;
+        }
+
+        if (isNumber(data.y)) {
+          cropBoxData.top = data.y * ratio + canvasData.top;
+        }
+
+        if (isNumber(data.width)) {
+          cropBoxData.width = data.width * ratio;
+        }
+
+        if (isNumber(data.height)) {
+          cropBoxData.height = data.height * ratio;
+        }
+
+        this.setCropBoxData(cropBoxData);
+      }
+
+      return this;
+    },
+
+    /**
+     * Get the container size data.
+     * @returns {Object} The result container data.
+     */
+    getContainerData: function getContainerData() {
+      return this.ready ? assign({}, this.containerData) : {};
+    },
+
+    /**
+     * Get the image position and size data.
+     * @returns {Object} The result image data.
+     */
+    getImageData: function getImageData() {
+      return this.sized ? assign({}, this.imageData) : {};
+    },
+
+    /**
+     * Get the canvas position and size data.
+     * @returns {Object} The result canvas data.
+     */
+    getCanvasData: function getCanvasData() {
+      var canvasData = this.canvasData;
+      var data = {};
+
+      if (this.ready) {
+        forEach(['left', 'top', 'width', 'height', 'naturalWidth', 'naturalHeight'], function (n) {
+          data[n] = canvasData[n];
+        });
+      }
+
+      return data;
+    },
+
+    /**
+     * Set the canvas position and size with new data.
+     * @param {Object} data - The new canvas data.
+     * @returns {Cropper} this
+     */
+    setCanvasData: function setCanvasData(data) {
+      var canvasData = this.canvasData;
+      var aspectRatio = canvasData.aspectRatio;
+
+      if (this.ready && !this.disabled && isPlainObject(data)) {
+        if (isNumber(data.left)) {
+          canvasData.left = data.left;
+        }
+
+        if (isNumber(data.top)) {
+          canvasData.top = data.top;
+        }
+
+        if (isNumber(data.width)) {
+          canvasData.width = data.width;
+          canvasData.height = data.width / aspectRatio;
+        } else if (isNumber(data.height)) {
+          canvasData.height = data.height;
+          canvasData.width = data.height * aspectRatio;
+        }
+
+        this.renderCanvas(true);
+      }
+
+      return this;
+    },
+
+    /**
+     * Get the crop box position and size data.
+     * @returns {Object} The result crop box data.
+     */
+    getCropBoxData: function getCropBoxData() {
+      var cropBoxData = this.cropBoxData;
+      var data;
+
+      if (this.ready && this.cropped) {
+        data = {
+          left: cropBoxData.left,
+          top: cropBoxData.top,
+          width: cropBoxData.width,
+          height: cropBoxData.height
+        };
+      }
+
+      return data || {};
+    },
+
+    /**
+     * Set the crop box position and size with new data.
+     * @param {Object} data - The new crop box data.
+     * @returns {Cropper} this
+     */
+    setCropBoxData: function setCropBoxData(data) {
+      var cropBoxData = this.cropBoxData;
+      var aspectRatio = this.options.aspectRatio;
+      var widthChanged;
+      var heightChanged;
+
+      if (this.ready && this.cropped && !this.disabled && isPlainObject(data)) {
+        if (isNumber(data.left)) {
+          cropBoxData.left = data.left;
+        }
+
+        if (isNumber(data.top)) {
+          cropBoxData.top = data.top;
+        }
+
+        if (isNumber(data.width) && data.width !== cropBoxData.width) {
+          widthChanged = true;
+          cropBoxData.width = data.width;
+        }
+
+        if (isNumber(data.height) && data.height !== cropBoxData.height) {
+          heightChanged = true;
+          cropBoxData.height = data.height;
+        }
+
+        if (aspectRatio) {
+          if (widthChanged) {
+            cropBoxData.height = cropBoxData.width / aspectRatio;
+          } else if (heightChanged) {
+            cropBoxData.width = cropBoxData.height * aspectRatio;
+          }
+        }
+
+        this.renderCropBox();
+      }
+
+      return this;
+    },
+
+    /**
+     * Get a canvas drawn the cropped image.
+     * @param {Object} [options={}] - The config options.
+     * @returns {HTMLCanvasElement} - The result canvas.
+     */
+    getCroppedCanvas: function getCroppedCanvas() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      if (!this.ready || !window.HTMLCanvasElement) {
+        return null;
+      }
+
+      var canvasData = this.canvasData;
+      var source = getSourceCanvas(this.image, this.imageData, canvasData, options); // Returns the source canvas if it is not cropped.
+
+      if (!this.cropped) {
+        return source;
+      }
+
+      var _this$getData = this.getData(),
+          initialX = _this$getData.x,
+          initialY = _this$getData.y,
+          initialWidth = _this$getData.width,
+          initialHeight = _this$getData.height;
+
+      var ratio = source.width / Math.floor(canvasData.naturalWidth);
+
+      if (ratio !== 1) {
+        initialX *= ratio;
+        initialY *= ratio;
+        initialWidth *= ratio;
+        initialHeight *= ratio;
+      }
+
+      var aspectRatio = initialWidth / initialHeight;
+      var maxSizes = getAdjustedSizes({
+        aspectRatio: aspectRatio,
+        width: options.maxWidth || Infinity,
+        height: options.maxHeight || Infinity
+      });
+      var minSizes = getAdjustedSizes({
+        aspectRatio: aspectRatio,
+        width: options.minWidth || 0,
+        height: options.minHeight || 0
+      }, 'cover');
+
+      var _getAdjustedSizes = getAdjustedSizes({
+        aspectRatio: aspectRatio,
+        width: options.width || (ratio !== 1 ? source.width : initialWidth),
+        height: options.height || (ratio !== 1 ? source.height : initialHeight)
+      }),
+          width = _getAdjustedSizes.width,
+          height = _getAdjustedSizes.height;
+
+      width = Math.min(maxSizes.width, Math.max(minSizes.width, width));
+      height = Math.min(maxSizes.height, Math.max(minSizes.height, height));
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
+      canvas.width = normalizeDecimalNumber(width);
+      canvas.height = normalizeDecimalNumber(height);
+      context.fillStyle = options.fillColor || 'transparent';
+      context.fillRect(0, 0, width, height);
+      var _options$imageSmoothi = options.imageSmoothingEnabled,
+          imageSmoothingEnabled = _options$imageSmoothi === void 0 ? true : _options$imageSmoothi,
+          imageSmoothingQuality = options.imageSmoothingQuality;
+      context.imageSmoothingEnabled = imageSmoothingEnabled;
+
+      if (imageSmoothingQuality) {
+        context.imageSmoothingQuality = imageSmoothingQuality;
+      } // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawImage
+
+
+      var sourceWidth = source.width;
+      var sourceHeight = source.height; // Source canvas parameters
+
+      var srcX = initialX;
+      var srcY = initialY;
+      var srcWidth;
+      var srcHeight; // Destination canvas parameters
+
+      var dstX;
+      var dstY;
+      var dstWidth;
+      var dstHeight;
+
+      if (srcX <= -initialWidth || srcX > sourceWidth) {
+        srcX = 0;
+        srcWidth = 0;
+        dstX = 0;
+        dstWidth = 0;
+      } else if (srcX <= 0) {
+        dstX = -srcX;
+        srcX = 0;
+        srcWidth = Math.min(sourceWidth, initialWidth + srcX);
+        dstWidth = srcWidth;
+      } else if (srcX <= sourceWidth) {
+        dstX = 0;
+        srcWidth = Math.min(initialWidth, sourceWidth - srcX);
+        dstWidth = srcWidth;
+      }
+
+      if (srcWidth <= 0 || srcY <= -initialHeight || srcY > sourceHeight) {
+        srcY = 0;
+        srcHeight = 0;
+        dstY = 0;
+        dstHeight = 0;
+      } else if (srcY <= 0) {
+        dstY = -srcY;
+        srcY = 0;
+        srcHeight = Math.min(sourceHeight, initialHeight + srcY);
+        dstHeight = srcHeight;
+      } else if (srcY <= sourceHeight) {
+        dstY = 0;
+        srcHeight = Math.min(initialHeight, sourceHeight - srcY);
+        dstHeight = srcHeight;
+      }
+
+      var params = [srcX, srcY, srcWidth, srcHeight]; // Avoid "IndexSizeError"
+
+      if (dstWidth > 0 && dstHeight > 0) {
+        var scale = width / initialWidth;
+        params.push(dstX * scale, dstY * scale, dstWidth * scale, dstHeight * scale);
+      } // All the numerical parameters should be integer for `drawImage`
+      // https://github.com/fengyuanchen/cropper/issues/476
+
+
+      context.drawImage.apply(context, [source].concat(_toConsumableArray(params.map(function (param) {
+        return Math.floor(normalizeDecimalNumber(param));
+      }))));
+      return canvas;
+    },
+
+    /**
+     * Change the aspect ratio of the crop box.
+     * @param {number} aspectRatio - The new aspect ratio.
+     * @returns {Cropper} this
+     */
+    setAspectRatio: function setAspectRatio(aspectRatio) {
+      var options = this.options;
+
+      if (!this.disabled && !isUndefined(aspectRatio)) {
+        // 0 -> NaN
+        options.aspectRatio = Math.max(0, aspectRatio) || NaN;
+
+        if (this.ready) {
+          this.initCropBox();
+
+          if (this.cropped) {
+            this.renderCropBox();
+          }
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     * Change the drag mode.
+     * @param {string} mode - The new drag mode.
+     * @returns {Cropper} this
+     */
+    setDragMode: function setDragMode(mode) {
+      var options = this.options,
+          dragBox = this.dragBox,
+          face = this.face;
+
+      if (this.ready && !this.disabled) {
+        var croppable = mode === DRAG_MODE_CROP;
+        var movable = options.movable && mode === DRAG_MODE_MOVE;
+        mode = croppable || movable ? mode : DRAG_MODE_NONE;
+        options.dragMode = mode;
+        setData(dragBox, DATA_ACTION, mode);
+        toggleClass(dragBox, CLASS_CROP, croppable);
+        toggleClass(dragBox, CLASS_MOVE, movable);
+
+        if (!options.cropBoxMovable) {
+          // Sync drag mode to crop box when it is not movable
+          setData(face, DATA_ACTION, mode);
+          toggleClass(face, CLASS_CROP, croppable);
+          toggleClass(face, CLASS_MOVE, movable);
+        }
+      }
+
+      return this;
+    }
+  };
+
+  var AnotherCropper = WINDOW.Cropper;
+
+  var Cropper =
+  /*#__PURE__*/
+  function () {
+    /**
+     * Create a new Cropper.
+     * @param {Element} element - The target element for cropping.
+     * @param {Object} [options={}] - The configuration options.
+     */
+    function Cropper(element) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      _classCallCheck(this, Cropper);
+
+      if (!element || !REGEXP_TAG_NAME.test(element.tagName)) {
+        throw new Error('The first argument is required and must be an <img> or <canvas> element.');
+      }
+
+      this.element = element;
+      this.options = assign({}, DEFAULTS, isPlainObject(options) && options);
+      this.cropped = false;
+      this.disabled = false;
+      this.pointers = {};
+      this.ready = false;
+      this.reloading = false;
+      this.replaced = false;
+      this.sized = false;
+      this.sizing = false;
+      this.init();
+    }
+
+    _createClass(Cropper, [{
+      key: "init",
+      value: function init() {
+        var element = this.element;
+        var tagName = element.tagName.toLowerCase();
+        var url;
+
+        if (element[NAMESPACE]) {
+          return;
+        }
+
+        element[NAMESPACE] = this;
+
+        if (tagName === 'img') {
+          this.isImg = true; // e.g.: "img/picture.jpg"
+
+          url = element.getAttribute('src') || '';
+          this.originalUrl = url; // Stop when it's a blank image
+
+          if (!url) {
+            return;
+          } // e.g.: "http://example.com/img/picture.jpg"
+
+
+          url = element.src;
+        } else if (tagName === 'canvas' && window.HTMLCanvasElement) {
+          url = element.toDataURL();
+        }
+
+        this.load(url);
+      }
+    }, {
+      key: "load",
+      value: function load(url) {
+        var _this = this;
+
+        if (!url) {
+          return;
+        }
+
+        this.url = url;
+        this.imageData = {};
+        var element = this.element,
+            options = this.options;
+
+        if (!options.rotatable && !options.scalable) {
+          options.checkOrientation = false;
+        } // Only IE10+ supports Typed Arrays
+
+
+        if (!options.checkOrientation || !window.ArrayBuffer) {
+          this.clone();
+          return;
+        } // XMLHttpRequest disallows to open a Data URL in some browsers like IE11 and Safari
+
+
+        if (REGEXP_DATA_URL.test(url)) {
+          if (REGEXP_DATA_URL_JPEG.test(url)) {
+            this.read(dataURLToArrayBuffer(url));
+          } else {
+            this.clone();
+          }
+
+          return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        var clone = this.clone.bind(this);
+        this.reloading = true;
+        this.xhr = xhr;
+        xhr.ontimeout = clone;
+        xhr.onabort = clone;
+        xhr.onerror = clone;
+
+        xhr.onprogress = function () {
+          if (xhr.getResponseHeader('content-type') !== MIME_TYPE_JPEG) {
+            xhr.abort();
+          }
+        };
+
+        xhr.onload = function () {
+          _this.read(xhr.response);
+        };
+
+        xhr.onloadend = function () {
+          _this.reloading = false;
+          _this.xhr = null;
+        }; // Bust cache when there is a "crossOrigin" property to avoid browser cache error
+
+
+        if (options.checkCrossOrigin && isCrossOriginURL(url) && element.crossOrigin) {
+          url = addTimestamp(url);
+        }
+
+        xhr.open('GET', url);
+        xhr.responseType = 'arraybuffer';
+        xhr.withCredentials = element.crossOrigin === 'use-credentials';
+        xhr.send();
+      }
+    }, {
+      key: "read",
+      value: function read(arrayBuffer) {
+        var options = this.options,
+            imageData = this.imageData;
+        var orientation = resetAndGetOrientation(arrayBuffer);
+        var rotate = 0;
+        var scaleX = 1;
+        var scaleY = 1;
+
+        if (orientation > 1) {
+          // Generate a new Data URL with the orientation value set to 1
+          // as some iOS browsers will render image with its orientation
+          this.url = arrayBufferToDataURL(arrayBuffer, MIME_TYPE_JPEG);
+
+          var _parseOrientation = parseOrientation(orientation);
+
+          rotate = _parseOrientation.rotate;
+          scaleX = _parseOrientation.scaleX;
+          scaleY = _parseOrientation.scaleY;
+        }
+
+        if (options.rotatable) {
+          imageData.rotate = rotate;
+        }
+
+        if (options.scalable) {
+          imageData.scaleX = scaleX;
+          imageData.scaleY = scaleY;
+        }
+
+        this.clone();
+      }
+    }, {
+      key: "clone",
+      value: function clone() {
+        var element = this.element,
+            url = this.url;
+        var crossOrigin;
+        var crossOriginUrl;
+
+        if (this.options.checkCrossOrigin && isCrossOriginURL(url)) {
+          crossOrigin = element.crossOrigin;
+
+          if (crossOrigin) {
+            crossOriginUrl = url;
+          } else {
+            crossOrigin = 'anonymous'; // Bust cache when there is not a "crossOrigin" property
+
+            crossOriginUrl = addTimestamp(url);
+          }
+        }
+
+        this.crossOrigin = crossOrigin;
+        this.crossOriginUrl = crossOriginUrl;
+        var image = document.createElement('img');
+
+        if (crossOrigin) {
+          image.crossOrigin = crossOrigin;
+        }
+
+        image.src = crossOriginUrl || url;
+        this.image = image;
+        image.onload = this.start.bind(this);
+        image.onerror = this.stop.bind(this);
+        addClass(image, CLASS_HIDE);
+        element.parentNode.insertBefore(image, element.nextSibling);
+      }
+    }, {
+      key: "start",
+      value: function start() {
+        var _this2 = this;
+
+        var image = this.isImg ? this.element : this.image;
+        image.onload = null;
+        image.onerror = null;
+        this.sizing = true;
+        var IS_SAFARI = WINDOW.navigator && /(Macintosh|iPhone|iPod|iPad).*AppleWebKit/i.test(WINDOW.navigator.userAgent);
+
+        var done = function done(naturalWidth, naturalHeight) {
+          assign(_this2.imageData, {
+            naturalWidth: naturalWidth,
+            naturalHeight: naturalHeight,
+            aspectRatio: naturalWidth / naturalHeight
+          });
+          _this2.sizing = false;
+          _this2.sized = true;
+
+          _this2.build();
+        }; // Modern browsers (except Safari)
+
+
+        if (image.naturalWidth && !IS_SAFARI) {
+          done(image.naturalWidth, image.naturalHeight);
+          return;
+        }
+
+        var sizingImage = document.createElement('img');
+        var body = document.body || document.documentElement;
+        this.sizingImage = sizingImage;
+
+        sizingImage.onload = function () {
+          done(sizingImage.width, sizingImage.height);
+
+          if (!IS_SAFARI) {
+            body.removeChild(sizingImage);
+          }
+        };
+
+        sizingImage.src = image.src; // iOS Safari will convert the image automatically
+        // with its orientation once append it into DOM (#279)
+
+        if (!IS_SAFARI) {
+          sizingImage.style.cssText = 'left:0;' + 'max-height:none!important;' + 'max-width:none!important;' + 'min-height:0!important;' + 'min-width:0!important;' + 'opacity:0;' + 'position:absolute;' + 'top:0;' + 'z-index:-1;';
+          body.appendChild(sizingImage);
+        }
+      }
+    }, {
+      key: "stop",
+      value: function stop() {
+        var image = this.image;
+        image.onload = null;
+        image.onerror = null;
+        image.parentNode.removeChild(image);
+        this.image = null;
+      }
+    }, {
+      key: "build",
+      value: function build() {
+        if (!this.sized || this.ready) {
+          return;
+        }
+
+        var element = this.element,
+            options = this.options,
+            image = this.image; // Create cropper elements
+
+        var container = element.parentNode;
+        var template = document.createElement('div');
+        template.innerHTML = TEMPLATE;
+        var cropper = template.querySelector(".".concat(NAMESPACE, "-container"));
+        var canvas = cropper.querySelector(".".concat(NAMESPACE, "-canvas"));
+        var dragBox = cropper.querySelector(".".concat(NAMESPACE, "-drag-box"));
+        var cropBox = cropper.querySelector(".".concat(NAMESPACE, "-crop-box"));
+        var face = cropBox.querySelector(".".concat(NAMESPACE, "-face"));
+        this.container = container;
+        this.cropper = cropper;
+        this.canvas = canvas;
+        this.dragBox = dragBox;
+        this.cropBox = cropBox;
+        this.viewBox = cropper.querySelector(".".concat(NAMESPACE, "-view-box"));
+        this.face = face;
+        canvas.appendChild(image); // Hide the original image
+
+        addClass(element, CLASS_HIDDEN); // Inserts the cropper after to the current image
+
+        container.insertBefore(cropper, element.nextSibling); // Show the image if is hidden
+
+        if (!this.isImg) {
+          removeClass(image, CLASS_HIDE);
+        }
+
+        this.initPreview();
+        this.bind();
+        options.initialAspectRatio = Math.max(0, options.initialAspectRatio) || NaN;
+        options.aspectRatio = Math.max(0, options.aspectRatio) || NaN;
+        options.viewMode = Math.max(0, Math.min(3, Math.round(options.viewMode))) || 0;
+        addClass(cropBox, CLASS_HIDDEN);
+
+        if (!options.guides) {
+          addClass(cropBox.getElementsByClassName("".concat(NAMESPACE, "-dashed")), CLASS_HIDDEN);
+        }
+
+        if (!options.center) {
+          addClass(cropBox.getElementsByClassName("".concat(NAMESPACE, "-center")), CLASS_HIDDEN);
+        }
+
+        if (options.background) {
+          addClass(cropper, "".concat(NAMESPACE, "-bg"));
+        }
+
+        if (!options.highlight) {
+          addClass(face, CLASS_INVISIBLE);
+        }
+
+        if (options.cropBoxMovable) {
+          addClass(face, CLASS_MOVE);
+          setData(face, DATA_ACTION, ACTION_ALL);
+        }
+
+        if (!options.cropBoxResizable) {
+          addClass(cropBox.getElementsByClassName("".concat(NAMESPACE, "-line")), CLASS_HIDDEN);
+          addClass(cropBox.getElementsByClassName("".concat(NAMESPACE, "-point")), CLASS_HIDDEN);
+        }
+
+        this.render();
+        this.ready = true;
+        this.setDragMode(options.dragMode);
+
+        if (options.autoCrop) {
+          this.crop();
+        }
+
+        this.setData(options.data);
+
+        if (isFunction(options.ready)) {
+          addListener(element, EVENT_READY, options.ready, {
+            once: true
+          });
+        }
+
+        dispatchEvent(element, EVENT_READY);
+      }
+    }, {
+      key: "unbuild",
+      value: function unbuild() {
+        if (!this.ready) {
+          return;
+        }
+
+        this.ready = false;
+        this.unbind();
+        this.resetPreview();
+        this.cropper.parentNode.removeChild(this.cropper);
+        removeClass(this.element, CLASS_HIDDEN);
+      }
+    }, {
+      key: "uncreate",
+      value: function uncreate() {
+        if (this.ready) {
+          this.unbuild();
+          this.ready = false;
+          this.cropped = false;
+        } else if (this.sizing) {
+          this.sizingImage.onload = null;
+          this.sizing = false;
+          this.sized = false;
+        } else if (this.reloading) {
+          this.xhr.onabort = null;
+          this.xhr.abort();
+        } else if (this.image) {
+          this.stop();
+        }
+      }
+      /**
+       * Get the no conflict cropper class.
+       * @returns {Cropper} The cropper class.
+       */
+
+    }], [{
+      key: "noConflict",
+      value: function noConflict() {
+        window.Cropper = AnotherCropper;
+        return Cropper;
+      }
+      /**
+       * Change the default options.
+       * @param {Object} options - The new default options.
+       */
+
+    }, {
+      key: "setDefaults",
+      value: function setDefaults(options) {
+        assign(DEFAULTS, isPlainObject(options) && options);
+      }
+    }]);
+
+    return Cropper;
+  }();
+
+  assign(Cropper.prototype, render, preview, events, handlers, change, methods);
+
+  return Cropper;
+
+})));
+
 ;
 //# sourceMappingURL=scripts.js.map
