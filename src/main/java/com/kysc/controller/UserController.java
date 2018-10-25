@@ -2,132 +2,162 @@ package com.kysc.controller;
 
 
 import com.kysc.bean.IdentifyCode;
-import com.kysc.bean.UserVo;
+import com.kysc.bean.User;
+import com.kysc.dto.IdentifyCodeDto;
 import com.kysc.service.IdentifyCodeService;
 import com.kysc.utils.R;
-import com.kysc.bean.User;
 import com.kysc.service.UserService;
 import com.kysc.utils.AccountValidatorUtil;
 import com.kysc.utils.ErrorMsg;
 import com.kysc.utils.FTPUtils;
 import com.kysc.utils.SMS.RandomUtils;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Md5Hash;
+import com.kysc.utils.Shiro.ShiroUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
+/**
+ * 用户
+ *
+ * @author yejuncheng
+ * @date 2018/10/25 9:40
+ */
 @RestController
 @RequestMapping("/user")
+@Api(description = "用户接口",tags = {"用户"})
 public class UserController {
 
     @Autowired
     UserService userService;
 
+    /**
+     * 验证码
+     */
     @Autowired
     IdentifyCodeService identifyCodeService;
 
-    //账号注册
+    /**
+     * TODO 账号注册
+     * @param identifyCodeDto
+     * @return
+     */
     @PostMapping(value = "/user", consumes = "application/json")
-    public R register(@RequestBody UserVo user){
-        if(user.getUsername() == null || user.getPassword() == null || user.getMobile() == null ||
-                user.getUsername() == "" || user.getPassword() == "" || user.getMobile() == "" ){
-           return R.error(ErrorMsg.ERROR_MSG9.getCode(),ErrorMsg.ERROR_MSG9.getMsg());
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String", name = "username",value = "用户名"),
+            @ApiImplicitParam(dataType = "String", name = "password",value = "密码"),
+            @ApiImplicitParam(dataType = "String", name = "mobile",value = "手机号码"),
+
+            @ApiImplicitParam(dataType = "Integer", name = "id",value = "验证码id"),
+            @ApiImplicitParam(dataType = "String", name = "mobile",value = "手机号码"),
+            @ApiImplicitParam(dataType = "Integer", name = "code",value = "验证码")
+
+    })
+    public R register(@RequestBody IdentifyCodeDto identifyCodeDto){
+        User user = identifyCodeDto.getUser();
+        IdentifyCode identifyCode = identifyCodeDto.getIdentifyCode();
+        //验证码是否正确
+        if(identifyCodeService.hasValidSmsCode(identifyCode) == 1){
+            userService.regisger(user);
+            ShiroUtils.setLoginUser(user);
+            return R.ok("注册成功");
+        }else{
+            return R.error(ErrorMsg.ERROR_MSG11.getCode(),ErrorMsg.ERROR_MSG11.getMsg());
         }
-        if(!AccountValidatorUtil.isPassword(user.getPassword()))     //检查密码规范
-            return R.error(ErrorMsg.ERROR_MSG5.getCode(),ErrorMsg.ERROR_MSG5.getMsg());
-        R r1 = checkUsername(user.getUsername());       //检查用户名
-        R r2 = checkMobile(user.getMobile());           //检查手机号
-        if(r1.get("code").equals(0)){ //用户名、手机号合法
-            if(r2.get("code").equals(0)){
-                IdentifyCode identifyCode = new IdentifyCode(user.getId(),user.getMobile(),user.getCode());
-                if(identifyCodeService.hasValidSmsCode(identifyCode) == 1){
-                    String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-                    user.setSalt(salt);
-                    user.setCreateTime(new Date());
-                    user.setLastTime(new Date());
-                    Md5Hash md5 = new Md5Hash(user.getPassword(),salt,2);   //加密2次
-                    user.setPassword(md5.toString());
-                    userService.regisger(user);
-                    return R.ok("注册成功");
-                }else
-                    return R.error(ErrorMsg.ERROR_MSG11.getCode(),ErrorMsg.ERROR_MSG11.getMsg());
-            }else
-                return r2;
-        }else
-            return r1;
     }
 
-    //检查用户名
+    /**
+     * TODO 用户名是否存在
+     * @param username
+     * @return
+     */
     @GetMapping("/user/{username}")
-    public R checkUsername(@PathVariable("username") String username){      //检查用户名是否重复
-        if(username != null && username != ""){         //为空
-            //4到15位（字母，数字，下划线，减号）
-            if(AccountValidatorUtil.isUsername(username)){     //用户名符合规范
-                if(userService.checkUsername(username)>0)
-                    return R.error(ErrorMsg.ERROR_MSG2.getCode(),ErrorMsg.ERROR_MSG2.getMsg());
-                else
-                    return R.ok();
-            }else
-                return R.error(ErrorMsg.ERROR_MSG1.getCode(),ErrorMsg.ERROR_MSG1.getMsg());
-        }else
-            return R.error(ErrorMsg.ERROR_MSG.getCode(),ErrorMsg.ERROR_MSG.getMsg());
+    public R checkUsername(@PathVariable("username") String username) {
+        if (userService.checkUsername(username) > 0) {
+            return R.error(ErrorMsg.ERROR_MSG2.getCode(), ErrorMsg.ERROR_MSG2.getMsg());
+        }
+        return R.ok();
     }
 
-
-    //检查手机号
-    public R checkMobile(String mobile){
-        if(AccountValidatorUtil.isMobile(mobile)){
-            int i = userService.checkMobile(mobile);       //手机已注册
-            if(i>0){
-                return R.error(ErrorMsg.ERROR_MSG4.getCode(),ErrorMsg.ERROR_MSG4.getMsg());
-            }else
-                return R.ok();
-        }else
-            return R.error(ErrorMsg.ERROR_MSG6.getCode(),ErrorMsg.ERROR_MSG6.getMsg());     //手机号不规范
-    }
-
-
-    //发送手机验证码
+    /**
+     * TODO 发送手机验证码
+     * @param mobile
+     * @return
+     */
     @PostMapping("/sms/{mobile}")
-    public R sms(@PathVariable("mobile") String mobile){//发送验证短信
-        R r = checkMobile(mobile);
-        if(r.get("code").equals(0)){        //该账号未被注册
-            int count = identifyCodeService.hasValidSms(mobile);     //已发送且有效的短信
-            if(count>0){
+    public R sms(@PathVariable("mobile") String mobile){
+        //该账号未被注册
+        if(userService.checkMobile(mobile) == 0){
+            //已发送且有效的短信
+            if(identifyCodeService.hasValidSms(mobile) > 0){
                 return R.error(ErrorMsg.ERROR_MSG10.getCode(),ErrorMsg.ERROR_MSG10.getMsg());
             }else{
                 //创建6位验证码
-                String param = RandomUtils.getParam();
-                //SMSUtils.testSendSms(mobile, param);
-                IdentifyCode identifyCode = new IdentifyCode(mobile,Integer.valueOf(param));
+                Integer param = RandomUtils.getParam();
+                //SMSUtils.testSendSms(mobile, param); 发送验证码
+                IdentifyCode identifyCode = new IdentifyCode();
+                identifyCode.setMobile(mobile);
+                identifyCode.setCode(param);
+                //向数据库插入一条验证码信息
                 identifyCodeService.insert(identifyCode);
+                //向前台传验证码的id
                 return R.ok().put("id",identifyCode.getId());
             }
-        }else
-            return r;
+        }else{
+            return R.error(ErrorMsg.ERROR_MSG4.getCode(),ErrorMsg.ERROR_MSG4.getMsg());
+        }
     }
 
+    /**
+     * TODO 头像上传接口
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/uploadImg")
     public R uploadImg(MultipartFile file) throws IOException {
-
         R r = FTPUtils.MultipartFiletoFile(file);
         File file1 = (File) r.get("file");
-        if(file1 == null)    //转换成file失败，比如后缀不通过，或创建file失败，或文件大小非法
+        //转换成file失败，比如后缀不通过，或创建file失败，或文件大小非法
+        if(file1 == null)   {
             return r;
+        }
         else{
             FTPUtils.Upload(file1);
         }
         return R.ok();
     }
 
+    /**
+     * TODO 登录
+     * @param user
+     * @return
+     */
     @PostMapping("login")
-    public R login(@RequestBody User user){
-        return null;
+    public R login(User user){
+        try{
+            UsernamePasswordToken token =
+                    new UsernamePasswordToken(user.getUsername(),user.getPassword());
+            Subject subject = ShiroUtils.getSubject();
+            subject.login(token);
+            ShiroUtils.setLoginUser(user);
+        }catch (UnknownAccountException e) {
+            return R.error(e.getMessage());
+        }catch (IncorrectCredentialsException e) {
+            return R.error(e.getMessage());
+        }catch (LockedAccountException e) {
+            return R.error(e.getMessage());
+        }catch (AuthenticationException e) {
+            return R.error("账户验证失败");
+        }
+        return R.ok().put("data",user);
     }
 
 }

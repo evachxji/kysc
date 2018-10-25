@@ -2,6 +2,12 @@ package com.kysc.bean;
 
 import java.util.Date;
 
+/**
+ * 用户
+ *
+ * @author yejuncheng
+ * @date 2018/10/25 10:21
+ */
 public class User {
     private Integer userId;
 
@@ -19,6 +25,8 @@ public class User {
 
     private Date lastTime;
 
+    private Short status;
+
     public Integer getUserId() {
         return userId;
     }
@@ -32,7 +40,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
     public String getPassword() {
@@ -40,7 +48,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public String getSalt() {
@@ -48,7 +56,7 @@ public class User {
     }
 
     public void setSalt(String salt) {
-        this.salt = salt == null ? null : salt.trim();
+        this.salt = salt;
     }
 
     public String getMobile() {
@@ -56,7 +64,7 @@ public class User {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
+        this.mobile = mobile;
     }
 
     public String getImg() {
@@ -64,7 +72,7 @@ public class User {
     }
 
     public void setImg(String img) {
-        this.img = img == null ? null : img.trim();
+        this.img = img;
     }
 
     public Date getCreateTime() {
@@ -81,5 +89,13 @@ public class User {
 
     public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 }

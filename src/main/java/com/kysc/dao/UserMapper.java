@@ -1,18 +1,19 @@
 package com.kysc.dao;
 
 import com.kysc.bean.User;
-import com.kysc.bean.UserExample;
 
-import java.util.List;
-
+/**
+ * 用户
+ * 
+ * @author yejuncheng
+ * @date 2018/10/25 10:25
+ */
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userId);
 
     int insert(User record);
 
     int insertSelective(User record);
-
-    List<User> selectByExample(UserExample example);
 
     User selectByPrimaryKey(Integer userId);
 
@@ -24,5 +25,10 @@ public interface UserMapper {
 
     int checkMobile(String mobile);
 
+    /**
+     * 登录，凭用户名得到User
+     * @param username
+     * @return
+     */
     User queryByUserName(String username);
 }

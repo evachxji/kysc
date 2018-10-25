@@ -2,10 +2,14 @@ package com.kysc.bean;
 
 import java.util.Date;
 
+/**
+ * 验证码
+ *
+ * @author yejuncheng
+ * @date 2018/10/25 10:21
+ */
 public class IdentifyCode {
     private Integer id;
-
-    private Integer userId;
 
     private String mobile;
 
@@ -15,27 +19,6 @@ public class IdentifyCode {
 
     private Date endTime;
 
-    public IdentifyCode() {
-    }
-
-    public IdentifyCode(String mobile, Integer code) {
-        this.mobile = mobile;
-        this.code = code;
-    }
-
-    public IdentifyCode(Integer id, String mobile, Integer code) {
-        this.id = id;
-        this.mobile = mobile;
-        this.code = code;
-    }
-
-    public IdentifyCode(String mobile, Integer code, Date createTime, Date endTime) {
-        this.mobile = mobile;
-        this.code = code;
-        this.createTime = createTime;
-        this.endTime = endTime;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -44,20 +27,12 @@ public class IdentifyCode {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getmobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setmobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public Integer getCode() {

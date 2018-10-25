@@ -1,18 +1,19 @@
 package com.kysc.dao;
 
 import com.kysc.bean.IdentifyCode;
-import com.kysc.bean.IdentifyCodeExample;
 
-import java.util.List;
-
+/**
+ * 验证码
+ * 
+ * @author yejuncheng
+ * @date 2018/10/25 10:21
+ */
 public interface IdentifyCodeMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(IdentifyCode record);
 
     int insertSelective(IdentifyCode record);
-
-    List<IdentifyCode> selectByExample(IdentifyCodeExample example);
 
     IdentifyCode selectByPrimaryKey(Integer id);
 
@@ -22,5 +23,10 @@ public interface IdentifyCodeMapper {
 
     int hasValidSms(String mobile);
 
+    /**
+     * 是否为合法的验证码
+     * @param identifyCode
+     * @return
+     */
     int hasValidSmsCode(IdentifyCode identifyCode);
 }

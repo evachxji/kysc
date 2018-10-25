@@ -4,18 +4,11 @@ import com.kysc.bean.User;
 import com.kysc.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Component
 public class MyShiroRealm extends AuthorizingRealm {
@@ -25,6 +18,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
 
     //用来授权
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 //        String username = (String) principalCollection.getPrimaryPrincipal();   //获取用户名
 //        Set<String> roles = getRolesByUserName(username);                   //获取角色
@@ -37,32 +31,39 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
 
-
-    //用来认证
+    /**
+     * TODO 认证登录
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authenticationToken) throws AuthenticationException {
-
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-
-        //String username = (String) authenticationToken.getPrincipal();
+        //获取用户名、密码
         String username = token.getUsername();
-        String password = String.valueOf(token.getPassword());  //提交的号码密码
+        String password = String.valueOf(token.getPassword());
 
+        //从数据库拿到User
         User user = userService.queryByUserName(username);
-
+        //返回的password要与传入的password一致（shiro认为返回的password是正确密码，并与传入的password进行比对）
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        //原始密码加盐加密
+        Md5Hash md5 = new Md5Hash(password,user.getSalt(),2);
+        password = md5.toString();
         //账号不存在
         if(user == null) {
             throw new UnknownAccountException("账号或密码不正确");
         }
-
         //密码错误
         if(!password.equals(user.getPassword())) {
             throw new IncorrectCredentialsException("账号或密码不正确");
         }
-
-
-
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        //账号锁定
+        /*if (user.getStatus()==1) {
+            throw new LockedAccountException("账号已被锁定,请联系管理员");
+        }*/
         return info;
     }
 

@@ -99,21 +99,26 @@ public class FTPUtils {
         String prefix=fileName.substring(fileName.lastIndexOf("."));
 
         if(prefix.equals(".jpg") || prefix.equals(".jpeg") || prefix.equals(".png")){
-            if(multipartFile.getSize()<2097152){        //文件大小小于2MB
+            //文件大小小于2MB
+            if(multipartFile.getSize()<2097152){
                 //生成uuid文件名
                 String newFileName = UUID.randomUUID().toString();
                 try {
-                    final File file = File.createTempFile(newFileName, prefix);     //创建空白File文件
-                    multipartFile.transferTo(file);                 //multipartfile转file
+                    //创建空白File文件
+                    final File file = File.createTempFile(newFileName, prefix);
+                    //multipartFile转File
+                    multipartFile.transferTo(file);
                     return R.ok().put("file",file);
                 } catch (IOException e) {
-                    e.printStackTrace();    //创建file文件失败
+                    //创建file文件失败
+                    e.printStackTrace();
                 }
-            }else
+            }else{
                 return R.error(ErrorMsg.ERROR_MSG8.getCode(),ErrorMsg.ERROR_MSG8.getMsg());
-
-        }else
+            }
+        }else{
             return R.error(ErrorMsg.ERROR_MSG7.getCode(),ErrorMsg.ERROR_MSG7.getMsg());
+        }
         return R.error();
     }
 
