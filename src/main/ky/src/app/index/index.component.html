@@ -1,6 +1,24 @@
 <div class="head">
-  <a [routerLink]="['/index/register']"><button data-toggle="modal" data-target="#myModal" data-keyboard="false" class="sui-btn btn-primary btn-lg">注册</button></a>
-  <a [routerLink]="['/index/upload']"><button data-toggle="modal" data-target="#myModal1" data-keyboard="false" class="sui-btn btn-primary btn-lg">设置头像</button></a>
+  <div class="bb">
+  <div class="title"><a [routerLink]="['/index']">KYSC</a></div>
+  </div>
+  <div class="register">
+  <a [routerLink]="['/index/register']"><button data-toggle="modal" data-target="#myModal" data-keyboard="false" class="sui-btn btn-primary btn-lg" style="border:none;background-color:transparent;border-right:1px solid #fff;">注册</button></a>
+  </div>
+  <div class="login">
+  <a [routerLink]="['/index/register']"><button data-toggle="modal" data-target="#myModal" data-keyboard="false" class="sui-btn btn-primary btn-lg" style="border:none;background-color:transparent;border-right:1px solid #fff;">登录</button></a>
+  </div>
+  <div class="sui-btn-toolbar" style="position:absolute;top:16px;right:64px;">
+  <div class="sui-btn-group">
+    <button data-toggle="dropdown" class="sui-btn btn-primary dropdown-toggle" style="border:none;background-color:transparent;"><i class="caret"></i>设置</button>
+    <ul role="menu" aria-labelledby="drop1" class="sui-dropdown-menu">
+      <li role="presentation"><a role="menuitem" tabindex="-1" [routerLink]="['/index/upload']"><button data-toggle="modal" data-target="#myModal1" data-keyboard="false" class="sui-btn btn-primary btn-lg"style="border:none;background-color:transparent;color:black;">设置头像</button></a></li>
+      <li role="presentation" style="text-align:center;"><a role="menuitem" tabindex="-1" href="#">注销</a></li>
+      <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">杭州</a></li>-->
+    </ul>
+  </div>
+  </div>
+   <!--<a [routerLink]="['/index/upload']"><button data-toggle="modal" data-target="#myModal1" data-keyboard="false" class="sui-btn btn-primary btn-lg">设置头像</button></a>-->
 </div>
 
 <router-outlet></router-outlet>
