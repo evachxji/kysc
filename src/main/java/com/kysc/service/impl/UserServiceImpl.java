@@ -40,11 +40,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(md5.toString());
         //用户名、盐、加盐加密密码、创建时间、最后登陆时间、状态
         userMapper.insert(user);
-
-        /*UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
-        Subject subject = ShiroUtils.getSubject();
-        subject.login(token);
-        ShiroUtils.setLoginUser(user);*/
         return user;
     }
 
@@ -61,6 +56,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryByUserName(String username) {
         return userMapper.queryByUserName(username);
+    }
+
+    @Override
+    public String getMobileByUsername(String username) {
+        return userMapper.getMobileByUsername(username);
     }
 
 }

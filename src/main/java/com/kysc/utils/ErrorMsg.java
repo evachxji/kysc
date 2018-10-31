@@ -26,6 +26,9 @@ public enum ErrorMsg {
     ERROR_MSG10(1011,"请在180秒以后重试"),
 
     ERROR_MSG11(1012,"验证码错误"),
+
+    ERROR_MSG12(1013,"用户名不存在"),
+
 ;
 	/** 错误码 */
 	private Integer code;

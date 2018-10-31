@@ -31,4 +31,11 @@ public interface UserMapper {
      * @return
      */
     User queryByUserName(String username);
+
+    /**
+     * 凭用户名查找手机号
+     * @param username
+     * @return
+     */
+    String getMobileByUsername(String username);
 }
