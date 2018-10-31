@@ -21,12 +21,13 @@
     delete from identify_code
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kysc.bean.IdentifyCode" >
-    insert into identify_code (id, mobile, code, 
-      create_time, end_time)
-    values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{code,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP})
-  </insert>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kysc.bean.IdentifyCode" useGeneratedKeys="true">
+
+        insert into identify_code (id, mobile, code,
+        create_time, end_time)
+        values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{code,jdbcType=INTEGER},
+        SYSDATE(), ADDDATE(SYSDATE(),INTERVAL 180 SECOND))
+    </insert>
   <insert id="insertSelective" parameterType="com.kysc.bean.IdentifyCode" >
     insert into identify_code
     <trim prefix="(" suffix=")" suffixOverrides="," >
