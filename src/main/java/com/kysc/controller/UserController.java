@@ -67,7 +67,8 @@ public class UserController {
         User user = identifyCodeDto.getUser();
         IdentifyCode identifyCode = identifyCodeDto.getIdentifyCode();
         //验证码是否正确
-        if(identifyCodeService.hasValidSmsCode(identifyCode) != 1){
+        int c = identifyCodeService.hasValidSmsCode(identifyCode);
+        if( c != 1){
             return R.error(ErrorMsg.ERROR_MSG11.getCode(),ErrorMsg.ERROR_MSG11.getMsg());
         }
         userService.regisger(user);

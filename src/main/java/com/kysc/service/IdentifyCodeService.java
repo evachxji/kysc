@@ -25,7 +25,7 @@ public interface IdentifyCodeService {
     int insert(IdentifyCode identifyCode);
 
     /**
-     * 是否为合法的验证码
+     * 是否为正确有效的验证码
      * @param identifyCode
      * @return
      */
