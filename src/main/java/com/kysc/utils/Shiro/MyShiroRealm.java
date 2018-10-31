@@ -47,11 +47,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         //从数据库拿到User
         User user = userService.queryByUserName(username);
-        //返回的password要与传入的password一致（shiro认为返回的password是正确密码，并与传入的password进行比对）
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
-        //原始密码加盐加密
-        Md5Hash md5 = new Md5Hash(password,user.getSalt(),2);
-        password = md5.toString();
+
         //账号不存在
         if(user == null) {
             throw new UnknownAccountException("账号或密码不正确");
@@ -64,6 +60,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         /*if (user.getStatus()==1) {
             throw new LockedAccountException("账号已被锁定,请联系管理员");
         }*/
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;
     }
 

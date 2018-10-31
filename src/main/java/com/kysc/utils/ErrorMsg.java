@@ -29,6 +29,8 @@ public enum ErrorMsg {
 
     ERROR_MSG12(1013,"用户名不存在"),
 
+    ERROR_MSG13(1014,"原密码错误");
+
 ;
 	/** 错误码 */
 	private Integer code;

@@ -44,4 +44,17 @@ public interface UserService {
      * @return
      */
     String getMobileByUsername(String username);
+
+    /**
+     * 凭用户名重置密码
+     * @param username 用户名
+     * @param password 新密码
+     */
+    void updatePasswordByUsername(String username, String password);
+
+    /**
+     * 最后登录时间更新
+     * @param user
+     */
+    void updateSelect(User user);
 }

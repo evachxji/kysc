@@ -10,8 +10,18 @@ import com.kysc.bean.IdentifyCode;
  */
 public interface IdentifyCodeService {
 
+    /**
+     * 是否存在生效时间内的验证码
+     * @param mobile
+     * @return
+     */
     int hasValidSms(String mobile);
 
+    /**
+     * 插入一条验证码记录
+     * @param identifyCode
+     * @return
+     */
     int insert(IdentifyCode identifyCode);
 
     /**

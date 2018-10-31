@@ -3,7 +3,6 @@ package com.kysc.utils.SMS;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.SSLContext;
-
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -17,6 +16,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 public class HttpConnectionManager {
 
 	private PoolingHttpClientConnectionManager cm = null;
+
+
 
 	private static HttpConnectionManager connectionManager;
 

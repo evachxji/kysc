@@ -63,4 +63,17 @@ public class UserServiceImpl implements UserService {
         return userMapper.getMobileByUsername(username);
     }
 
+    @Override
+    public void updatePasswordByUsername(String username, String password) {
+        User user = userMapper.queryByUserName(username);
+        Md5Hash md5 = new Md5Hash(password,user.getSalt(),2);
+        user.setPassword(md5.toString());
+        userMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public void updateSelect(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
 }
