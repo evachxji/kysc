@@ -1,0 +1,16 @@
+<div id="myModal2" tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade" style="border:none;width:390px;border-radius:8px;background:rgba(0,0,0,0.8);padding-left:20px;">
+    <div class="modal-header" style="border-bottom:0;">
+        <button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×</button>
+    </div>
+    <div class="modal-body" style="height:300px;border-radius:8px;">
+        <div class="input-element" [ngClass]="{active: isUserName}">
+            <label for="username" >账号(4-15位)</label>
+            <input type="text" id="username" #user (focus)="isUserName=true" (blur)="isBlur(userName,'isUserName')" (input)="yzLogin(userName,'isUserName')">
+        </div>
+        <div class="input-element" [ngClass]="{active: isPassWord}">
+            <label for="password">密码(5-15位)</label>
+            <input type="password" id="password" #pass (focus)="isPassWord=true" (blur)="isBlur(passWord,'isPassWord')" (input)="yzLogin(passWord,'isPassWord')">
+        </div>
+        <button [disabled]="!yzUser || !yzPass"class="sui-btn btn-block btn-xlarge btn-info" style="margin-top:60px;" (click)="login()"><div *ngIf="isLoad" class="sui-loading loading-xxsmall loading-light loading-inline" style="position:relative;top:5px;margin-right:5px;"><i class="sui-icon icon-pc-loading"></i></div>登录</button>
+    </div>
+    </div>

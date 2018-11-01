@@ -6,7 +6,7 @@
   <a [routerLink]="['/index/register']"><button data-toggle="modal" data-target="#myModal" data-keyboard="false" class="sui-btn btn-primary btn-lg" style="border:none;background-color:transparent;border-right:1px solid #fff;">注册</button></a>
   </div>
   <div class="login">
-  <a [routerLink]="['/index/register']"><button data-toggle="modal" data-target="#myModal" data-keyboard="false" class="sui-btn btn-primary btn-lg" style="border:none;background-color:transparent;border-right:1px solid #fff;">登录</button></a>
+  <a [routerLink]="['/index/login']"><button data-toggle="modal" data-target="#myModal2" data-keyboard="false" class="sui-btn btn-primary btn-lg" style="border:none;background-color:transparent;border-right:1px solid #fff;">登录</button></a>
   </div>
   <div class="sui-btn-toolbar" style="position:absolute;top:16px;right:64px;">
   <div class="sui-btn-group">
@@ -20,6 +20,8 @@
   </div>
    <!--<a [routerLink]="['/index/upload']"><button data-toggle="modal" data-target="#myModal1" data-keyboard="false" class="sui-btn btn-primary btn-lg">设置头像</button></a>-->
 </div>
-
+<div style="margin:200px auto;">
+<app-login></app-login>
+</div>
 <router-outlet></router-outlet>
 

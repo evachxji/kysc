@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
   };
   userMessage={
     username: this.userNameValue,
-    password: this.password,
+    password: this.passwordValue,
     mobile: this.mobileValue
   };
   identifyCode={
@@ -163,7 +163,15 @@ export class RegisterComponent implements OnInit {
       );
   }
   register(){
-    this.yzmValue=$(this.yzm.nativeElement).val();
+    this.identifyCode.code=$(this.yzm.nativeElement).val();
+    this.userMessage.username=this.userNameValue;
+    this.userMessage.password=this.passwordValue;
+    this.userMessage.mobile=this.mobileValue;
+    this.identifyCode.id=this.yzmID;
+    this.identifyCode. mobile=this.mobileValue;
+    console.log(this.identifyCode. mobile);
+    console.log(this.userMessage);
+    console.log(this.identifyCode);
     this.isLoad=true;
     this.http
       .post('/user/user/',
@@ -175,7 +183,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(res=>{
         if(res.json().code===0){
           this.isLoad=false;
-          alert(res.json().msg);
+          alert('注册成功！');
         }
         else{
           this.isLoad=false;

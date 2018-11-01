@@ -98,14 +98,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_register_register_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./index/register/register.component */ "./src/app/index/register/register.component.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _index_index_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./index/index.component */ "./src/app/index/index.component.ts");
-/* harmony import */ var _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index/upload-image/upload-image.component */ "./src/app/index/upload-image/upload-image.component.ts");
-/* harmony import */ var _index_index_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index/index.module */ "./src/app/index/index.module.ts");
+/* harmony import */ var _index_login_login_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index/login/login.component */ "./src/app/index/login/login.component.ts");
+/* harmony import */ var _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index/upload-image/upload-image.component */ "./src/app/index/upload-image/upload-image.component.ts");
+/* harmony import */ var _index_index_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./index/index.module */ "./src/app/index/index.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -127,7 +129,11 @@ var appRoutes = [
             },
             {
                 path: 'upload',
-                component: _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__["UploadImageComponent"]
+                component: _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_9__["UploadImageComponent"]
+            },
+            {
+                path: 'login',
+                component: _index_login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"]
             }
         ] }
     //{path:'about', loadChildren:'./about/about.module#AboutModule'}
@@ -140,13 +146,14 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                 _index_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"],
-                _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_8__["UploadImageComponent"],
+                _index_upload_image_upload_image_component__WEBPACK_IMPORTED_MODULE_9__["UploadImageComponent"],
+                _index_login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"],
                 _index_index_component__WEBPACK_IMPORTED_MODULE_7__["IndexComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _index_index_module__WEBPACK_IMPORTED_MODULE_9__["IndexModule"],
+                _index_index_module__WEBPACK_IMPORTED_MODULE_10__["IndexModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["JsonpModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterModule"].forRoot(appRoutes)
@@ -180,7 +187,7 @@ module.exports = ".head{\r\n  height:60px;\r\n  background-color:#5bc0de;\r\n  w
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"head\">\r\n  <div class=\"bb\">\r\n  <div class=\"title\"><a [routerLink]=\"['/index']\">KYSC</a></div>\r\n  </div>\r\n  <div class=\"register\">\r\n  <a [routerLink]=\"['/index/register']\"><button data-toggle=\"modal\" data-target=\"#myModal\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\" style=\"border:none;background-color:transparent;border-right:1px solid #fff;\">注册</button></a>\r\n  </div>\r\n  <div class=\"login\">\r\n  <a [routerLink]=\"['/index/register']\"><button data-toggle=\"modal\" data-target=\"#myModal\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\" style=\"border:none;background-color:transparent;border-right:1px solid #fff;\">登录</button></a>\r\n  </div>\r\n  <div class=\"sui-btn-toolbar\" style=\"position:absolute;top:16px;right:64px;\">\r\n  <div class=\"sui-btn-group\">\r\n    <button data-toggle=\"dropdown\" class=\"sui-btn btn-primary dropdown-toggle\" style=\"border:none;background-color:transparent;\"><i class=\"caret\"></i>设置</button>\r\n    <ul role=\"menu\" aria-labelledby=\"drop1\" class=\"sui-dropdown-menu\">\r\n      <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" [routerLink]=\"['/index/upload']\"><button data-toggle=\"modal\" data-target=\"#myModal1\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\"style=\"border:none;background-color:transparent;color:black;\">设置头像</button></a></li>\r\n      <li role=\"presentation\" style=\"text-align:center;\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\">注销</a></li>\r\n      <!--<li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\">杭州</a></li>-->\r\n    </ul>\r\n  </div>\r\n  </div>\r\n   <!--<a [routerLink]=\"['/index/upload']\"><button data-toggle=\"modal\" data-target=\"#myModal1\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\">设置头像</button></a>-->\r\n</div>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n"
+module.exports = "<div class=\"head\">\r\n  <div class=\"bb\">\r\n  <div class=\"title\"><a [routerLink]=\"['/index']\">KYSC</a></div>\r\n  </div>\r\n  <div class=\"register\">\r\n  <a [routerLink]=\"['/index/register']\"><button data-toggle=\"modal\" data-target=\"#myModal\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\" style=\"border:none;background-color:transparent;border-right:1px solid #fff;\">注册</button></a>\r\n  </div>\r\n  <div class=\"login\">\r\n  <a [routerLink]=\"['/index/login']\"><button data-toggle=\"modal\" data-target=\"#myModal2\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\" style=\"border:none;background-color:transparent;border-right:1px solid #fff;\">登录</button></a>\r\n  </div>\r\n  <div class=\"sui-btn-toolbar\" style=\"position:absolute;top:16px;right:64px;\">\r\n  <div class=\"sui-btn-group\">\r\n    <button data-toggle=\"dropdown\" class=\"sui-btn btn-primary dropdown-toggle\" style=\"border:none;background-color:transparent;\"><i class=\"caret\"></i>设置</button>\r\n    <ul role=\"menu\" aria-labelledby=\"drop1\" class=\"sui-dropdown-menu\">\r\n      <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" [routerLink]=\"['/index/upload']\"><button data-toggle=\"modal\" data-target=\"#myModal1\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\"style=\"border:none;background-color:transparent;color:black;\">设置头像</button></a></li>\r\n      <li role=\"presentation\" style=\"text-align:center;\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\">注销</a></li>\r\n      <!--<li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"#\">杭州</a></li>-->\r\n    </ul>\r\n  </div>\r\n  </div>\r\n   <!--<a [routerLink]=\"['/index/upload']\"><button data-toggle=\"modal\" data-target=\"#myModal1\" data-keyboard=\"false\" class=\"sui-btn btn-primary btn-lg\">设置头像</button></a>-->\r\n</div>\r\n<div style=\"margin:200px auto;\">\r\n<app-login></app-login>\r\n</div>\r\n<router-outlet></router-outlet>\r\n\r\n"
 
 /***/ }),
 
@@ -265,6 +272,157 @@ var IndexModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/index/login/login.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/index/login/login.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".container {\r\n  width: 300px;\r\n  margin: 0 auto;\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  -webkit-transform: translate(-50%, -51%);\r\n  transform: translate(-50%, -51%);\r\n  -webkit-backface-visibility: hidden;\r\n}\r\n\r\n.input-element {\r\n  margin: 0 auto;\r\n  padding-top: 30px;\r\n  position: relative;\r\n  overflow: visible;\r\n}\r\n\r\n.input-element:last-child {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.input-element:after {\r\n  content: \" \";\r\n  display: block;\r\n  position: absolute;\r\n  bottom: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 1px;\r\n  background: #fff;\r\n}\r\n\r\n.input-element:before {\r\n  content: \" \";\r\n  display: block;\r\n  position: absolute;\r\n  bottom: 0;\r\n  width: 0;\r\n  height: 1px;\r\n  background: #5bc0de;\r\n  transition: width .3s ease-in-out;\r\n  z-index: 20;\r\n  left: 50%;\r\n  -webkit-transform: translateX(-50%);\r\n  transform: translateX(-50%);\r\n}\r\n\r\n.input-element label {\r\n  -webkit-backface-visibility: hidden;\r\n  -moz-backface-visibility: hidden;\r\n  -ms-backface-visibility: hidden;\r\n  -webkit-transform: translateZ(0);\r\n  transform: translateZ(0);\r\n  color: #fff;\r\n  top: 42px;\r\n  left: 0;\r\n  position: absolute;\r\n  transition: all 0.3s ease-in-out;\r\n  width: 100%;\r\n  font-size:16px;\r\n}\r\n\r\n.input-element label:hover {\r\n  cursor: pointer;\r\n  color: #5bc0de;\r\n}\r\n\r\n.input-element input {\r\n  width: 100%;\r\n  padding: 8px 0;\r\n  background: none;\r\n  border: none;\r\n  outline: none;\r\n  color: #fff;\r\n  font-size: 18px;\r\n  -webkit-backface-visibility: hidden;\r\n}\r\n\r\n.input-element label.active  {\r\n  top: 15px;\r\n  color: #5bc0de;\r\n  font-size: 12px;\r\n}\r\n\r\n.input-element.active label {\r\n  top: 15px;\r\n  color: #5bc0de;\r\n  font-size: 12px;\r\n}\r\n\r\n.input-element.error  label{\r\n  top: 15px;\r\n  color: red;\r\n  font-size: 12px;\r\n}\r\n\r\n.input-element.active:before {\r\n  width: 100%;\r\n}\r\n"
+
+/***/ }),
+
+/***/ "./src/app/index/login/login.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/index/login/login.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"myModal2\" tabindex=\"-1\" role=\"dialog\" data-hasfoot=\"false\" class=\"sui-modal hide fade\" style=\"border:none;width:390px;border-radius:8px;background:rgba(0,0,0,0.8);padding-left:20px;\">\n    <div class=\"modal-header\" style=\"border-bottom:0;\">\n        <button type=\"button\" data-dismiss=\"modal\" aria-hidden=\"true\" class=\"sui-close\">×</button>\n    </div>\n    <div class=\"modal-body\" style=\"height:300px;border-radius:8px;\">\n        <div class=\"input-element\" [ngClass]=\"{active: isUserName}\">\n            <label for=\"username\" >账号(4-15位)</label>\n            <input type=\"text\" id=\"username\" #user (focus)=\"isUserName=true\" (blur)=\"isBlur(userName,'isUserName')\" (input)=\"yzLogin(userName,'isUserName')\">\n        </div>\n        <div class=\"input-element\" [ngClass]=\"{active: isPassWord}\">\n            <label for=\"password\">密码(5-15位)</label>\n            <input type=\"password\" id=\"password\" #pass (focus)=\"isPassWord=true\" (blur)=\"isBlur(passWord,'isPassWord')\" (input)=\"yzLogin(passWord,'isPassWord')\">\n        </div>\n        <button [disabled]=\"!yzUser || !yzPass\"class=\"sui-btn btn-block btn-xlarge btn-info\" style=\"margin-top:60px;\" (click)=\"login()\"><div *ngIf=\"isLoad\" class=\"sui-loading loading-xxsmall loading-light loading-inline\" style=\"position:relative;top:5px;margin-right:5px;\"><i class=\"sui-icon icon-pc-loading\"></i></div>登录</button>\n    </div>\n    </div>\n"
+
+/***/ }),
+
+/***/ "./src/app/index/login/login.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/index/login/login.component.ts ***!
+  \************************************************/
+/*! exports provided: LoginComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(http, jsonp) {
+        this.http = http;
+        this.jsonp = jsonp;
+        this.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]({ 'Content-Type': 'application/json' });
+        this.isUserName = false;
+        this.isPassWord = false;
+        this.isLoad = false;
+        this.userNameValue = '';
+        this.passWordValue = '';
+        this.user = {
+            username: this.userNameValue,
+            password: this.passWordValue
+        };
+        this.yzUser = false;
+        this.yzPass = false;
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent.prototype.isBlur = function (o, p) {
+        if ($(o.nativeElement).val() !== '' && $(o.nativeElement).val() !== null) {
+            if (p === 'isUserName') {
+                this.yzUser = true;
+                this.isUserName = true;
+            }
+            else {
+                this.yzPass = true;
+                this.isPassWord = true;
+            }
+        }
+        else {
+            if (p === 'isUserName') {
+                this.isUserName = false;
+            }
+            else {
+                this.isPassWord = false;
+            }
+        }
+    };
+    LoginComponent.prototype.yzLogin = function (o, p) {
+        if ($(o.nativeElement).val() !== '' && $(o.nativeElement).val() !== null) {
+            if (p === 'isUserName') {
+                this.yzUser = true;
+            }
+            else {
+                this.yzPass = true;
+            }
+        }
+        else {
+            if (p === 'isUserName') {
+                this.yzUser = false;
+            }
+            else {
+                this.yzPass = false;
+            }
+        }
+    };
+    LoginComponent.prototype.login = function () {
+        var _this = this;
+        this.userNameValue = $(this.userName.nativeElement).val();
+        this.passWordValue = $(this.passWord.nativeElement).val();
+        this.user.username = this.userNameValue;
+        this.user.password = this.passWordValue;
+        console.log(this.user);
+        console.log(this.userNameValue);
+        this.isLoad = true;
+        this.http
+            .post('/user/login/', JSON.stringify({
+            username: this.userNameValue,
+            password: this.passWordValue
+        }), { headers: this.headers })
+            .subscribe(function (res) {
+            if (res.json().code === 0) {
+                _this.isLoad = false;
+                alert(res.json().msg);
+            }
+            else {
+                _this.isLoad = false;
+                alert(res.json().msg);
+            }
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('user'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], LoginComponent.prototype, "userName", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('pass'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], LoginComponent.prototype, "passWord", void 0);
+    LoginComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-login',
+            template: __webpack_require__(/*! ./login.component.html */ "./src/app/index/login/login.component.html"),
+            styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/index/login/login.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"],
+            _angular_http__WEBPACK_IMPORTED_MODULE_1__["Jsonp"]])
+    ], LoginComponent);
+    return LoginComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/index/register/register.component.css":
 /*!*******************************************************!*\
   !*** ./src/app/index/register/register.component.css ***!
@@ -341,7 +499,7 @@ var RegisterComponent = /** @class */ (function () {
         };
         this.userMessage = {
             username: this.userNameValue,
-            password: this.password,
+            password: this.passwordValue,
             mobile: this.mobileValue
         };
         this.identifyCode = {
@@ -471,7 +629,15 @@ var RegisterComponent = /** @class */ (function () {
     };
     RegisterComponent.prototype.register = function () {
         var _this = this;
-        this.yzmValue = $(this.yzm.nativeElement).val();
+        this.identifyCode.code = $(this.yzm.nativeElement).val();
+        this.userMessage.username = this.userNameValue;
+        this.userMessage.password = this.passwordValue;
+        this.userMessage.mobile = this.mobileValue;
+        this.identifyCode.id = this.yzmID;
+        this.identifyCode.mobile = this.mobileValue;
+        console.log(this.identifyCode.mobile);
+        console.log(this.userMessage);
+        console.log(this.identifyCode);
         this.isLoad = true;
         this.http
             .post('/user/user/', JSON.stringify({ user: this.userMessage,
@@ -480,7 +646,7 @@ var RegisterComponent = /** @class */ (function () {
             .subscribe(function (res) {
             if (res.json().code === 0) {
                 _this.isLoad = false;
-                alert(res.json().msg);
+                alert('注册成功！');
             }
             else {
                 _this.isLoad = false;
